@@ -31,7 +31,7 @@ import { JoyrideModule } from 'ngx-joyride';
       // clearIfNotMatch : false
     }),
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyCPaWZ82O2KbXCsZwnZXq0Qe_kKu-SL_WA',
+      apiKey: 'your google map key',
       libraries: ['places', 'drawing', 'geometry']
     }),
     JoyrideModule.forRoot(),
