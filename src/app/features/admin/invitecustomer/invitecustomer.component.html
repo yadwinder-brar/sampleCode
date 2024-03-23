@@ -1,0 +1,25 @@
+<div class="row">
+    <div class="col-lg-12 justify-between-md-center pt-3">
+        <div class="invit-div">
+            <h3 class="font-26 font-500">Invite <span class="getStarted font-600">Customer</span></h3>
+            <p class="font-12">Invite Customer to My Workspace</p>
+        </div>
+        <div class="close-div">
+            <mat-icon (click)="this.dialogRef.close(true)" class="close">highlight_off</mat-icon>
+        </div>
+    </div>
+</div>
+
+<div class="row ">
+    <div class="col-lg-8 col-xl-8">
+        <label class="font-14">Email</label>
+        <form-field [errorControl]="email" name="email">
+            <input type="text" class="form-control forgot-pass"
+                placeholder="Johnsmith@gmail.com" [formControl]="email" />
+        </form-field>
+        <!-- <mat-error class="error" *ngIf="email.touched && email.hasError('emailValidator')">please enter valid email</mat-error> -->
+    </div>
+    <div class="col-lg-4 col-xl-4">
+        <button class="theme-btn red sent" type="button" (click)="sendEmail()" >Send</button>
+    </div> 
+</div>

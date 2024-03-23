@@ -1,0 +1,565 @@
+<app-client-dashboard-header
+  [pageName]="'Account Settings'"
+></app-client-dashboard-header>
+<div class="d-none" [class.loading]="isLoading">
+  <mat-progress-spinner
+    *ngIf="isLoading"
+    class="loader"
+    [color]="'warn'"
+    [mode]="'indeterminate'"
+    [value]="'30'"
+    stroke="f44336"
+  >
+  </mat-progress-spinner>
+</div>
+<div class="content">
+  <div class="inner-dashbaord pt-3">
+    <div class="shippment-form-card mb-3 tab-account">
+      <div class="col-lg-12 tab-padding">
+        <mat-tab-group
+          [(selectedIndex)]="tabIndex"
+          (selectedTabChange)="changeTab($event)"
+          class="tab-unpaid profile-tab"
+        >
+          <mat-tab label="Profile Settings">
+            <div class="pt-3">
+              <h3 class="font-16 font-600 color-text setting-p">
+                Profile Settings Details
+                <img
+                  routerLink="/client/editprofile/{{ userData?.id }}"
+                  src="../../../assets/images/edit-profile.svg"
+                  class="lockPassword mr-2"
+                />
+              </h3>
+            </div>
+            <div class="account-setting pt-3">
+              <div
+                [ngClass]="
+                  userData?.currentProfile?.profilePicture
+                    ? 'logo-div1'
+                    : 'logo-div'
+                "
+              >
+                <img
+                  src="{{
+                    userData?.currentProfile?.profilePicture ||
+                      '../../../../assets/images/ship-district-logo.svg'
+                  }}"
+                />
+              </div>
+              <div class="account-setg pt-4 pb-4 col-lg-4">
+                <div class="account-min">
+                  <div class="img">
+                    <img src="../../../../assets/images/acc-name.svg" />
+                  </div>
+                  <div class="user-name">
+                    Name : {{ userData?.profiles[0]?.name }}
+                  </div>
+                </div>
+                <div class="account-min">
+                  <div class="img">
+                    <img src="../../../../assets/images/comapny-name.svg" />
+                  </div>
+                  <div class="user-name">
+                    Company Name :
+                    {{ userData?.profiles[0]?.companyName || "--" }}
+                  </div>
+                </div>
+                <div class="account-min">
+                  <div class="img">
+                    <img src="../../../../assets/images/addreess.svg" />
+                  </div>
+                  <div class="user-name">
+                    Address :
+                    {{
+                      userData?.profiles[0]?.address1 ||
+                        userData?.profiles[1]?.address1
+                    }}
+                    {{
+                      userData?.profiles[0]?.address2 ||
+                        userData?.profiles[1]?.address2
+                    }}
+                    {{
+                      userData?.profiles[0]?.address3 ||
+                        userData?.profiles[1]?.address3
+                    }}
+                  </div>
+                </div>
+                <div class="account-min">
+                  <div class="img">
+                    <img src="../../../../assets/images/city.svg" />
+                  </div>
+                  <div class="user-name">
+                    City : {{ userData?.profiles[0]?.city || "--" }}
+                  </div>
+                </div>
+                <div class="account-min">
+                  <div class="img">
+                    <img src="../../../../assets/images/country.svg" />
+                  </div>
+                  <div class="user-name">
+                    Country : {{ userData?.profiles[0]?.country || "--" }}
+                  </div>
+                </div>
+                <div class="account-min">
+                  <div class="img">
+                    <img src="../../../../assets/images/zip.svg" />
+                  </div>
+                  <div class="user-name">
+                    Zip Code : {{ userData?.profiles[0]?.zipCode }}
+                  </div>
+                </div>
+                <div class="account-min">
+                  <div class="img">
+                    <img src="../../../../assets/images/phoneIcon.svg" />
+                  </div>
+                  <div class="user-name">
+                    Phone No. : {{ userData?.profiles[0]?.phone || "--" }}
+                  </div>
+                </div>
+                <div class="account-min" *ngIf="mailboxAccount">
+                  <div class="img">
+                    <img src="../../../../assets/images/addreess.svg" />
+                  </div>
+                  <div class="user-name">
+                    Mailbox Address : {{ mailboxAccount?.virtualId || "--" }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mat-tab>
+          <mat-tab label="Mailbox Plan" *ngIf="mailboxAccount">
+            <div
+              class="planDetail"
+              *ngIf="mailboxAccount?.status == 'approved'"
+            >
+              <div class="account-min">
+                <div class="img">
+                  <img src="../../../../assets/images/planName.svg " />
+                </div>
+                <div class="user-name">
+                  Plan Name : {{ this.userPlanDetail?.planInfo?.planName }}
+                </div>
+              </div>
+              <div class="account-min">
+                <div class="img">
+                  <img src="../../../../assets/images/planPrice.svg" />
+                </div>
+                <div class="user-name">
+                  Plan Price :
+                  {{ "$" + " " + this.userPlanDetail?.planInfo?.planPrice }}
+                </div>
+              </div>
+              <div class="account-min">
+                <div class="img">
+                  <img src="../../../../assets/images/planType.svg" />
+                </div>
+                <div class="user-name">
+                  Plan Type : {{ this.userPlanDetail?.planInfo?.validity }}
+                </div>
+              </div>
+              <div class="account-min">
+                <div class="img">
+                  <img src="../../../../assets/images/totoalScan.svg" />
+                </div>
+                <div class="user-name">
+                  Total scans : {{ this.userPlanDetail?.scanCount }}
+                </div>
+              </div>
+              <div class="account-min">
+                <div class="img">
+                  <img src="../../../../assets/images/usedScan.svg" />
+                </div>
+                <div class="user-name">
+                  Used scans : {{ this.userPlanDetail?.usedScanCount }}
+                </div>
+              </div>
+              <div class="account-min">
+                <div class="img">
+                  <img src="../../../../assets/images/leftScan.svg" />
+                </div>
+                <div class="user-name">
+                  Scans Available : {{ this.userPlanDetail?.leftScanCount }}
+                </div>
+              </div>
+              <div class="account-min">
+                <div class="img">
+                  <img src="../../../../assets/images/exDate.svg" />
+                </div>
+                <div class="user-name">
+                  Due Date : {{ this.userPlanDetail?.endDate | date }}
+                </div>
+              </div>
+              <div class="m-3 buttonDiv">
+                <button class="theme-btn red" routerLink="/client/selectplan">
+                  Buy Scans
+                </button>
+              </div>
+            </div>
+            <div class="planDetail" *ngIf="mailboxAccount?.status == 'pending'">
+              your request is not approved by admin yet please wait for approval
+            </div>
+            <div
+              class="planDetail"
+              *ngIf="mailboxAccount?.status == 'rejected'"
+            >
+              Your request for mailbox account is rejected by admin. Please
+              connect with admin for more detail.
+            </div>
+          </mat-tab>
+          <mat-tab
+            label="Upgrade Account"
+            *ngIf="userData?.accountType !== 'both' && userData?.parentData"
+          >
+            <div class="">
+              <div
+                class="shipmentAccount"
+                *ngIf="userData?.accountType == 'virtualMailBox'"
+              >
+                <button
+                  (click)="upgradeAccount('shipment')"
+                  *ngIf="userData?.profiles?.length == 1"
+                  class="theme-btn red request-button"
+                >
+                  Upgrade to shipment Account
+                </button>
+                <span
+                  *ngIf="userData?.profiles?.length > 1"
+                  class="theme-btn red ml-2"
+                  >request submitted</span
+                >
+              </div>
+              <div
+                class="mailboxAccount"
+                *ngIf="userData?.accountType !== 'virtualMailBox'"
+              >
+                <div class="row my-4">
+                  <div class="col-lg-4">
+                    <div class="mt-4">
+                      <div class="white-form-card">
+                        <div class="align-center justify-between">
+                          <div
+                            class="font-14 font-600"
+                            (click)="applicationOpen()"
+                          >
+                            Post Office Form
+                          </div>
+                          <!-- <div class="align-center font-12">
+                            <a
+                              class="dowanloadForm"
+                              href="../../../../assets/images/SHIPDISTRICTPMBFORM.pdf"
+                              attributes-list
+                              download
+                            >
+                              <span class="download-icon1"
+                                ><img
+                                  width="12px"
+                                  class="mr-1"
+                                  src="../../../../assets/images/download-icon.svg"
+                                  alt="" /></span
+                              >Download Form
+                            </a>
+                          </div> -->
+                        </div>
+
+                        <div
+                          class="upload-file my-3"
+                          (click)="applicationOpen(dataForm)"
+                        >
+                          <div class="d-flex flex-column text-center">
+                            <!-- <input type="file" hidden #upload (change)="selectFile($event)" >
+                            <file-uploader
+                              #fileUploader="FileUploader"
+                            ></file-uploader>
+                            <app-uploader-ui
+                              #selectFile1
+                              [fileUploader]="fileUploader"
+                              (afterUploadFile)="selectFile($event)"
+                            ></app-uploader-ui> -->
+                            <img
+                              width="300px"
+                              class="mx-auto"
+                              src="../../../../assets/images/Screenshot-img.png"
+                              alt=""
+                            />
+                            <!-- <span class="font-10 grey my-2"
+                              >Upload your file</span
+                            >
+                            <div class="text-center">
+                              <button
+                                type="button"
+                                class="theme-btn upload-btn"
+                              >
+                                Upload
+                              </button>
+                            </div> -->
+                          </div>
+                        </div>
+                        <div class="hr-line">
+                          <div class="justify-between">
+                            <span class="font-12" (click)="applicationOpen(dataForm)"> Fill this form Click Here</span>
+                            <span class="font-12" *ngIf="dataForm">Form updated</span>
+                          </div>
+                          <!-- <p class="font-12">
+                            <a
+                              class="dowanloadForm formColor"
+                              href="../../../../assets/images/Mail-boxExampleForm.pdf"
+                              target="blank"
+                              attributes-list
+                            >
+                              <span class="download-icon1"
+                                ><img
+                                  width="12px"
+                                  class="mr-1"
+                                  src="../../../../assets/images/download-icon.svg"
+                                  alt="" /></span>
+                              Need help to fill out the mailbox form? Click
+                              Here
+                            </a>
+                          </p> -->
+                          <hr />
+                        </div>
+                        <div
+                          class="upload-bar align-center justify-between my-2 py-3 px-3"
+                          *ngIf="formUrl"
+                        >
+                          <div class="align-center font-12 fw-5">
+                            <img
+                              width="12px"
+                              class="mr-2"
+                              src="../../../../assets/images/pdf-file.svg"
+                              alt=""
+                            />Post Office form
+                          </div>
+                          <div class="font-12 dark-red">Uploaded 100%</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="mailboxButton">
+                      <button
+                        (click)="upgradeAccount('virtualMailBox')"
+                        class="theme-btn red request-button"
+                      >
+                        Upgrade to Mailbox Account
+                      </button>
+                    </div>
+                  </div>
+                  <div class="col-lg-8 px-5 mt-2">
+                    <div class="mt-3">
+                      <div class="white-form-card">
+                        <div class="padding-both-side">
+                          <div class="font-14 l-black text-center">
+                            Please submit two forms of ID to be provided for
+                            USPS Form 1583.
+                            <!-- Upload your ID's by clicking in the Proof 1 & 2 boxes and upload very clear photos or scans. -->
+                          </div>
+                          <div class="row justify-between">
+                            <div class="col-lg-5 pr-2">
+                              <div
+                                class="text-center font-14 mt-3 mb-2 l-black"
+                              >
+                                Proof 1
+                              </div>
+                              <file-uploader
+                                #fileUploader="FileUploader"
+                              ></file-uploader>
+                              <image-cropper
+                                #cropper="ImageCropper"
+                              ></image-cropper>
+                              <app-uploader-ui
+                                #selectFile11
+                                [cropper]="cropper"
+                                [fileUploader]="fileUploader"
+                                (afterUploadFile)="proof1Upload($event)"
+                              ></app-uploader-ui>
+                              <div
+                                class="upload-proof"
+                                *ngIf="!firstProfImg"
+                                (click)="selectFile11.selectFile()"
+                              >
+                                <img
+                                  src="../../../../assets/images/plus-icon.svg"
+                                  alt=""
+                                />
+                              </div>
+                              <div class="upload-proof" *ngIf="firstProfImg">
+                                <mat-icon
+                                  class="first_icon"
+                                  (click)="firstProfImg = ''"
+                                  >close</mat-icon
+                                >
+                                <img [src]="firstProfImg" alt="" />
+                              </div>
+                            </div>
+                            <div class="col-lg-5 pl-2">
+                              <div
+                                class="text-center font-14 mt-3 mb-2 l-black"
+                              >
+                                Proof 2
+                              </div>
+                              <file-uploader
+                                #fileUploader="FileUploader"
+                              ></file-uploader>
+                              <image-cropper
+                                #cropper="ImageCropper"
+                              ></image-cropper>
+                              <app-uploader-ui
+                                #selectFile2
+                                [cropper]="cropper"
+                                [fileUploader]="fileUploader"
+                                (afterUploadFile)="proof2Upload($event)"
+                              ></app-uploader-ui>
+                              <div
+                                class="upload-proof"
+                                *ngIf="!secProfImg"
+                                (click)="selectFile2.selectFile()"
+                              >
+                                <img
+                                  src="../../../../assets/images/plus-icon.svg"
+                                  alt=""
+                                />
+                              </div>
+                              <div class="upload-proof" *ngIf="secProfImg">
+                                <mat-icon
+                                  class="first_icon"
+                                  (click)="secProfImg = ''"
+                                  >close</mat-icon
+                                >
+                                <!-- <img src="" (click)="removeImage()" /> -->
+                                <img [src]="secProfImg" alt="" />
+                              </div>
+                            </div>
+                          </div>
+                          <div class="mt-3">
+                            <div class="font-14 l-black">
+                              <img
+                                src="../../../../assets/images/tooltip-icon.svg"
+                                alt=""
+                                class="ml-2 doit"
+                              />
+                              Do's and don'ts for uploading your document
+                            </div>
+                            <div>
+                              <ul class="uloading-instruction">
+                                <li class="font-12 l-black">
+                                  Upload your ID's by clicking in the Proof 1 &
+                                  2 boxes and upload very colored photos or
+                                  scans.
+                                </li>
+                                <li class="font-12 l-black">
+                                  Social Security Cards, Credit Cards, & Birth
+                                  Certificates are not accepted.
+                                </li>
+                                <li class="font-12 l-black">
+                                  Accepted proofs of ID are Driver's Licenses,
+                                  Passports, Armed forces, Government, State,
+                                  Alien, Recognizable Corporate, University
+                                  Identification cards, Current Leases,
+                                  Mortgages/Deeds, Voter Registration Cards,
+                                  Home or Vehicle Insurance Policies, & Vehicle
+                                  Registration Cards
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <span
+                  *ngIf="userData?.profiles?.length > 1"
+                  class="theme-btn red ml-2"
+                  >request submitted</span
+                >
+              </div>
+            </div>
+          </mat-tab>
+          <mat-tab label="Business Settings" *ngIf="userData?.parentUser?.role?.code=='SUPER_ADMIN'">
+            <div class="row account-setting">
+              <div class="col-lg-12 pl-2">
+                <div class="pt-3">
+                  <h3 class="font-16 font-600">Business Details</h3>
+                </div>
+                <div class="Business-detail pt-3">
+                  <p>Display your logo on Commercial Invoice?</p>
+                  <mat-radio-group aria-label="Select an option">
+                    <mat-radio-button value="1" checked>Yes</mat-radio-button>
+                    <mat-radio-button value="2">No</mat-radio-button>
+                  </mat-radio-group>
+                </div>
+                <div class="Business-detail pt-4">
+                  <div class="row">
+                    <div class="col-lg-6 col-xl-2 Business-detail">
+                      <p class="font-14 font-600">Generate your API Key?</p>
+                      <mat-radio-group aria-label="Select an option">
+                        <mat-radio-button value="1" checked
+                          >Yes</mat-radio-button
+                        >
+                        <mat-radio-button value="2">No</mat-radio-button>
+                      </mat-radio-group>
+                    </div>
+                    <!-- formControlName="email" -->
+                    <div class="col-lg-6 col-xl-3 genrate perc">
+                      <form-field name="email">
+                        <input
+                          type="text"
+                          class="form-control forgot-pass"
+                          placeholder="Generate your API Key?"
+                        />
+                      </form-field>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="Business-detail pt-4 Percentage Markup">
+                  <div class="row">
+                    <div class="col-lg-6 col-xl-2 Business-detail">
+                      <p class="font-14 font-600">Markup Shipping Rates?</p>
+                      <mat-radio-group aria-label="Select an option">
+                        <mat-radio-button value="1" checked
+                          >Yes</mat-radio-button
+                        >
+                        <mat-radio-button value="2">No</mat-radio-button>
+                      </mat-radio-group>
+                    </div>
+                    <!-- formControlName="email" -->
+                    <div class="col-lg-6 col-xl-3 perc">
+                      <form-field name="email">
+                        <input
+                          type="text"
+                          class="form-control forgot-pass"
+                          placeholder="Percentage Markup"
+                        />
+                      </form-field>
+                      <span class="Percentage-icon"
+                        ><img src="../../../../assets/images/per.svg"
+                      /></span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="manage-account pt-3 pb-4 col-lg-6 col-xl-5">
+                  <h2 class="font-20 font-600">Manage Shipping Accounts</h2>
+                  <p class="font-14">Add your shipping accounts below:</p>
+                  <label class="fw-5 font-14">Carrier</label>
+                  <form-field>
+                    <mat-select
+                      panelClass="my-custom-class"
+                      class="form-control shipping-drop"
+                      placeholder="Select Carrier"
+                    >
+                      <mat-option>Inch</mat-option>
+                      <mat-option>Ounce</mat-option>
+                      <mat-option>Pond</mat-option>
+                    </mat-select>
+                  </form-field>
+                </div>
+              </div>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </div>
+</div>

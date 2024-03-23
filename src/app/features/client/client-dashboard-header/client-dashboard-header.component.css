@@ -1,0 +1,25 @@
+span.backArrow > img {
+    width: 15px !important;
+    margin-right: 5px;
+    cursor: pointer;  
+}
+/* ::ng-deep ngx-guided-tour .tour-step {
+   
+    position: fixed;
+    z-index: 999 !important;
+    background-color: lightgrey !important;
+    border-radius: 8px !important;
+    top: 80px !important;
+}
+
+::ng-deep ngx-guided-tour .tour-step .tour-arrow {
+    position: absolute;
+    width: 20px !important;
+    height: 20px !important;
+    background: lightgrey !important;
+    rotate: 45deg !important;
+    top: 5% !important;
+    left: 50% !important;
+    transform: translate(-70%, -50%) !important;
+
+} */

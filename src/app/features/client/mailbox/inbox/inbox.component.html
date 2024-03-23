@@ -1,0 +1,224 @@
+<app-client-dashboard-header [pageName]="'Inbox'"></app-client-dashboard-header>
+<div class="content">
+  <div class="inner-dashbaord px-3 pt-3 pb-4">
+    <div class="row">
+      <div class="col-lg-4 col-xl-3 pr-2 pl-2 padding-l mobile-serach d-none">
+        <div>
+          <form-field>
+            <input type="text" [(ngModel)]="search" placeholder="Searching..." class="form-control font-family" />
+            <img *ngIf="!search" src="../../../../assets/images/search.svg" class="form-append searching-icon" />
+            <img *ngIf="search" src="../../../../assets/images/close-icon.svg" (click)="search = ''; getInboxList()"
+              class="form-append" />
+          </form-field>
+        </div>
+      </div>
+      <div class="col-lg-4 col-xl-2 pr-2 cursor">
+        <div class="se">
+          <img src="../../../../assets/images/fillter-date.svg" class="filter-icon" />
+
+          <div class="filter-date">
+            <input type="text" [(ngModel)]="inboxDate" (keyup)="searchInboxList()" [max]="maxDate"
+              (dateChange)="searchInboxList()" (click)="startDate.open()" readonly placeholder="Filter by Date"
+              [matDatepicker]="startDate" class="form-control" />
+            <img *ngIf="!inboxDate" class="form-append mr-2 mr-right icon-set" (click)="startDate.open()"
+              src="../../../../assets/images/arrow-down.svg" alt="" />
+            <img *ngIf="inboxDate" class="form-append mr-2 mr-right" (click)="inboxDate = ''; searchInboxList()"
+              src="../../../../assets/images/close-icon.svg" alt="" />
+            <mat-datepicker #startDate></mat-datepicker>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-xl-2 pr-2">
+        <div class="se">
+          <img *ngIf="!InboxType" src="../../../../assets/images/fillter-date.svg" class="filter-icon custom-height" />
+          <img *ngIf="InboxType" (click)="InboxType = ''; searchInboxList()"
+            src="../../../../assets/images/close-icon.svg" class="filter-icon" />
+          <div class="Filter-status">
+            <form-field>
+              <mat-select [(ngModel)]="InboxType" (selectionChange)="searchInboxList()"
+                class="form-control filter-status1" placeholder="Filter by Status">
+                <mat-option value="openAndScanResponse">Open for scan</mat-option>
+                <mat-option value="forwardLabelResponse">Forward</mat-option>
+              </mat-select>
+            </form-field>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-xl-2 offset-xl-5" [ngClass]="labelIds && labelIds.length > 0 ? '' : 'd-none'">
+        <ul class="icon-indiftication">
+          <!-- <li
+            class="identification bgShadow"
+            (click)="openAndScan('')"
+            matTooltip="Open and scan"
+          >
+            <img
+              src="../../../../../assets/images/barcode-identification.png"
+            />
+          </li> -->
+          <li class="identification bgShadow" (click)="forwardMultiple('')" matTooltip="Forward mail">
+            <img src="../../../../../assets/images/forward.svg" />
+          </li>
+          <!-- <li class="identification1">
+            <img src="../../../../../assets/images/forward.svg" />
+          </li> -->
+          <li class="identification2" (click)="openHoldForPicupDialog('',labelIds)" matTooltip="Hold for pickup">
+            <img src="../../../../../assets/images/home-delivery-icon.svg" />
+          </li>
+          <li class="identification3 bgShadow" (click)="notMyMail('')" matTooltip="Not my mail">
+            <img src="../../../../../assets/images/mail.svg" />
+          </li>
+          <li class="identification3 bgred" matTooltip="Send to trash" (click)="sendToTrash('')">
+            <img src="../../../../../assets/images/send-trash.svg" class="" />
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="pb-5" *ngIf="InboxList && InboxList.length > 0 && !isLoading">
+    <div class="chek-div" *ngFor="let data of InboxList; let i = index">
+      <div class="row">
+        <!-- *ngIf="data?.scanImages && data?.scanImages.length== 0 && !data?.forwardMailCharges?.fiveToSevenDays  == null" -->
+        <div class="col-lg-1 check-div">
+          <mat-checkbox *ngIf="!data?.lastActionUser && data?.lastActionAdmin=='labelAssignedToUser'"
+            (change)="checkMailbox($event, data?.id, data)" class="mr-2 agree signup"></mat-checkbox>
+            <span class="mobile-view">Click here to select multiple scans</span>
+        </div>
+        <div class="col-lg-11 contetnt-inbox relative">
+          <div class="inbox-card-mailbox pb-4 mt-1" [ngClass]="
+              labelIds && labelIds.length > 0 && labelIds.includes(data?.id)
+                ? 'overlay'
+                : ''
+            ">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="row">
+                  <div class="col-lg-7">
+                    <div class="inbox-card">
+                      <div class="inbox-img">
+                        <!-- <img [src]="data?.labelLink" /> -->
+                        <img *ngIf="getImageName(data?.labelLink) != 'pdf'" [src]="data?.labelLink" />
+                        <iframe class="iframeClass" *ngIf="getImageName(data?.labelLink) == 'pdf'" [src]="
+                            sanitizer.bypassSecurityTrustResourceUrl(
+                              data?.labelLink
+                            )
+                          "></iframe>
+                        <span class="zoom-icon">
+                          <img (click)="viewImg(data)" src="../../../../../assets/images/zoom-icon.svg" />
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-5 inbox-padding">
+                    <div class="main-inbox">
+                      <div class="date-div">
+                        <span class="font-14">{{
+                          data?.labelCreationDate | date : "EEEE , MM-dd-YYYY"
+                          }}</span>
+                        <!-- <span class="font-14">{{
+                          data?.labelCreationDate | date : "fullDate"
+                        }}</span> -->
+                        <span class="font-12">Created On</span>
+                        <span class="font-12">Type: {{data?.labelOriginType}}</span>
+                        <p *ngIf="data?.labelOriginType=='package'" class="font-12">Storage date: {{data?.storageDate|
+                          date:'EEEE , MM-dd-YYYY'}}</p>
+                      </div>
+                      <div class="Unread ml-auto">
+                        <button class="btn in-transit">
+                          Unread
+                        </button>
+                      </div>
+                    </div>
+                    <div class="following-action pt-4"
+                      *ngIf="data?.forwardMailCharges?.fiveToSevenDays == null && !labelIds.includes(data?.id) ">
+                      <p class="font-12">
+                        Please select one of the following action
+                      </p>
+                      <div class="action-perfom">
+                        <div *ngIf="
+                            data?.scanImages && data?.scanImages.length == 0
+                          " class="open-scan mr-right mr-3 cursor" (click)="openAndScan(data)">
+                          <p class="">
+                            <img src="../../../../../assets/images/barcode-identification.png" />Open and scan
+                          </p>
+                        </div>
+                        <div *ngIf="
+                            data?.scanImages && data?.scanImages.length > 0
+                          " class="open-scan clickView mr-3 cursor" (click)="viewImages(data)">
+                          <p class="">
+                            <!-- <img
+                            src="../../../../../assets/images/barcode-identification.png"
+                          /> -->
+                            Click to view scan
+                          </p>
+                        </div>
+                        <div class="Forward cursor" routerLink="/client/forwardmailfirst/{{ data?.id }}">
+                          <p class="">
+                            <img src="../../../../../assets/images/forward.svg" />Forward
+                          </p>
+                        </div>
+                        <div class="hold mr-right mr-3 cursor" (click)="holdForPickUp(data)">
+                          <p class="">
+                            <img src="../../../../../assets/images/home-delivery-icon.svg" />Hold for pickup
+                          </p>
+                        </div>
+                        <div *ngIf="data?.lastActionAdmin=='labelAssignedToUser'" class="mail cursor" (click)="notMyMail(data?.id)">
+                          <p class="">
+                            <img src="../../../../../assets/images/mail.svg" />Not my mail
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="send-trash pt-4 justify-center"
+                      *ngIf="data?.forwardMailCharges?.fiveToSevenDays == null  && !labelIds.includes(data?.id) && (data?.lastActionAdmin=='labelAssignedToUser' || data?.lastActionAdmin=='openAndScanResponse')">
+                      <button class="btn bnt-trash" (click)="sendToTrash(data?.id)">
+                        <img src="../../../../../assets/images/send-trash.svg" class="send-tras" />Send to trash
+                      </button>
+                    </div>
+                    <div *ngIf="data?.forwardMailCharges?.fiveToSevenDays != null">
+                      <div class="following-action pt-4">
+                        <p class="font-12">
+                          You submitted this item as forward mail
+                        </p>
+                      </div>
+                      <div class="send-trash pt-1 pb-3">
+                        <!-- <p class=""><img src="../../../../../assets/images/forward.svg">Forward</p> -->
+
+                        <div class="send-trash pt-4 justify-center">
+                          <button *ngIf="!data?.forwardLabelSuccess" class="create-btn red"
+                            routerLink="/client/forwardmaillast/{{ data?.id }}">
+                            Click to proceed
+                          </button>
+                        </div>
+                        <span *ngIf="data?.forwardLabelSuccess">Your shipment date is :
+                          {{data?.forwardLabelDeliveryDate| date : "EEEE , MM-dd-YYYY"}} </span>
+                        <p *ngIf="data?.forwardLabelSuccess && data?.forwardLabelTrackingNumber">Your Tracking # is:
+                          {{data?.forwardLabelTrackingNumber}} </p>
+                        <div class="text-center">
+                          <button *ngIf="data?.forwardLabelSuccess" class="create-btn red my-2 shortButton"
+                            (click)="sendToArchive(data)" type="button">Send To Archive</button>
+                        </div>
+                      </div>
+
+                      <div class="last-updated pt-3">
+                        <p class="ml-auto float-right font-12 mb-0">
+                          Last Updated:
+                          {{ data?.updatedAt | date : "E,MM-dd-YYYY" }}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <pagination [(pageNo)]="pageNo" [(pageSize)]="pageSize" (page)="getInboxList()"
+        [totalRecords]="totalRecords || 0"></pagination>
+    </div>
+  </div>
+  <div class="col-lg-12 noRequest" *ngIf="InboxList && InboxList.length == 0 && !isLoading">
+    <span> No Data found</span>
+  </div>
+</div>

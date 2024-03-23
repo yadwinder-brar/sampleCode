@@ -1,0 +1,209 @@
+<section class="bg-info">
+    <div class="row justify-between-md-center d-none">
+        <div class="col-lg-4 pl-2">
+            <img class="img-logo1" src="../../../../assets/images/newLogo4.png" alt="" />
+        </div>
+        <div class="col-lg-6 mt-3">
+            <div class="text-center font-36 fw-6">Create New <span class="getStarted font-600">Shipment</span></div>
+            <div class="text-center font-16 l-black">
+                Make Payment to Complete Shipment
+            </div>
+        </div>
+     </div>
+    <div class="row" *ngIf="cardList && cardList.length>0">
+        <div class="col-lg-4 pl-3 mt-2 padding-r d-none ">
+            <div class="row">
+                <div class="col-lg-12 mt-2 mb-2">
+                    <div class="white-form-card1">
+                        <div class="edit-servces">
+                            <p class="float-left">Quote</p>
+                            <a href="" class="refersh"><img src="../../../../assets/images/refresh-red.svg" /></a>
+                        </div>
+                        <table class="sender-info" width="100%">
+                            <tr>
+                                <td align="left">
+                                    <span class="font-weight">1 Day Service </span>
+                                    <p>10:30 AM</p>
+                                </td>
+                                <td align="right" class="font-22 maincolor">490 $</td>
+                            </tr>
+                            <tr>
+                                <td align="left">Base Rate</td>
+                                <td align="right">300 $</td>
+                            </tr>
+                            <tr>
+                                <td align="left">Fuel Surcharge</td>
+                                <td align="right">120 $</td>
+                            </tr>
+                            <tr>
+                                <td align="left">Residential Surcharge</td>
+                                <td align="right">110 $</td>
+                            </tr>
+                            <tr class="maincolor">
+                                <td align="left">Discount</td>
+                                <td align="right">40 $</td>
+                            </tr>
+                            <tr>
+                                <td align="left">Additional Charges</td>
+                                <td align="right">85 $</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-lg-12 mt-2 mb-2">
+                    <div class="white-form-card1">
+                        <div class="edit-servces">
+                            <p class="float-left">Sender Information</p>
+                        </div>
+                        <table class="sender-info" width="100%">
+                            <tr>
+                                <td align="left">Name :</td>
+                                <td align="right">Johnsmith</td>
+                            </tr>
+                            <tr>
+                                <td align="left">Email :</td>
+                                <td align="right">Johnsmith@gmail.com</td>
+                            </tr>
+                            <tr>
+                                <td align="left">Phone No.</td>
+                                <td align="right">789-456-1230</td>
+                            </tr>
+                            <tr>
+                                <td align="left">Address :</td>
+                                <td align="right">36 west havenue,denver, Z4858 CA, US</td>
+                            </tr>
+                        </table>
+                        <div class="edit-servces pt-3">
+                            <p class="float-left">Receiver Information</p>
+                            <table class="sender-info" width="100%">
+                                <tr>
+                                    <td align="left">Name :</td>
+                                    <td align="right">Johnsmith</td>
+                                </tr>
+                                <tr>
+                                    <td align="left">Email :</td>
+                                    <td align="right">Johnsmith@gmail.com</td>
+                                </tr>
+                                <tr>
+                                    <td align="left">Phone No.</td>
+                                    <td align="right">789-456-1230</td>
+                                </tr>
+                                <tr>
+                                    <td align="left">Address :</td>
+                                    <td align="right">36 west havenue,denver, Z4858 CA, US</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="edit-servces pt-3">
+                            <p class="float-left">Package Information</p>
+                            <table class="sender-info" width="100%">
+                                <tr>
+                                    <td align="left">Package :</td>
+                                    <td align="right">(2) Qty</td>
+                                </tr>
+                                <tr>
+                                    <td align="left">Dimensions:</td>
+                                    <td align="right">14X5X6</td>
+                                </tr>
+                                <tr>
+                                    <td align="left">Insurance Declared:</td>
+                                    <td align="right">789-456-1230</td>
+                                </tr>
+                               
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-12 px-3 mt-2">
+            <div class="row">
+                <div class="col-lg-12 mt-2">
+                    <div class="white-form-card1 my-cards-div">
+                        <div class="row">
+                            <div class="header-shippment">
+                                <div class="card-tag float-left">
+                                    <p class="scondry-color">My Cards</p>
+                                </div>
+                                <div class="add-card float-right">
+                                    <p (click)="goToAddCard()" >+ Add New Card</p>
+                                </div>
+                            </div>
+                        </div>
+                        <mat-radio-group [(ngModel)]="selectedCard" aria-label="Select an option">
+                            <div class="row mt-5 mb-5">
+                                <div class="col-lg-4 cards-div" *ngFor="let item of cardList">
+                                    <section class="checbox-section cards">
+                                        <mat-radio-button [value]="item.id" class="card-mat">
+                                            <span>
+                                                <img class="card-img" src="../../../../assets/images/card-icon.svg" /><mat-icon class="mat-icon"><img (click)="deleteCard($event,item.id)" src="../../../../assets/images/delete-icon.svg" /></mat-icon>
+                                            </span>
+                                        </mat-radio-button>
+                                    </section>
+                                </div>
+                                <div class="col-lg-4 d-none cards-div">
+                                    <section class="checbox-section cards">
+                                        <mat-radio-button value="1" class="card-mat">
+                                            <span>
+                                                <img class="card-img" src="../../../../assets/images/card-icon.svg" /><mat-icon (click)="deleteCard()" class="mat-icon delete-icon">delete</mat-icon>
+                                                <!-- <img class="card-img" src="../../../../assets/images/card-icon.svg" /><mat-icon class="mat-icon"><img src="../../../../assets/images/delete-icon.svg" /></mat-icon> -->
+                                            </span>
+                                        </mat-radio-button>
+                                    </section>
+                                </div>
+                                <div class="col-lg-4 d-none cards-div">
+                                    <section class="checbox-section cards">
+                                        <mat-radio-button value="3" class="card-mat">
+                                            <span>
+                                                <img class="card-img" src="../../../../assets/images/card-icon.svg" /><mat-icon class="mat-icon"><img src="../../../../assets/images/delete-icon.svg" /></mat-icon>
+                                            </span>
+                                        </mat-radio-button>
+                                    </section>
+                                </div>
+                            </div>
+                       
+                        </mat-radio-group>
+                        <!-- <div class="col-lg-4">
+                                <section class="checbox-section cards">
+                                    <mat-checkbox class="example-margin">
+                                        <span><img src="../../../../assets/images/cards.svg" /></span>
+                                    </mat-checkbox>
+                                </section>
+                            </div> -->
+
+                        <div class="justify-center mt-4">
+                            <button class="theme-btn white-btn mr-2 back-red" type="button" routerLink="/client/shipments">Cancel</button>
+                            <button class="theme-btn red ml-2" (click)="pay()" type="button">Confirm & Pay</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="cardList && cardList.length == 0" >
+        <div class="col-lg-12 mt-2">
+            <div class="white-form-card1">
+                <div class="row">
+                    <div class="header-shippment">
+                        <div class="card-tag float-left">
+                            <p class="scondry-color">Please Select Card</p>
+                        </div>
+                        <div class="add-card float-right">
+                            <button class="btn btn-addnewcard" (click)="goToAddCard()">+ Add New Card</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-md-center">
+                    <div class="mt-2 pt-5 pt-70 slect-card-img">
+                        <img src="../../../../assets/images/website-development.svg" />
+                    </div>
+                </div>
+
+                <div class="footer-text justify-content-md-center pt-5 mb-2">
+                    <p class="text-center">No card added yet</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

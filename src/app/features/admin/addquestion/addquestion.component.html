@@ -1,0 +1,28 @@
+<div class="row">
+    <div class="col-lg-12 justify-between-md-center pt-3">
+        <div class="invit-div">
+        <p class="font-500 text-center">{{this.dialogData?.questionData?'Edit':'Add'}} Question </p>
+   
+    </div>
+    
+    </div>
+</div>
+
+<div class="row ">
+    <div class="col-lg-12 col-xl-12" [formGroup]="faqForm">        
+        <form-field [errorControl]="faqForm.get('question')" name="question">
+            <input type="text" formControlName="question" class="form-control forgot-pass" 
+                 placeholder="Question" />
+        </form-field>
+        <form-field [errorControl]="faqForm.get('answer')" name="answer" class="text-field">                  
+            <textarea formControlName="answer" class="form-control textarea" placeholder="Type Answer " rows="3"></textarea>
+          </form-field>
+    </div>
+      
+</div>
+<div class="row justify-center ">
+    <div class="justify-center my-3">
+        <button type="button" class="theme-btn white-btn mr-2 back-red" (click)="this.dialogRef.close(false)">Cancel</button>
+        <button type="button" class="theme-btn red ml-2" (click)="addEditQuestion()">{{this.dialogData?.questionData?'Update':'Add'}} </button>
+    </div>
+</div>

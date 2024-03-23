@@ -1,0 +1,195 @@
+<!-- <p>dashboard works!</p> -->
+<app-admin-header [pageName]="'Margin & Discount'"></app-admin-header>
+<div class="content">
+  <div class="inner-dashbaord pt-3">
+    <div class="shippment-form-card">
+      <div class="row">
+        <div class="col-lg-6 col-xl-3 pr-2 pl-2 padding-l">
+          <div>
+            <!-- <img src="../../../../assets/images/search.svg" class="searching-icon" />
+                        <form-field>
+                            <input type="text"  placeholder="Searching..." class="form-control font-family" />
+                        </form-field> -->
+            <form-field>
+              <input
+                type="text"
+                [(ngModel)]="search"
+                (keyup)="searchCustomer($event)"
+                placeholder="Search..."
+                class="form-control font-family"
+              />
+              <img
+                *ngIf="!search"
+                src="../../../../assets/images/search.svg"
+                class="form-append"
+              />
+              <img
+                *ngIf="search"
+                (click)="search = ''; getCustomerList()"
+                src="../../../../assets/images/close-icon.svg"
+                class="form-append"
+              />
+            </form-field>
+          </div>
+        </div>
+        <div class="col-lg-6 col-xl-2 pr-2 pl-2 padding-l">
+          <div>
+            <img
+              src="../../../../assets/images/fillter-date.svg"
+              class="filter-icon"
+            />
+            <div class="Filter-status">
+              <form-field>
+                <mat-select
+                  [(ngModel)]="position"
+                  (selectionChange)="getCustomerList()"
+                  class="form-control filter-status1"
+                  placeholder="Filter by Group"
+                >
+                  <mat-option value="pro">Pro</mat-option>
+                  <mat-option value="vip">Vip</mat-option>
+                </mat-select>
+              </form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="defaul">
+        <div class="row pb-2">
+          <div class="col-lg-6 col-xl-5">
+            <div class="row">
+              <div class="col-lg-10 col-xl-10">
+                <label class="font-14">Default Margin</label>
+                <form-field>
+                  <input
+                    type="text"
+                    [disabled]="true"
+                    class="form-control forgot-pass"
+                    [placeholder]="marginAndDiscountData?.defaultMargin + '%'"
+                  />
+                </form-field>
+              </div>
+              <div class="col-lg-2 col-xl-2">
+                <label class="font-14"></label>
+                <div class="edit-icon">
+                  <img
+                    src="../../../../assets/images/admin/editicon.svg"
+                    (click)="editMargin(marginAndDiscountData)"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-xl-5 offset-xl-2">
+            <div class="row">
+              <div class="col-lg-10 col-xl-10">
+                <label class="font-14">Default Discount</label>
+                <form-field name="confirm password">
+                  <input
+                    type="text"
+                    [disabled]="true"
+                    class="form-control forgot-pass"
+                    [placeholder]="marginAndDiscountData?.defaultDiscount + '%'"
+                  />
+                </form-field>
+              </div>
+              <div class="col-lg-2 col-xl-2">
+                <label class="font-14"></label>
+                <div class="edit-icon">
+                  <img
+                    src="../../../../assets/images/admin/editicon.svg"
+                    (click)="editDiscount(marginAndDiscountData)"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hr">
+          <hr />
+        </div>
+        <div class="row">
+          <div
+            class="col-lg-12 tble-res"
+            *ngIf="customerList && customerList.length > 0 && !isLoading"
+          >
+            <table class="table table-responsive shippment-table">
+              <tr>
+                <th>
+                  Customer ID<i class="short"
+                    ><img
+                      (click)="sortCustomerList()"
+                      src="../../../../assets/images/shorting-icon.svg"
+                  /></i>
+                </th>
+                <th>Customer Name</th>
+                <th>Email</th>
+                <th>City</th>
+                <th>Account Type</th>
+                <th>User Position Tag</th>
+                <th>Margin</th>
+                <th>Discount</th>
+                <th></th>
+              </tr>
+              <tr class="pointer" *ngFor="let item of customerList">
+                <td>{{ item?.UniqueId || "--" }}</td>
+                <td>{{ item?.fullName || "--" }}</td>
+                <td>{{ item?.email || "--" }}</td>
+                <td>{{ item?.currentProfile?.city || "--" }}</td>
+                <td>{{ item?.accountType }}</td>
+                <td>{{ item?.userPositionTag }}</td>
+                <td>{{ item?.userMarginAndDiscount?.defaultMargin + "%" }}</td>
+                <td>
+                  {{ item?.userMarginAndDiscount?.defaultDiscount + "%" }}
+                </td>
+                <!-- <button class="btn" [ngClass]="item?.status=='inactive'? 'in-transit':'in-deliverd' ">{{item?.status}}</button> -->
+                <td>
+                  <img
+                    src="../../../../assets/images/admin/editicon.svg"
+                    (click)="editUserDiscount(item)"
+                  />
+                </td>
+                <!-- <img [matMenuTriggerFor]="menu" src="../../../../assets/images/dots.svg" /> -->
+                <!-- <mat-menu xPosition="before" #menu="matMenu">
+                                <button class="font-10  mat-menu-item">
+                                    Edit
+                                </button>
+                                <button class="font-10  mat-menu-item">Delete</button>
+                            </mat-menu> -->
+                <!-- <td>
+                            <img *ngIf="item?.status!=='deleted'" [matMenuTriggerFor]="menu" src="../../../../assets/images/dots.svg" />
+                            <mat-menu xPosition="before" #menu="matMenu">-->
+                <!-- <button class="font-10  mat-menu-item">Reset Password</button>
+                                <button class="font-10  mat-menu-item">Send Email</button> -->
+                <!-- <button *ngIf="item?.status=='active'" (click)="userAction(item?.id,'inactive')" class="font-10  mat-menu-item">Inactive</button>
+                                <button *ngIf="item?.status=='inactive'" (click)="userAction(item?.id,'active')" class="font-10  mat-menu-item">Active</button>
+                                <button class="font-10  mat-menu-item" (click)="userAction(item?.id,'deleted')">Delete</button>
+                            </mat-menu>
+                        </td> -->
+              </tr>
+            </table>
+          </div>
+          <div
+            class="col-lg-12 noRequest"
+            *ngIf="customerList && customerList.length == 0 && !isLoading"
+          >
+            <span>No User found</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="pagination"
+    *ngIf="customerList && customerList.length > 0 && !isLoading"
+  >
+    <pagination
+      [(pageNo)]="pageNo"
+      [(pageSize)]="pageSize"
+      (page)="getCustomerList()"
+      [totalRecords]="totalRecords || 0"
+    ></pagination>
+  </div>
+</div>

@@ -1,0 +1,105 @@
+<app-admin-header [pageName]="'Sub Admins'"></app-admin-header>
+<!-- <></isLoading> -->
+<div class="d-none" [class.loading]="isLoading">
+    <mat-progress-spinner
+      *ngIf="isLoading"
+      class="loader"
+      [color]="'warn'"
+      [mode]="'indeterminate'"
+      [value]="'30'"
+      stroke="f44336"
+    >
+    </mat-progress-spinner>
+  </div>
+<div class="content">
+    <div class="inner-dashbaord pt-3">
+        <div class="shippment-form-card">
+            <div class="row">
+                <div class="col-lg-6 col-xl-3 pr-2 pl-2 padding-l">
+                    <div>
+                      <form-field>
+                        <input type="text" [(ngModel)]="search" (keyup)="searchCustomer($event)" placeholder="Search..." class="form-control font-family" />
+                        <img *ngIf="!search" src="../../../../assets/images/search.svg" class="form-append" />
+                        <img *ngIf="search" (click)="search = ''; getCustomerList();" src="../../../../assets/images/close-icon.svg" class="form-append" />
+                        </form-field>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-xl-2 pr-2">
+                    <div>
+                        <img *ngIf="!status" src="../../../../assets/images/fillter-date.svg" class="filter-icon" />
+                        <img *ngIf="status" (click)="status = ''; getCustomerList();" src="../../../../assets/images/close-icon.svg" class="filter-icon" />
+                        <div class="Filter-status">
+                            <form-field>
+                                <mat-select [(ngModel)]="status"  (selectionChange)="getCustomers();"   class="form-control filter-status1" placeholder="Filter by Status">
+                                    <mat-option value="active,inactive">All</mat-option>
+                                    <mat-option value="active" >Active</mat-option>
+                                    <mat-option value="inactive">Inactive</mat-option>
+                                </mat-select>
+                            </form-field>
+                        </div>
+                    </div>
+                </div>
+               
+                <div class="col-lg-6 col-xl-3 justify-center pr-2 butn-display ml-auto">
+                    <button class="theme-btn orange ml-1 create-shipment"
+                        routerLink="/admin/newSubAdmin">+ Add SubAdmin</button>
+                </div>
+            </div>
+            <div class="hr">
+                <hr />
+            </div>
+            <div class="row">
+                <div class="col-lg-12 tble-res" *ngIf="customerList && customerList.length>0 && !isLoading">
+                    <table class="table table-responsive shippment-table mb-5">
+                        <tr>
+                            <th>Sub-admin ID<i class="short"><img (click)="sortCustomerList()" src="../../../../assets/images/shorting-icon.svg"></i> </th>
+                            <th>Sub-admin Name </th>
+                            <th>Email </th>
+                            <th>Phone </th>
+                            <th>City </th>
+                            <th>Status </th>
+                            <th></th>
+                        </tr>
+                        <tr class=" pointer" *ngFor="let item of customerList">
+                            <td routerLink="subAdmin-detail/{{item?.id}}">{{item?.UniqueId || "--"}}</td>
+                            <td routerLink="subAdmin-detail//{{item?.id}}">{{item?.fullName || "--"}}</td>
+                            <td routerLink="subAdmin-detail/{{item?.id}}">{{item?.email || '--' }}</td>
+                            <td routerLink="subAdmin-detail/{{item?.id}}">{{item?.phone || '--' }}</td>
+                            <td routerLink="subAdmin-detail/{{item?.id}}" class="lowerText">{{item?.state || "--"}}</td>
+                            <td routerLink="subAdmin-detail/{{item?.id}}"><button class="btn" [ngClass]="item?.status=='inactive'? 'in-transit':'in-deliverd' ">{{item?.status| titlecase}}</button></td>
+                            <td><button *ngIf="item?.status!=='inactive'" (click)="loginToSubAdminAccount(item?.id)" class="btn in-deliverd pointer">Access Account</button>
+                                <button *ngIf="item?.status=='inactive'" class="btn in-transit ">no access</button></td>
+                            <td>
+                                <img *ngIf="item?.status!=='deleted'" [matMenuTriggerFor]="menu" src="../../../../assets/images/dots.svg" />
+                                <mat-menu xPosition="before" #menu="matMenu">
+                                    <!-- <button class="font-10  mat-menu-item">Reset Password</button>
+                                    <button class="font-10  mat-menu-item">Send Email</button> -->
+                                    <button *ngIf="item?.status=='active'" (click)="userAction(item?.id,'inactive')" class="font-10  mat-menu-item">Inactive</button>
+                                    <button *ngIf="item?.status=='inactive'" (click)="userAction(item?.id,'active')" class="font-10  mat-menu-item">Active</button>
+                                    <!-- <button class="font-10  mat-menu-item" (click)="userAction(item?.id,'deleted')">Delete</button>
+                                    <button class="font-10  mat-menu-item" (click)="hardDelete(item?.id)">Permanent Delete</button> -->
+                                
+                                </mat-menu>
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+                <div class="col-lg-12 tble-res" *ngIf="customerList && customerList.length==0 && !isLoading">
+                    <div class="noRequest">No Sub-admin Found</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pagination" *ngIf="customerList && customerList.length>0 && !isLoading">
+      <pagination
+        [(pageNo)]="pageNo"
+        [(pageSize)]="pageSize"
+        (page)="getCustomerList()"
+        [totalRecords]="totalRecords || 0"
+      ></pagination>
+  </div>
+</div>
+
+

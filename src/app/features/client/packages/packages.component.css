@@ -1,0 +1,13 @@
+.addresNot{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh;
+}
+
+@media (max-width:767px){
+    .custom-padding{
+        padding-left: 0.5rem !important;
+        padding-right: 0.5rem !important;
+    }
+}

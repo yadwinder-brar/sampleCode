@@ -1,0 +1,80 @@
+<app-sub-admin-header *ngIf="!isLoading" [pageName]="'Dashboard'"></app-sub-admin-header>
+<div class="d-none"  [class.loading]="isLoading">
+    <mat-progress-spinner *ngIf="isLoading" class="loader" [color]="'warn'" [mode]="'indeterminate'" [value]="'30'"
+        stroke="f44336">
+    </mat-progress-spinner>
+  </div>
+<div class="inner-dashbaord" *ngIf="!isLoading">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="create-admin-dash cusrsor">
+                <div class="shipment-admin">
+                    <div class="imge-icon"><img src="../../../../assets/images/admin/shipping-fast.svg"></div>
+                    <div class="text-right-admin">
+                        <span>{{dashboardStatus?.customerCount}}+</span>
+                        <span class="font-12">Total Customer</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="pervious-admin-dash cusrsor">
+                <div class="shipment-admin">
+                    <div class="imge-icon"><img src="../../../../assets/images/admin/mailbox-.svg"></div>
+                    <div class="text-right-admin">
+                        <span>{{dashboardStatus?.mailboxRequestCount}}+</span>
+                        <span class="font-12">Mailbox Request</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 ">
+            <div class="draft-admin-dash cusrsor">
+                <div class="shipment-admin">
+                    <div class="imge-icon"><img src="../../../../assets/images/admin/after-draft-click.svg"></div>
+                    <div class="text-right-admin">
+                        <span>${{dashboardStatus?.totalRevenue}}</span>
+                        <span class="font-12">Revenue</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="graph-dashboard box-shadow mt-4">
+        <span class="font-14 font-500">Mail Box</span>
+        <div class="col-lg-12  graph-t">
+            <div class="card saving white-form-card">
+                <div class="chart-wrapper">
+                    <div class="d-flex dateFilter">
+                        <div class="countText"><span>Mailbox Accounts</span></div>
+                        <div class="d-flex">
+                            <span>
+                                <div class="countStartDate">
+                                    <div class="filter-date dashadmin ">
+                                        <input type="text" [value]="year" (click)="Year.open()" [(ngModel)]="year"
+                                            (dateChange)="getDashboardshipingAndMailboxcount()" [matDatepicker]="Year"
+                                            class="form-control" [placeholder]="year||'Year'" />
+                                        <img src="../../../../assets/images/calender.svg" (click)="Year.open()"
+                                            class="form-append mr-2" />
+                                        <!-- <img *ngIf="year" (click)="year = ''; getMailboxlineChartData(); " src="../../../../assets/images/close-icon.svg" class="form-append mr-2" /> -->
+                                        <mat-datepicker (yearSelected)="chosenYearHandler($event, Year)"
+                                            startView="multi-year" #Year></mat-datepicker>
+                                    </div>
+                                    <!--  -->
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- *ngIf="!isLineChartLoading && this.lineChartData && this.lineChartData[0]?.data.length >0" -->
+                    <canvas baseChart
+                        *ngIf="!isLineChartLoading"
+                        [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
+                        [legend]="lineChartLegend" [type]="lineChartType" [plugins]="lineChartPlugins">
+                    </canvas>
+                </div>
+                <!-- <img src="../../../../../assets/images/mailbox-chart.png" /> -->
+            </div>
+
+        </div>
+    </div>
+</div>

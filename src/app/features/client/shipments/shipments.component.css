@@ -1,0 +1,14 @@
+mat-icon.mat-icon.notranslate.clearfilter.material-icons.mat-icon-no-color {
+    left: 40px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin-top: 18px;
+}
+.Filter-status {
+    display: flex;
+    justify-content: center;
+}
+button.theme-btn.red.my-1.btn-width.create-shipment {
+    max-width: 100px;
+}

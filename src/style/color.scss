@@ -1,0 +1,21 @@
+$l-black: rgba(0, 0, 0, 0.7);
+$black-ld: rgba(0, 0, 0, 0.8);
+$red: #D0333A;
+$grey: rgba(190, 190, 190, 1);
+$dark-red:rgba(208, 51, 58, 1);
+
+.dark-red{
+  color: $dark-red;
+}
+.grey{
+  color: $grey;
+}
+.l-black {
+  color: $l-black;
+}
+.black-ld {
+  color: $black-ld;
+}
+.red{
+  color: $red;
+}

@@ -1,0 +1,323 @@
+<app-client-dashboard-header
+  [pageName]="'Shipments'"
+></app-client-dashboard-header>
+<div class="content">
+  <div class="inner-dashbaord pt-3">
+    <div class="shippment-form-card">
+      <div class="row">
+        <div class="col-lg-6  col-xl-3 pr-2 pl-2 padding-l mobile-serach">
+          <div>
+            <form-field>
+              <input
+              type="text"
+              [(ngModel)]="search"
+              (keyup)="searchShipment($event)"
+              placeholder="Search by Service Type"
+              class="form-control font-family"
+              />
+              <img *ngIf="!search"
+                src="../../../../assets/images/search.svg"
+                class="form-append searching-icon custom-height"
+              />
+              <img *ngIf="search" (click)="search = ''; getShipments();" src="../../../../assets/images/close-icon.svg" class="form-append" />
+            </form-field>
+          </div>
+        </div>
+        <div class="col-lg-6 col-xl-2 pr-2 cursor " *ngIf="accountType =='shipment'">
+          <div>
+            <img *ngIf="!shipmentDate"
+              src="../../../../assets/images/fillter-date.svg"
+              class="filter-icon custom-height"
+            />
+            <img *ngIf="shipmentDate" (click)="shipmentDate = ''; getShipments();" src="../../../../assets/images/close-icon.svg" class="filter-icon" />
+            <div class="filter-date">
+              <input
+                type="text"
+                [(ngModel)]="shipmentDate"
+                (click)="startDate.open()"
+                (dateChange)="getShipments()"
+                readonly
+                placeholder="Filter by Date"
+                [matDatepicker]="startDate"
+                class="form-control"
+              />
+              <img
+                class="form-append mr-2"
+                (click)="startDate.open()"
+                src="../../../../assets/images/arrow-down.svg"
+                alt=""
+              />
+              <mat-datepicker #startDate></mat-datepicker>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-xl-2 pr-2" *ngIf="accountType =='shipment'">
+          <div>
+            <img *ngIf="!shipmentStatus"
+              src="../../../../assets/images/fillter-date.svg"
+              class="filter-icon custom-height"
+            />
+            <img *ngIf="shipmentStatus" (click)="shipmentStatus = ''; getShipments();" src="../../../../assets/images/close-icon.svg" class="filter-icon" />
+            <div class="Filter-status">
+              <form-field class="box-set">
+                <mat-select
+                  [(ngModel)]="shipmentStatus"
+                  (selectionChange)="getShipments()"
+                  class="form-control filter-status1"
+                  placeholder="Filter by Status"
+                >
+                  <mat-option value="inTransit">In Transit</mat-option>
+                  <mat-option value="deleted">Cancelled</mat-option>
+                  <mat-option value="drafted">In Draft </mat-option>
+                  <!-- <mat-option value="deleted" >Deleted</mat-option>
+                                  <mat-option value="delivered" >Delivered</mat-option>
+                                  <mat-option value="active" >Active</mat-option> -->
+                </mat-select>
+              </form-field>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-xl-2 pr-2">
+          <div class="Filter-status ">
+            <img src="../../../../assets/images/fillter-date.svg" class="filter-icon" />
+            <form-field class="box-set">
+              <mat-select (selectionChange)=" search = '';viewInvoice($event)" [(ngModel)]="accountType" class="form-control filter-status1" placeholder="Invoice Type">
+                <mat-option value="shipment">Shipment</mat-option>
+                <mat-option value="bulkShipment">Bulk Shipments</mat-option>
+                <!-- <mat-option>Pond</mat-option> -->
+            </mat-select>
+            </form-field>
+        </div>
+        </div>
+        <div class="col-lg-6 col-xl-3 justify-center pr-2 butn-display" [ngClass]="accountType =='shipment'?'':'offset-xl-4'">
+          <button *ngIf="this.accountType !='shipment'"
+            class="theme-btn white-btn mr-2 back-red bulk-shipment" (click)="selectFile.selectFile()"
+            >
+            <!-- routerLink="/client/upload-document" -->
+            Bulk Shipments
+          </button>
+          <file-uploader
+              #fileUploader="FileUploader"
+              [path]="'shipments/import'"
+            ></file-uploader>
+            <app-uploader-ui
+              #selectFile
+              [fileUploader]="fileUploader"
+              (afterUploadFile)="selectFiles($event)"
+            ></app-uploader-ui>
+          <button *ngIf="this.accountType =='shipment'"
+            class="theme-btn orange ml-1 create-shipment"
+            routerLink="/client/add-shipment/sender-address"
+          >
+            Create Shipment
+          </button>
+        </div>
+      </div>
+      <div class="hr"><hr /></div>
+      <div class="row" *ngIf="accountType =='shipment'">
+        <div class="col-lg-12 tble-res" *ngIf="shipmentData && shipmentData.length>0">
+          <table
+            class="table table-responsive shippment-table table-bordered "
+          >
+            <tr>
+              <th>
+                Service Type
+                <i class="short"
+                  ><img (click)="sortShipments()" src="../../../../assets/images/shorting-icon.svg"
+                /></i>
+
+              </th>
+              <th>
+                Tracking No.
+                <!-- <i class="short"
+                  ><img src="../../../../assets/images/shorting-icon.svg"
+                /></i> -->
+              </th>
+              <th>
+                Price Quote
+                <!-- <i class="short"
+                  ><img src="../../../../assets/images/shorting-icon.svg"
+                /></i> -->
+              </th>
+              <th>
+                Label Creation
+                   <!-- <i class="short"
+                  ><img src="../../../../assets/images/shorting-icon.svg"
+                /></i> -->
+              </th>
+              <th>
+                Estimated Arrival
+                <!-- <i class="short"
+                  ><img src="../../../../assets/images/shorting-icon.svg"
+                /></i> -->
+              </th>
+              <th>
+                Status
+                <!-- <i class="short"
+                  ><img src="../../../../assets/images/shorting-icon.svg"
+                /></i> -->
+              </th>
+              <th></th>
+            </tr>
+            <tr *ngFor="let item of shipmentData" class="pointer">
+              <td class="fixWidth" (click)="ViewShipment(item);">
+                {{ item?.selectedService?.serviceType }}
+              </td>
+              <td (click)="ViewShipment(item);">
+                {{item?.trackingNumber || '--'}}
+              </td>
+              <td (click)="ViewShipment(item);">
+                {{
+                  item?.serviceQuote? "$"+item?.serviceQuote[1]?.value:'--' 
+                }}
+              </td>
+              <td (click)="ViewShipment(item);">
+                {{(item?.labelCreationDate | date:'MM-dd-YYYY') || '--'}}
+              </td>
+              <td (click)="ViewShipment(item);">
+                {{ item?.selectedService?.day | date :'MM-dd-YYYY'}}
+              </td>
+              <td (click)="ViewShipment(item);">
+                <button class="btn in-transit"  [matTooltip]="item?.trackingStatus?.DEFINATION"
+                matTooltipPosition="right">
+                  {{ item?.trackingStatus?.CODE}}
+                </button>
+              </td>
+              <td *ngIf="item?.status == 'drafted'">
+                <img
+                  [matMenuTriggerFor]="menu" *ngIf="item?.status == 'drafted' || item?.status == 'delivered'"
+                  src="../../../../assets/images/dots.svg"
+                />
+                <mat-menu xPosition="before" #menu>
+                  <button class="font-10 mat-menu-item" (click)="ViewShipment(item)" *ngIf="item?.status == 'drafted'">Edit</button>
+                  <button class="font-10 mat-menu-item" (click)="deleteShipment(item?.id)" *ngIf="item?.status == 'drafted' || item?.status == 'delivered'" >Delete</button>
+                </mat-menu>
+              </td>
+              <td *ngIf="item?.status != 'drafted' && item?.trackingStatus?.CODE!='CA'">
+                <img [matMenuTriggerFor]="menu" src="../../../../assets/images/dots.svg" />
+                <mat-menu xPosition="before" #menu="matMenu">
+                    <button (click)="cancelShipment(item?.id);" class="font-10  mat-menu-item">Cancel</button>
+                </mat-menu>
+            </td>
+            </tr>
+          </table>
+
+        </div>
+
+        <div class="col-lg-12 shipmentNot" *ngIf="shipmentData && shipmentData.length==0 && !isloading">
+          <span> No shipment found</span>
+        </div>
+      </div>
+      <div class="row" *ngIf="accountType !='shipment'">
+        <div class="col-lg-12 tble-res" *ngIf="bulkShipmentData && bulkShipmentData.length>0 && !isloading">
+          <table
+            class="table table-responsive shippment-table table-bordered "
+          >
+            <tr>
+              <th>
+                Customer Name
+              </th>
+              <th>
+                Service Type
+                <!-- <i class="short"
+                  ><img (click)="sortShipments()" src="../../../../assets/images/shorting-icon.svg"
+                /></i> -->
+
+              </th>
+             
+              <th>
+                Tracking No.
+                <!-- <i class="short"
+                  ><img src="../../../../assets/images/shorting-icon.svg"
+                /></i> -->
+              </th>
+              <th>
+                Price Quote
+                <!-- <i class="short"
+                  ><img src="../../../../assets/images/shorting-icon.svg"
+                /></i> -->
+              </th>
+              <th>
+                Label Creation
+                   <!-- <i class="short"
+                  ><img src="../../../../assets/images/shorting-icon.svg"
+                /></i> -->
+              </th>
+              <th>
+                Status
+                <!-- <i class="short"
+                  ><img src="../../../../assets/images/shorting-icon.svg"
+                /></i> -->
+              </th>
+              <th></th>
+            </tr>
+            <tr *ngFor="let item of bulkShipmentData" class="pointer">
+              <td >
+                {{item?.CustomerName || '--'}}
+              </td>
+              <td class="fixWidth">
+                {{ item?.ServiceType || '--'}}
+              </td>
+              
+              <td >
+                {{item?.TrackingNo || '--'}}
+              </td>
+              <td>
+                {{
+                  item?.DeliveryCharge? "$"+item?.DeliveryCharge:'--' 
+                }}
+              </td>
+              <td>
+                {{(item?.LabelCreation | date:'MM-dd-YYYY') || '--'}}
+              </td>
+              <td> {{item?.Status || '--'}}
+                <!-- <button class="btn in-transit"  [matTooltip]="item?.trackingStatus?.DEFINATION"
+                matTooltipPosition="right">
+                  {{ item?.trackingStatus?.CODE || 'Completed'}}
+                </button> -->
+              </td>
+              <!-- <td *ngIf="item?.status == 'drafted'">
+                <img
+                  [matMenuTriggerFor]="menu" *ngIf="item?.status == 'drafted' || item?.status == 'delivered'"
+                  src="../../../../assets/images/dots.svg"
+                />
+                <mat-menu xPosition="before" #menu>
+                  <button class="font-10 mat-menu-item" (click)="ViewShipment(item)" *ngIf="item?.status == 'drafted'">Edit</button>
+                  <button class="font-10 mat-menu-item" (click)="deleteShipment(item?.id)" *ngIf="item?.status == 'drafted' || item?.status == 'delivered'" >Delete</button>
+                </mat-menu>
+              </td>-->
+              <td>
+                <img [matMenuTriggerFor]="menu" src="../../../../assets/images/dots.svg" />
+                <mat-menu xPosition="before" #menu="matMenu">
+                    <button (click)="deleteBulkShipment(item?.id);" class="font-10  mat-menu-item">Delete</button>
+                </mat-menu>
+            </td> 
+            </tr>
+          </table>
+
+        </div>
+
+        <div class="col-lg-12 shipmentNot" *ngIf="bulkShipmentData && bulkShipmentData.length==0 && !isloading">
+          <span> No shipment found</span>
+        </div>
+      </div>
+
+  </div>
+
+</div>
+<div class="pagination" *ngIf="accountType =='shipment'">
+  <pagination *ngIf="shipmentData && shipmentData.length>0"
+    [(pageNo)]="pageNo"
+    [(pageSize)]="pageSize"
+    (page)="getShipments()"
+    [totalRecords]="totalRecords || 0"
+  ></pagination>
+</div>
+<div class="pagination" *ngIf="accountType !='shipment'">
+  <pagination *ngIf="bulkShipmentData && bulkShipmentData.length>0"
+    [(pageNo)]="pageNo"
+    [(pageSize)]="pageSize"
+    (page)="getBulkShipments()"
+    [totalRecords]="totalRecords || 0"
+  ></pagination>
+</div>

@@ -1,0 +1,133 @@
+<!-- <p>dashboard works!</p> -->
+<app-client-dashboard-header [pageName]="'Invoices'"></app-client-dashboard-header>
+<div class="d-none" [class.loading]="isloading">
+    <mat-progress-spinner
+      *ngIf="isloading"
+      class="loader"
+      [color]="'warn'"
+      [mode]="'indeterminate'"
+      [value]="'30'"
+      stroke="f44336"
+    >
+    </mat-progress-spinner>
+  </div>
+<div class="content">
+    <div class="inner-dashbaord  pt-3">
+        <div class="shippment-form-card">
+            <div class="row">
+                <div class="col-lg-6  col-xl-3 pr-2 pl-2 padding-l mobile-serach">
+                    <div>
+                        <!-- <img src="../../../../assets/images/search.svg" class="searching-icon" /> -->
+                        <form-field>
+                            <input [(ngModel)]="search"
+                            (keyup)="searchInvoice($event)" type="text" placeholder="Searching..." class="form-control font-family" />
+                            <img *ngIf="!search"
+                src="../../../../assets/images/search.svg"
+                class="form-append searching-icon custom-height"
+              />
+              <img *ngIf="search" (click)="search = ''; getInvoiceList();" src="../../../../assets/images/close-icon.svg" class="form-append" />
+                        </form-field>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-xl-2 col-md-12 col-sm-12 pr-2 cursor">
+                    <div class="">
+                        <img *ngIf="!date" src="../../../../assets/images/fillter-date.svg" class="filter-icon custom-height" />
+                        <img *ngIf="date" (click)="date = ''; getInvoiceList();" src="../../../../assets/images/close-icon.svg" class="filter-icon" />
+
+                        <div class="filter-date mr-right">
+                            <input type="text" [(ngModel)]="date" (dateChange)="getInvoiceList()" (click)="startDate.open()" readonly placeholder="Filter by Date"
+                                [matDatepicker]="startDate" class="form-control" />
+                            <img class="form-append mr-2 icon-left" (click)="startDate.open()"
+                                src="../../../../assets/images/arrow-down.svg" alt="" />
+                            <mat-datepicker #startDate></mat-datepicker>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-xl-2 col-md-12 col-sm-12 pr-2 cursor">
+                    <div class="d-none">
+                        <img src="../../../../assets/images/fillter-date.svg" class="filter-icon" />
+                        <div class="Filter-status">
+                            <form-field>
+                                <mat-select class="form-control filter-status1" placeholder="All">
+                                    <mat-option value="1">Showing All</mat-option>
+                                    <mat-option value="2" >International</mat-option>
+                                </mat-select>
+                            </form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xl-2  offset-xl-3 pr-2 tab-e ">
+                    <mat-tab-group class="tab-unpaid" [(selectedIndex)]="paidStatus" (selectedTabChange)="onTabChanged($event);">
+                        <mat-tab label="Paid"> </mat-tab>
+                        <!-- <mat-tab matBadge="3" matBadgeOverlap="false" label="Unpaid"></mat-tab> -->
+                        <mat-tab>
+                            <ng-template mat-tab-label>
+                              <span [matBadge]="count" matBadgeColor="warn" matBadgeOverlap="false">Unpaid</span>
+                            </ng-template>
+                          </mat-tab>
+                    </mat-tab-group>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12 tble-res" *ngIf="InvoiceList && InvoiceList.length>0">
+                    <table class="table table-responsive address-table packages-table ">
+                        <tr>
+                            <th>Invoice #
+                                <!-- <i class="short"><img src="../../../../assets/images/shorting-icon.svg"></i> -->
+                            </th>
+                            <th>Tracking No.</th>
+                            <th>Invoice Date <i class="short"><img (click)="sortInvoices();" src="../../../../assets/images/shorting-icon.svg"></i></th>
+                            <th>Total Amount
+                                <!-- <i class="short"><img src="../../../../assets/images/shorting-icon.svg"></i> -->
+                            </th>
+                            <th>Status
+                                <!-- <i class="short"><img src="../../../../assets/images/shorting-icon.svg"></i> -->
+                            </th>
+                            <!-- <th *ngIf="paidStatus == '0'">Due Date <i class="short"><img src="../../../../assets/images/shorting-icon.svg"></i></th> -->
+                            <th>{{this.status == 'unpaid'?'Reason':''}}</th>
+                            <th></th>
+                        </tr>
+                        <tr class="" *ngFor="let item of InvoiceList; let i =index">
+                            <td>{{item?.invoiceId || '--'}}</td>
+                            <td>{{item?.shipmentTrackingNumber || '--'}}</td>
+                            <td>{{(item?.createdAt | date:'MM-dd-YYYY') || '--'}}</td>
+                            <td >{{ item?.amount?  '$' +" " +(item?.amount) :'--'}}</td>
+                            <td>{{item?.paymentStatus || '--'}}</td>
+                            <!-- <td *ngIf="paidStatus == '0'" >02/02/2021</td> -->
+                            <td >
+                                <span *ngIf="this.status == 'unpaid'"  [matTooltip]="item?.reason || '--'"
+                                matTooltipPosition="left"
+                               class=""><img src="../../../../assets/images/file-pakages.svg"></span>
+
+                            </td>
+                            <td>
+                                <span *ngIf="item?.paymentStatus == 'paid'" class="icons-innovices" (click)="dowanloadInvoice(item?.id)">
+                                    <img src="../../../../assets/images/download-invoices.svg">
+                                </span>
+                                <span *ngIf="item?.paymentStatus != 'paid'" class="icons-innovices" (click)="Pay(item?.id)">
+                                    <button class="theme-btn red Pay">Pay</button>
+                                </span>
+
+                            </td>
+                            <td></td>
+                        </tr>
+                    </table>
+
+                </div>
+                <div class="col-lg-12 noRequest" *ngIf="InvoiceList && InvoiceList.length==0 && !isloading">
+                    <span> No Invoice found</span>
+                  </div>
+            </div>
+        </div>
+    </div>
+    <div class="pagination" *ngIf="InvoiceList && InvoiceList.length >0 && !isloading">
+      <pagination
+        [(pageNo)]="pageNo"
+        [(pageSize)]="pageSize"
+        (page)="getInvoiceList()"
+        [totalRecords]="totalRecords || 0"
+      ></pagination>
+    </div>
+</div>

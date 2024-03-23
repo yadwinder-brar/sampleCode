@@ -1,0 +1,35 @@
+<div class="row">
+  <div class="col-lg-12 justify-between-md-center pt-3">
+      <div class="invit-div">
+          <p class="font-500 text-center">{{this.data?.planData?'Edit':'Add'}}  Top Up Plan </p>
+      </div>
+  </div>
+</div>
+<div class="row justify-center">
+  <div class="col-lg-9 col-xl-9 justify-between-md-center">
+      <label class="font-14">Name</label>
+      <form-field [errorControl]="name" name="name">
+          <input type="text" [formControl]="name" maxlength="15" class="form-control forgot-pass"
+              placeholder="Top Up Name" />
+      </form-field>
+  </div>
+  <div class="col-lg-9 col-xl-9 justify-between-md-center">
+      <label class="font-14">Price</label>
+      <form-field [errorControl]="price" name="price">
+          <input type="text" NumberInput [formControl]="price" maxlength="2" class="form-control forgot-pass"
+              placeholder="Top Up Price" />
+      </form-field>
+  </div>
+  <div class="col-lg-9 col-xl-9 justify-between-md-center">
+      <label class="font-14">Scan Count</label>
+      <form-field [errorControl]="scanCount" name="Scan Count">
+          <input type="text" NumberInput maxlength="2" class="form-control forgot-pass" [formControl]="scanCount"
+              placeholder="Scan Count" />
+      </form-field>
+  </div>
+  <div class="justify-center my-3">
+      <button type="button" class="theme-btn white-btn mr-2 back-red" (click)="this.dialogRef.close(false)">Cancel</button>
+      <button type="button" [disabled]="isLoading" class="theme-btn red ml-2" (click)="updateTopUP()"> Save</button>
+  </div>
+
+</div>

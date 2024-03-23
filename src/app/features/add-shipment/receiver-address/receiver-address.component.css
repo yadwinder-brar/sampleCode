@@ -1,0 +1,4 @@
+.info-page > .mat-progress-bar {
+    height: 10px !important;
+    border-radius: 12px !important;
+}

@@ -1,0 +1,27 @@
+
+/* .checkbox-section.virtual-section > .mat-checkbox-background, .mat-checkbox-frame {
+  border-radius: 70%!important;
+  border: 1px solid #575858 !important;
+} */
+
+
+@media (max-width:768px) {
+  .header-post-mail img {
+    width: 120px;
+    padding-left: 10px;
+  }
+}
+
+@media (max-width:768px) {
+  .contactBtn {
+    top: 42px;
+    right: 16px;
+  }
+}
+
+@media (min-width:769px) and (max-width:885px) {
+  .contactBtn {
+    top: 42px;
+    right: 16px;
+  }
+}

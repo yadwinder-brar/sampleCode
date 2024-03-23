@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
+  <g id="ic_sidemenu" transform="translate(-227 -41)">
+    <g id="Rectangle_2217" data-name="Rectangle 2217" transform="translate(227 41)" fill="#d0333a" stroke="#fefefe" stroke-width="1">
+      <rect width="30" height="30" rx="10" stroke="none"/>
+      <rect x="0.5" y="0.5" width="29" height="29" rx="9.5" fill="none"/>
+    </g>
+    <path id="compose" d="M4.624,14.647a.44.44,0,0,1-.44-.506l.308-2.051a.44.44,0,0,1,.123-.246l7.1-7.109a1.686,1.686,0,0,1,2.381,2.381L7,14.211a.44.44,0,0,1-.246.123l-2.064.3ZM6.688,13.9ZM5.341,12.349l-.2,1.32,1.32-.2,7.007-6.977a.806.806,0,1,0-1.14-1.14Z" transform="translate(232.646 46.528)" fill="#fff" style="mix-blend-mode: luminosity;isolation: isolate"/>
+  </g>
+</svg>

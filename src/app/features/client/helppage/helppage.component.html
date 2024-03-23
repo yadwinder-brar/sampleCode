@@ -1,0 +1,43 @@
+<!-- <p>dashboard works!</p> -->
+<app-client-dashboard-header [pageName]="'Help'"></app-client-dashboard-header>
+
+<div class="content">
+  <div class="inner-dashbaord  pt-3">
+    <div class="shippment-form-card">
+      <div class="row">
+        <div class="col-lg-4 col-xl-3 help-search">
+          <div>
+            <img *ngIf="!search" src="../../../../assets/images/search.svg" class="searching-icon1 custom-height" />
+              <form-field>
+                <input type="text" [(ngModel)]="search" type="text" (keyup)="searchFaq();" placeholder="How can we help you?" class="form-control font-family" />
+                <img class="form-append" *ngIf="search" (click)="search = '';getFaqList();" src="../../../../assets/images/close-icon.svg" />
+              </form-field>
+          </div>
+        </div>
+      </div>
+      <div class="help-list col-lg-9" *ngIf="faqList && faqList.length>0 && !isLoading">
+        <mat-accordion>
+          <mat-expansion-panel hideToggle expanded="{{i==0}}" *ngFor="let data of faqList; index as i">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <span class="color-tab">{{i+1}}</span> {{data?.question}}?
+              </mat-panel-title>
+
+            </mat-expansion-panel-header>
+            <p>{{data?.answer}}</p>
+          </mat-expansion-panel>
+        </mat-accordion>
+
+      </div>
+      <div class="noRequest" *ngIf="faqList && faqList.length==0 && !isLoading" >
+        No FAQ Found
+      </div>
+    </div>
+  </div>
+  <!-- <pagination  *ngIf="faqList && faqList.length>0 && !isLoading"
+    [(pageNo)]="pageNo"
+    [(pageSize)]="pageSize"
+  (page)="getFaqList()"
+  [totalRecords]="totalRecords || 0"
+></pagination> -->
+</div>

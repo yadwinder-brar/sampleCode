@@ -1,0 +1,92 @@
+<div class="superAdminBar" *ngIf="superAdmin">
+  <p class="ml-3 fw-5 mt-3 textMain"><span class="iconImage"><img class="accessIcon" src="../../../../assets/images/access-control.png"></span><span class="loginText">Logged in as <span class="fw-6">{{userData?.fullName | titlecase}}</span></span></p>
+  <!-- <p class="">ACCESS ACCOUNT</p> -->
+  <button (click)="backToSuperAdmin()" class="mr-4 theme-btn white create-shipment">Exit Access</button></div>
+<mat-drawer-container>
+  <mat-drawer #drawer opened mode="side">
+    <div class="side-container">
+      <div
+        class="pointer fw-6 font-18 logo1 justify-between align-center"
+        [ngClass]="isSmallNav ? 'logs' : ''"
+        routerLink="/admin/dashboard"
+      >
+        <img src="../../../../assets/images/newLogo4.png" *ngIf="!isSmallNav" />
+        <img
+          width="40px"
+          src="../../../../assets/images/logo-small.png"
+          *ngIf="isSmallNav"
+        />
+      </div>
+      <section>
+        <div id="dashboad-ul1" class="sidebar">
+          <ul class="nav-links">
+            <li *ngFor="let item of tabs" #itemEl routerLinkActive="active">
+              <div
+                *ngIf="item.sub.length == 0"
+                [routerLink]="item?.navigation"
+                class="dropdown-title"
+              >
+                <div class="">
+                  <img class="navicon" src="{{ item.grayImg }}" />
+                  <img class="navicon-active" src="{{ item.activeImg }}" />
+                </div>
+                <div class="nav-item pl-2 ml-1">
+                  {{ item.title }}
+                </div>
+              </div>
+              <div
+                *ngIf="item.sub.length > 0"
+                class="dropdown-title nopadding"
+                (click)="showSubmenu(itemEl)"
+              >
+                <a>
+                  <div class="">
+                    <img class="navicon" src="{{ item.grayImg }}" />
+                    <img class="navicon-active" src="{{ item.activeImg }}" />
+                  </div>
+                  <div class="nav-item pl-2 ml-1">
+                    {{ item.title }}
+                  </div>
+                </a>
+                <i class="bx bxs-chevron-down arrow"
+                  ><img src="../../../assets/images/icon-down.svg"
+                /></i>
+              </div>
+
+              <ul
+                class="sub-menu innersubmnu"
+                [class.blank]="item.sub.length == 0"
+              >
+                <li
+                  class="padding-b active1"
+                  *ngFor="let item_sub of item.sub"
+                  routerLinkActive="active"
+                >
+                  <img [src]="item_sub?.activeImg" />
+                  <a [routerLink]="[item_sub?.navigation]">{{
+                    item_sub.title
+                  }}</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <div class="bg-img">
+            <img src="../../../../assets/images/ship-dashboard.png" />
+          </div>
+
+          <footer class="footer-bottom">
+            <p>
+              <span><img src="../../../../assets/images/arrow-left.png" /></span
+              >Copyright {{ copyRightYear | date : "YYYY" }} Shipdistrict
+            </p>
+          </footer>
+        </div>
+      </section>
+    </div>
+  </mat-drawer>
+  <mat-drawer-content [ngClass]="isSmallNav ? 'md-width' : ''">
+    <div class="main">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>

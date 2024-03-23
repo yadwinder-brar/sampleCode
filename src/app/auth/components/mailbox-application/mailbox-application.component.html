@@ -1,0 +1,58 @@
+<section class="py-3">
+  <div class="row justify-between">
+    <div class="col-lg-2 pl-2">
+      <img
+      class="img-logo1"
+        src="../../../../assets/images/newLogo4.png"
+        alt=""
+      />
+    </div>
+
+    <div class="col-lg-6 padd-side mt-5">
+      <div class="text-center font-40 fw-6">
+        <span class="getStarted"></span> User Account
+      </div>
+      <div class="text-center font-14 l-black font-family ">
+        Please allow up to 48 hours to be granted access to the online account(s). Contact Ship District if your account still does not have access after this time period has passed.
+<br> Thank you for applying to Ship District Internet Express!
+      </div>
+    </div>
+    <div class="col-lg-6 padd-side mt-5 d-none"WWWWWWW>
+      <div class="text-center font-40 fw-6 padding-both">
+       SignUp <span class="getStarted font-600">Successful,</span>Welcome
+      </div>
+      <div class="text-center font-14 l-black font-family ">
+        Thank you for signing up for a Ship District Account.
+      </div>
+    </div>
+
+    <div class="col-lg-2 text-right pr-3 order-3">
+      <div>
+        <button class="theme-btn border-white contactBtn"><a href="tel:+123456890">Contact Us </a></button>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-center padding-both">
+    <div class="col-lg-4">
+      <div class="mt-4">
+        <div class="">
+        <div>
+          <img width="100%" src="../../../../assets/images/envelop-icon1.svg" alt="" class="mail-img">
+        </div>
+
+         <div class="font-14 l-black text-center mt-3 font-family">
+          While you wait, please verify your email so that once approved you can login.
+         </div>
+         <div class="font-14 l-black text-center mt-3 font-family d-none" *ngIf="this.accountType == 'shipment'">
+          Please verify your email and you will be able to login.
+         </div>
+
+          <div class="justify-center mt-3 py-3">
+            <!-- <button class="theme-btn red ml-2" (click)="next()">{{this.accountType == 'shipment' || this.accountType == 'both' ?   'Back to Log in':'Done'}}</button> -->
+            <button class="theme-btn red ml-2" (click)="next()">Done</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="331.119" height="207.812" viewBox="0 0 331.119 207.812">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.188" y1="0.233" x2="1.271" y2="1.256" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#b721ff"/>
+      <stop offset="1" stop-color="#fc00ff"/>
+    </linearGradient>
+    <filter id="Background" x="0" y="0" width="331.119" height="207.812" filterUnits="userSpaceOnUse">
+      <feOffset dy="10" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feFlood flood-opacity="0.09"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <clipPath id="clip-path">
+      <rect id="CardBg" width="301.119" height="177.812" rx="13" opacity="0.13" fill="url(#linear-gradient)"/>
+    </clipPath>
+    <linearGradient id="linear-gradient-3" x1="0.824" y1="1.099" x2="0.61" y2="-0.552" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#160606"/>
+      <stop offset="1" stop-color="#ab1f21"/>
+    </linearGradient>
+    <filter id="Path_27" x="-167.225" y="-276.981" width="638.985" height="558.471" filterUnits="userSpaceOnUse">
+      <feOffset dy="-14" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="29" result="blur-2"/>
+      <feFlood flood-opacity="0.129"/>
+      <feComposite operator="in" in2="blur-2"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Path_28" x="-185.366" y="-233.009" width="692.138" height="533.812" filterUnits="userSpaceOnUse">
+      <feOffset dy="-14" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="29" result="blur-3"/>
+      <feFlood flood-opacity="0.129"/>
+      <feComposite operator="in" in2="blur-3"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Path_29" x="-168.077" y="-166.248" width="657.079" height="518.394" filterUnits="userSpaceOnUse">
+      <feOffset dy="-14" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="29" result="blur-4"/>
+      <feFlood flood-opacity="0.129"/>
+      <feComposite operator="in" in2="blur-4"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Path_30" x="-117.026" y="-110.633" width="702.442" height="489.213" filterUnits="userSpaceOnUse">
+      <feOffset dy="-14" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="29" result="blur-5"/>
+      <feFlood flood-opacity="0.129"/>
+      <feComposite operator="in" in2="blur-5"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Ellipse_6" x="-148.37" y="-184.974" width="331.055" height="329.731" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="30" result="blur-6"/>
+      <feFlood flood-opacity="0.2"/>
+      <feComposite operator="in" in2="blur-6"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="card5" transform="translate(15 4.699)">
+    <g transform="matrix(1, 0, 0, 1, -15, -4.7)" filter="url(#Background)">
+      <rect id="Background-2" data-name="Background" width="301.119" height="177.812" rx="13" transform="translate(15 5)" fill="url(#linear-gradient)"/>
+    </g>
+    <g id="Card_Design" data-name="Card Design" transform="translate(0 0)">
+      <g id="Mask_Group_5" data-name="Mask Group 5" clip-path="url(#clip-path)">
+        <g id="Card_Design-2" data-name="Card Design" transform="translate(-113.366 -180.68)">
+          <g id="Design" transform="translate(0 0)">
+            <g id="Design-2" data-name="Design" transform="translate(0 0)">
+              <g id="Group_35" data-name="Group 35">
+                <g transform="matrix(1, 0, 0, 1, 98.37, 175.98)" filter="url(#Path_27)">
+                  <path id="Path_27-2" data-name="Path 27" d="M.415,384.471s-5.88-129.414,26.6-187.115,68.9-11.831,114.249-38.661,30.833-51.359,67.129-68.659,42.352,10.489,67.127-5.568S321.927,0,321.927,0L464.985,384.471l-326.219-30.85Z" transform="translate(-80.23 -175.98)" fill="url(#linear-gradient-3)"/>
+                </g>
+                <g transform="matrix(1, 0, 0, 1, 98.37, 175.98)" filter="url(#Path_28)">
+                  <path id="Path_28-2" data-name="Path 28" d="M0,355.438s68.723-89.483,153.893-140.816c64.209-38.7,79.492,4.313,135.684-22.4s70.115-65.09,105.83-82.874c39.421-19.629-51.785-19.9-24.878-38.118S454.611,0,454.611,0l63.527,340.912-350.319,18.9Z" transform="translate(-98.37 -132.01)" fill="url(#linear-gradient-3)"/>
+                </g>
+                <g transform="matrix(1, 0, 0, 1, 98.37, 175.98)" filter="url(#Path_29)">
+                  <path id="Path_29-2" data-name="Path 29" d="M0,344.394S97.014,220.121,154.028,189.811s86.087-7.57,132.844-23.478,55.506-69.565,97.8-86.865,50.682-2.786,79.547-18.843S480.227,0,480.227,0l-8.266,306.481-262.809,8.732-20.414-5.984Z" transform="translate(-81.08 -65.25)" fill="url(#linear-gradient-3)"/>
+                </g>
+                <g transform="matrix(1, 0, 0, 1, 98.37, 175.98)" filter="url(#Path_30)">
+                  <path id="Path_30-2" data-name="Path 30" d="M0,295.153s82.909-109.267,135.211-127.66,81.654.2,128.411-15.706,65.724-65.626,108.014-82.926,42.077-1.235,70.943-17.292S528.442,0,528.442,0l-8.268,306.481-262.809,8.732-20.413-5.984Z" transform="translate(-30.03 -9.63)" fill="url(#linear-gradient-3)"/>
+                </g>
+              </g>
+              <g transform="matrix(1, 0, 0, 1, 98.37, 175.98)" filter="url(#Ellipse_6)">
+                <ellipse id="Ellipse_6-2" data-name="Ellipse 6" cx="75.527" cy="74.866" rx="75.527" ry="74.866" transform="translate(-58.37 -97.97)" fill="#612f30"/>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+    <g id="Text" transform="translate(16.084 11.917)">
+      <text id="Reba_Lueilwitz" data-name="Reba Lueilwitz" transform="translate(1.787 139.308)" fill="#fff" font-size="14" font-family="Poppins-SemiBold, Poppins" font-weight="600" letter-spacing="0.012em"><tspan x="0" y="0">Reba Lueilwitz</tspan></text>
+      <text id="Expires_on_08_25" data-name="Expires on
+08/25" transform="translate(1.787 8)" fill="#fff" font-size="8" font-family="Poppins-Light, Poppins" font-weight="300" letter-spacing="0.01em"><tspan x="0" y="0">Expires on</tspan><tspan x="0" y="12">08/25</tspan></text>
+      <g id="mastercardlogo" transform="translate(214.935 120.254)">
+        <path id="Path_71" data-name="Path 71" d="M1.437.662V0H1.265l-.2.454L.867,0H.694V.662H.816v-.5L1,.594H1.13L1.316.162v.5h.121ZM.343.662V.113H.564V0H0V.113H.221V.662H.342Z" transform="translate(53.216 26.961)" fill="#f79410"/>
+        <path id="Path_72" data-name="Path 72" d="M14.922,26.817H0V0H14.922Z" transform="translate(20.132 3.646)" fill="#ff5f00"/>
+        <path id="Path_73" data-name="Path 73" d="M21.078,17.055A17.027,17.027,0,0,1,27.592,3.647a17.055,17.055,0,1,0,0,26.817,17.027,17.027,0,0,1-6.514-13.408" transform="translate(0 0)" fill="#eb001b"/>
+        <path id="Path_74" data-name="Path 74" d="M27.593,17.055A17.054,17.054,0,0,1,0,30.463,17.024,17.024,0,0,0,6.514,17.055,17.024,17.024,0,0,0,0,3.647,17.054,17.054,0,0,1,27.593,17.055" transform="translate(27.592 0)" fill="#f79e1b"/>
+      </g>
+      <g id="Group_24" data-name="Group 24" transform="translate(0 50.083)">
+        <text id="_5535_" data-name="5535 " transform="translate(0 20.392)" fill="#fff" font-size="15" font-family="Poppins-Regular, Poppins" letter-spacing="0.012em"><tspan x="0" y="0">5535</tspan><tspan y="0" fill="#000"> </tspan></text>
+        <text id="_" data-name="••••" transform="translate(56.956 20)" fill="#fff" font-size="22" font-family="Proxima Nova" font-weight="600" letter-spacing="0.012em"><tspan x="0" y="0">••••</tspan></text>
+        <text id="_2" data-name="••••" transform="translate(102.891 20)" fill="#fff" font-size="22" font-family="Proxima Nova" font-weight="600" letter-spacing="0.012em"><tspan x="0" y="0">••••</tspan></text>
+        <text id="_2296" data-name="2296" transform="translate(149.334 20.392)" fill="#fff" font-size="15" font-family="Poppins-Regular, Poppins" letter-spacing="0.012em"><tspan x="0" y="0">2296</tspan></text>
+      </g>
+    </g>
+  </g>
+</svg>

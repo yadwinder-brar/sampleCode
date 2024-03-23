@@ -1,0 +1,192 @@
+<div class="d-none" [class.loading]="isLoading">
+  <mat-progress-spinner
+    *ngIf="isLoading"
+    class="loader"
+    [color]="'warn'"
+    [mode]="'indeterminate'"
+    [value]="'30'"
+    stroke="f44336"
+  >
+  </mat-progress-spinner>
+</div>
+<div class="row justify-between-md-center">
+  <div class="col-lg-7 col-sm-7 mt-3">
+    <div class="text-center planText font-36 fw-6">
+      Select <span class="getStarted font-600">Plan </span>
+    </div>
+    <div class="text-center planText font-16 l-black">Please select your plan.</div>
+  </div>
+  <div class="col-lg-1 col-sm-1 mt-3 offset-1">
+    <mat-icon class="justify-end" (click)="dialogRef.close(false)">close</mat-icon>
+  </div>
+</div>
+<section class="planHeight">
+  <div class="text-center radioButton mt-2">
+    <mat-radio-group
+      aria-label="Select an option"
+      (change)="planTypeChange($event)"
+      [(ngModel)]="planType"
+    >
+      <mat-radio-button
+        [checked]="planType == 'monthly'"
+        color="warn"
+        class="mx-2"
+        value="monthly"
+        >Monthly</mat-radio-button
+      >
+      <mat-radio-button
+        [checked]="planType == 'annually'"
+        color="warn"
+        class="mx-2"
+        value="annually"
+        >Annual</mat-radio-button
+      >
+      <mat-radio-button
+        [checked]="planType == 'topUp'"
+        color="warn"
+        class="mx-2"
+        value="topUp"
+        >Scans</mat-radio-button
+      >
+    </mat-radio-group>
+  </div>
+  <div class="">
+    <div
+      class="row justify-between-md-center pb-4 mt-4"
+      *ngIf="PlansData && PlansData.length > 0"
+    >
+      <div class="col-lg-12 mt-3">
+        <div class="row justify-center" *ngIf="planType !== 'topUp'">
+          <div
+            class="col-lg-5 my-3"
+            *ngFor="let item of PlansData; let i = index"
+          >
+            <!-- <div (click)="storePlanId(item?.id)" [ngClass]="item?.planName == 'Basic Plan'?'basic-plan':(item?.planName == 'Standard Plan'?'stand-plan':'pre-plan')" [class.active]="selectedPlan == item?.id"> -->
+            <div class="p-2 top-margin" (click)="storePlanId(item?.id)" >
+              <div class="cardHeight"[class.active]="selectedPlan == item?.id"  [class.annual]="planType == 'annually'" [ngClass]="{'card_red':i==0,'card_gray':i==1,'card_Warn':i==2,'card_red1':i==3,'card_gray1':i==4,'card_Warn1':i==5}">
+              <!-- <div class="cardHeight"  [ngClass]="{'annualRed':i==0,'annualGray':i==1,'annualWarn':i==2,'annualRed1':i==3,'annualGray1':i==4,'annualWarn1':i==5}"> -->
+                <h5 class="text-center m-0 p-1 py-3">{{ item?.planName| titlecase }}</h5>
+                <div class="sub-item">
+                  <img *ngIf="item?.isPopular"
+                    class="most-img"
+                    src="assets/images/mostpop.svg"
+                    alt=""
+                  />
+                  <img *ngIf="i==0 || i==1 || i==2" [src]="i==0?'assets/images/mailred.svg':i==1?'assets/images/mailGray.svg':'assets/images/mailWarn.svg'" alt="" />
+                  <img *ngIf="i==3 || i==4 || i==5" [src]="i==3?'assets/images/mailred.svg':i==4?'assets/images/mailGray.svg':'assets/images/mailWarn.svg'" alt="" />
+                  <img *ngIf="i>5" [src]="'assets/images/mailred.svg'" alt="" />
+                  <h4>$ <span class="text_price">{{ item?.planPrice }}</span>/<span
+                    class="font-14"
+                    >{{ item?.validity == "monthly" ? "Month" : "Year" }}</span
+                  ></h4>
+                  <p>Scan Count Mail & Packages: <strong>{{ item?.scanCount }}</strong></p>
+                  <h5>Included With Mailbox Address</h5>
+                  <ul>
+                    <li><mat-icon class="checkList">check</mat-icon>Physical Street Address</li>
+                    <li><mat-icon class="checkList">check</mat-icon>Mail & Package Scans</li>
+                    <li><mat-icon class="checkList">check</mat-icon>Unlimited Recipients</li>
+                    <li><mat-icon class="checkList">check</mat-icon>Mail Shredding</li>
+                    <li><mat-icon class="checkList">check</mat-icon>Junk Mail Filtering</li>
+                    <li><mat-icon class="checkList">check</mat-icon>Mail Consolidation When Forwarded</li>
+                  </ul>
+                  <h5>Additional Fees</h5>
+                  <ul class="addFee">
+                    <li><mat-icon class="checkList addIcon">add</mat-icon>
+                      Package Receiving: 5 free, then <strong>${{ item?.additionalFee?.packageReceiving }}</strong> each additional, per
+                      month
+                    </li>
+                    <li><mat-icon class="checkList addIcon">add</mat-icon>
+                      Package Consolidation: <strong>${{ item?.additionalFee?.packageConsolidation }}</strong> per consolidation, additional
+                      charges may apply
+                    </li>
+                    <li><mat-icon class="checkList addIcon">add</mat-icon>
+                      Overweight (50+ Pounds) / Oversized (Length + Width +
+                      Height is greater than or equal to 50) Package:<strong> ${{item?.additionalFee?.overWeight}}</strong> per  package
+                    </li>
+                    <li><mat-icon class="checkList addIcon">add</mat-icon>Mail Storage (After 30 days): <strong>${{ item?.additionalFee?.mailStorage }}</strong> per day</li>
+                    <li><mat-icon class="checkList addIcon">add</mat-icon>Package Storage (After 3 days): <strong>${{ item?.additionalFee?.packageStorage }}</strong> per day</li>
+                    <li><mat-icon class="checkList addIcon">add</mat-icon>
+                      Forward Mail & Packages: <strong>Standard carrier rates applied</strong>
+                    </li>
+                    <li><mat-icon class="checkList addIcon">add</mat-icon>
+                      Pallet Receiving: <strong>${{item?.additionalFee?.palletReceiving}}</strong>
+                    </li>
+                    <li><mat-icon class="checkList addIcon">add</mat-icon>
+                      Pallet Storage (After 3 Days): <strong>${{item?.additionalFee?.palletStorage}}</strong> per day
+                    </li>
+                  </ul>
+                  <h5>Penalty Fees</h5>
+                  <ul class="penFee">
+                    <li class="penalty">
+                      Wrong Address (Missing/Incorrect Assigned Address): <strong>${{item?.penaltyFee?.wrongAddress }}</strong>
+                    </li>
+                    <li class="penalty">
+                      Late (Every week an Additional Fee is not paid): <strong>${{item?.penaltyFee?.late}}</strong> 
+                    </li>
+                    <li class="penalty">
+                      Reinstatement (15 Days Non-payment of Mailbox Address
+                      Fee): <strong>${{ item?.penaltyFee?.reinstatement }}</strong>
+                       
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- -->
+        </div>
+        <div class="row justify-center" *ngIf="planType == 'topUp'">
+          <div class="col-lg-5 mt-2" *ngFor="let item of PlansData; let i = index">
+            <div class="p-2 top-margin" (click)="storePlanId(item?.id)" >
+              <div class="" [class.active]="selectedPlan == item?.id" [ngClass]="{'card_red':i==0,'card_gray':i==1,'card_Warn':i==2,'card_red1':i==3,'card_gray1':i==4,'card_Warn1':i==5}">
+                <h5 class="text-center m-0 p-1 py-3">{{item?.planName| titlecase }}</h5>
+                <div class="sub-item">
+                  <img *ngIf="item?.isPopular"
+                    class="most-img"
+                    src="assets/images/mostpop.svg"
+                    alt=""
+                  />
+                  <img *ngIf="i==0 || i==1 || i==2" [src]="i==0?'assets/images/mailred.svg':i==1?'assets/images/mailGray.svg':'assets/images/mailWarn.svg'" alt="" />
+                  <img *ngIf="i==3 || i==4 || i==5" [src]="i==3?'assets/images/mailred.svg':i==4?'assets/images/mailGray.svg':'assets/images/mailWarn.svg'" alt="" />
+                  <img *ngIf="i>5" [src]="'assets/images/mailred.svg'" alt="" />
+                  <h4>$ <span class="text_price">{{ item?.planPrice }}</span></h4>
+                  <p>Scan Count Mail & Packages: {{ item?.scanCount}}</p>
+                  <h5>Included With Mailbox Address</h5>
+                  <ul class="">
+                    <li><mat-icon class="checkList">check</mat-icon>Physical Street Address</li>
+                    <li><mat-icon class="checkList">check</mat-icon>Mail & Package Scans</li>
+                    <li><mat-icon class="checkList">check</mat-icon>Unlimited Recipients</li>
+                    <li><mat-icon class="checkList">check</mat-icon>Mail Shredding</li>
+                    <li><mat-icon class="checkList">check</mat-icon>Junk Mail Filtering</li>
+                    <li><mat-icon class="checkList">check</mat-icon>Mail Consolidation When Forwarded</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="pt-4 choose">
+            Choosing a scan plan will add more scans to your current Mailbox
+            Address Plan. Other features of your current Mailbox Address Plan,
+            will remain the same.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div
+  class="justify-center pt-1 mt-4 mb-4"
+  *ngIf="PlansData && PlansData.length > 0"
+>
+  <button
+    type="button"
+    class="theme-btn white-btn mr-2 back-red"
+    (click)="dialogRef.close(false)"
+  >
+    Cancel
+  </button>
+  <button class="theme-btn red ml-2" (click)="assignPlan()">Assign Plan</button>
+</div>
+<div class="NoPlan" *ngIf="PlansData && PlansData.length == 0 && !isLoading">
+  <span>No plan found</span>
+</div>

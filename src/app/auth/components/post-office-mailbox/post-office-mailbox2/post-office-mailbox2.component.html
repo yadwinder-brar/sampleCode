@@ -1,0 +1,220 @@
+<section>
+  <div class="row justify-between">
+    <div class="col-lg-2 pl-2 header-post-mail">
+      <img
+        class="img-logo1"
+        src="../../../../assets/images/newLogo4.png"
+        alt=""
+      />
+    </div>
+    <div class="col-lg-6 mt-3 order-2">
+      <div class="text-center font-36 fw-6">Application for Mailbox Rental</div>
+      <div class="text-center font-16 l-black">
+        Fill in all the details required to submit your application.
+      </div>
+    </div>
+    <div class="col-lg-2 text-right pr-3 order-3">
+      <div>
+        <button class="theme-btn border-white contactBtn">
+          <a href="tel:+123456890">Contact Us </a>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="mx-3">
+  <div class="justify-between"><span>Step 2</span><span>2/2</span></div>
+  <mat-progress-bar
+    color="warn"
+    mode="determinate"
+    [value]="100"
+  ></mat-progress-bar>
+</div>
+<div class="row justify-content-md-center">
+  <div class="col-lg-12 px-3 mt-2 mb-5">
+    <div class="mt-4">
+      <div class="white-form-card aggre-ment">
+        <p class="pt-50"></p>
+        <p>
+          This acknowledgment is required by Section 17538.5 of the Business and
+          Professions Code of the State of California. Any person obtaining
+          private mailbox receiving service in the State of California must read
+          and acknowledge receipt of the following statement, which is to be
+          kept on file at this Commercial Mail Receiving Agency and will be made
+          available, upon demand, to the Department of Consumer Affairs or any
+          law enforcement agency conducting an investigation
+        </p>
+        <p>
+          By obtaining use of a private mailbox receiving service in the State
+          of California, I acknowledge that:
+        </p>
+        <p>
+          <b>1.</b> I am obligated to disclose my actual home address or place
+          of residence on a USPS Form 1583 or other form as may later be
+          developed and I further agree that I will provide prompt written
+          notice to this CMRA of any subsequent change in my home address or
+          place of residence
+        </p>
+        <p>
+          <b>2. </b>By signing/printing name below, I irrevocably authorize this
+          CMRA to act as my agent for service of process to receive any legal
+          documents that may be served upon me. This authorization shall
+          continue from the date of this agreement until two years after my mail
+          receiving service has been terminated. I understand that this CMRA
+          will (A) place a copy of the documents or a notice that the documents
+          were received into my mailbox or other place where I usually receive
+          my mail, unless my mail receiving service has been terminated, and (B)
+          send all documents by first-class mail to the home or other address
+          last known to the CMRA
+        </p>
+        <p>
+          <b>3. </b>I further acknowledge that I understand that use of a
+          private mailbox receiving service for commercial purposes in the State
+          of California requires the user to comply with all applicable laws,
+          including Section 17538.5 of the Business and Professions Code and
+          laws prohibiting unfair competition and false advertising as set forth
+          in Sections 17200 and 17500 of the Business and Professions Code.
+          Violation of these laws may result in civil or criminal penalties or
+          both. I understand that the United States Postal Service Form 1583
+          that must be prepared for each private mailbox receiving service
+          customer shall be delivered to the local United States Post Office and
+          a copy of the must be retained by this CMRA and made available upon
+          demand to the Department of Consumer Affairs or any law enforcement
+          agency conducting an investigation. I hereby agree to accept and abide
+          by the foregoing requirements.
+        </p>
+        <form [formGroup]="form">
+          <div class="col-lg-4">
+            <p>
+              <span class="inupt-errr"
+                ><input
+                  type="text"
+                  formControlName="signature"
+                  class="Agreement-sgn"
+                /><span
+                  *ngIf="error(this.form.get('signature'), 'signature')"
+                  class="mat-err"
+                >
+                  <mat-error class="error">{{
+                    error(this.form.get("signature"), "signature")
+                  }}</mat-error>
+                </span></span
+              >
+            </p>
+            <span class="font-14">Applicant Printed Name / Signature</span>
+          </div>
+          <div class="font-16 mt-3">
+            <b>Please verify the information entered below is correct.</b>
+          </div>
+          <div class="row pt-50">
+            <div class="col-lg-6 pr-3">
+              <div>
+                <label class="l-black fw-5 font-14">Name (Printed)</label>
+                <form-field>
+                  <input
+                    type="text"
+                    formControlName="name"
+                    placeholder="Name (Printed)"
+                    class="form-control font-family"
+                  />
+                </form-field>
+              </div>
+            </div>
+            <div class="col-lg-6 pr-3">
+              <div>
+                <label class="l-black fw-5 font-14">Street Address</label>
+                <form-field>
+                  <input
+                    type="text"
+                    formControlName="address1"
+                    placeholder="Street Address"
+                    class="form-control font-family"
+                  />
+                </form-field>
+              </div>
+            </div>
+            <div class="col-lg-4 pr-3">
+              <div>
+                <label class="l-black fw-5 font-14">City</label>
+                <form-field>
+                  <input
+                    type="text"
+                    formControlName="city"
+                    placeholder="City"
+                    class="form-control font-family"
+                  />
+                </form-field>
+              </div>
+            </div>
+            <div class="col-lg-4 pr-3">
+              <div>
+                <label class="l-black fw-5 font-14">State</label>
+                <form-field>
+                  <input
+                    type="text"
+                    formControlName="state"
+                    placeholder="State"
+                    class="form-control font-family"
+                  />
+                </form-field>
+              </div>
+            </div>
+            <div class="col-lg-4 pr-3">
+              <div>
+                <label class="l-black fw-5 font-14">ZIP Code</label>
+                <form-field>
+                  <input
+                    type="text"
+                    formControlName="zipCode"
+                    placeholder="ZIP Code"
+                    class="form-control font-family"
+                  />
+                </form-field>
+              </div>
+            </div>
+            <div class="col-lg-6 pr-3">
+              <div>
+                <label class="l-black fw-5 font-14">Email</label>
+                <form-field>
+                  <input
+                    type="text"
+                    formControlName="email"
+                    placeholder="Email"
+                    class="form-control font-family"
+                  />
+                </form-field>
+              </div>
+            </div>
+            <div class="col-lg-6 pr-3">
+              <div>
+                <label class="l-black fw-5 font-14">Phone Number</label>
+                <form-field>
+                  <input
+                    type="text"
+                    formControlName="phone"
+                    [mask]="mask"
+                    [maxLength]="14"
+                    placeholder="Phone Number"
+                    class="form-control font-family"
+                  />
+                </form-field>
+              </div>
+            </div>
+          </div>
+          <div class="justify-center mt-4">
+            <button
+              type="text"
+              class="theme-btn white-btn mr-2"
+              routerLink="/post-mail-box"
+            >
+              Back
+            </button>
+            <button type="text" class="theme-btn red ml-2" (click)="submit()">
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

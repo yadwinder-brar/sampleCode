@@ -1,0 +1,132 @@
+.draft-shipment-dash,
+.pervious-shipment-dash,
+.create-shipment-dash {
+  cursor: pointer;
+}
+canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.dounght {
+  display: flex;
+  justify-content: center;
+}
+.filter-date input {
+  margin-left: 0px;
+  height: 35px;
+  margin-top: 0px !important;
+  padding: 6px 0px;
+}
+.countStartDate {
+  width: 125px;
+}
+.dateFilter {
+  justify-content: space-between;
+}
+.countText {
+  display: flex;
+  align-items: center;
+}
+.filter-date {
+  border: 1px solid #afb0c9;
+  border-radius: 10px;
+  padding: 6px 0px;
+  height: 46px;
+  margin-top: 2px;
+  background-color: #fff;
+}
+.noData {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80%;
+}
+
+.text_position {
+  position: absolute;
+  top: 50%;
+  font-size: 15px;
+  font-weight: 700;
+}
+.dounght {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.row.main {
+  justify-content: space-around !important;
+  height: 100%;
+}
+
+.main-card {
+  width: 32%;
+  padding-right: 1px;
+}
+.main-card:last-child {
+  padding-right: 0px;
+}
+
+.cw {
+  height: 130px;
+  width: 100%;
+  border-radius: 20px;
+  color: #fff;
+  margin: 1px 0 0 0;
+  padding-right: 1px;
+}
+
+.create-shipment-dash-color {
+  background: #e44531 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px rgba(39, 45, 59, 0.2);
+}
+.pervious-shipment-dash-color {
+  background: #fd79a8 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px rgba(39, 45, 59, 0.2);
+}
+
+.draft-shipment-dash-color {
+  background: #00cec9 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px rgba(39, 45, 59, 0.2);
+}
+
+@media (max-width: 992px) {
+  img.ng-star-inserted {
+    height: unset !important;
+    margin-top: 0 !important;
+  }
+  img.form-append.mr-2 {
+    margin-top: 0;
+  }
+  .img-ship > img {
+    width: 50px;
+  }
+  .main-card {
+    width: 100%;
+  }
+  .row.main {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 767px) {
+  .date-box {
+    /* flex-direction: column; */
+    flex-wrap: wrap;
+  }
+  .dateFilter {
+    /* flex-direction: column; */
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 512px) {
+  .filter-date {
+    margin-left: 0;
+  }
+}
+
+.padding-set {
+  padding-right: 0 !important;
+}

@@ -1,0 +1,331 @@
+<app-admin-header [link]="link" [icon]="true" [pageName]="'Back'"></app-admin-header>
+<div class="row">
+   <div class="col-lg-6 padding-both">
+       <div class="white-form-card1 shipment-card">
+           <div class="edit-servces ship-detail">
+               <p class="float-left">Shipment Details</p>
+               <span class="in-transit detail admin" [matTooltip]="shipmentDetail?.trackingStatus?.DEFINATION"
+               matTooltipPosition="right">{{this.shipmentDetail?.trackingStatus?.CODE}}</span>
+           </div>
+           <div class="shipment-datte">
+               <p>Estimated Arrival</p>
+               <span>{{shipmentDetail?.selectedService?.day?(shipmentDetail?.selectedService?.day | date) : '--'}}</span>
+               <span
+          *ngIf="
+            !shipmentDetail?.shipmentDetail?.output?.transactionShipments[0]
+              ?.shipDatestamp
+          "
+        >
+          {{ shipmentDetail?.selectedService?.time + "," }}
+          {{ shipmentDetail?.selectedService?.day | date }}</span
+        >
+           </div>
+           <div class="select-service">
+               <p>Selected Service</p>
+               <span>{{ shipmentDetail?.selectedService?.serviceType }}</span>
+           </div>
+       </div>
+   </div>
+   <!-- <div class="col-lg-6 padding-right">
+      <div class="white-form-card1 shipment-card">
+          <div class="edit-servces">
+              <p class="tracking-detial">Tracking Details</p>
+               <p class="scheduld">You have scheduled pickup on Mar 26, 2020</p>
+          </div>
+          <div class="shippment-delivery admin">
+            <p class="ship-delivery">Shipment has left the delivery facility and is on it’s way!</p>
+            <p class="date-shipment"><img src="../../../../../assets/images/date.svg"/>March 16th, 2020 - 3:00pm EST</p>
+
+          </div>
+          
+      </div>
+  </div> -->
+  <div class="col-lg-6 padding-right">
+    <div class="white-form-card1 shipment-card">
+      <div class="edit-servces">
+        <p class="tracking-detial">Tracking Details</p>
+        <p class="scheduld"></p>
+        <!-- You have scheduled pickup on Mar 26, 2020 -->
+      </div>
+      <div class="shippment-delivery admin">
+        <p class="ship-delivery">
+          <!-- Shipment has left the delivery facility and is on it’s way! --> Shipment {{shipmentDetail?.trackingStatus?.DEFINATION}}
+        </p>
+        <!-- <p class="date-shipment">
+          <img src="../../../../../assets/images/date.svg" /> Current Location : {{shipmentDetail?.shipmentTrackingDetail?.lastUpdatedDestinationAddress?.city}}
+          <br/>
+          {{shipmentDetail?.shipmentTrackingDetail?.serviceCommitMessage?.message}}
+        </p> -->
+        <div class="date-shipment my-1" *ngFor="let data of shipmentDetail?.shipmentTrackingDetail?.scanEvents">
+          <span> Date : </span><span>{{data?.date | date : 'medium'}}</span> <br>
+          <span> Status : </span><span>{{data?.eventDescription}}</span><br>
+          <span *ngIf="data?.scanLocation?.countryName"> Location : </span> <span *ngIf="data?.scanLocation?.countryName">{{data?.scanLocation?.countryName}}</span> <span *ngIf="data?.scanLocation?.countryName">{{','}} {{data?.scanLocation?.city}}</span>
+          <hr />
+        </div> 
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+   <div class="col-lg-6  padding-both">
+       <div class="white-form-card1">
+           <div class="edit-servces">
+               <p class="float-left">Sender Information</p>
+           </div>
+           <table class="sender-info" width="100%">
+            <tr>
+              <td align="left">Name :</td>
+              <td align="left">{{ shipmentDetail?.sender?.name || "--" }}</td>
+            </tr>
+            <tr>
+              <td align="left">Company Name :</td>
+              <td align="left">{{ shipmentDetail?.sender?.companyName || "--" }}</td>
+            </tr>
+            <tr>
+              <td align="left">Address :</td>
+              <td align="left">
+                {{
+                  shipmentDetail?.sender?.address1 +
+                    " " +
+                    shipmentDetail?.sender?.address2 +
+                    " " +
+                    shipmentDetail?.sender?.address3
+                }}
+              </td>
+            </tr>
+            <tr class="font-600">
+              <td align="left">Zip Code :</td>
+              <td align="left">{{ shipmentDetail?.sender?.zipCode }}</td>
+            </tr>
+            <tr>
+              <td align="left">State and Country :</td>
+              <td align="left">
+                {{ shipmentDetail?.sender?.state }},{{
+                  shipmentDetail?.sender?.country
+                }}
+              </td>
+            </tr>
+            <tr>
+              <td align="left">Phone No. :</td>
+              <td align="left">{{ shipmentDetail?.sender?.phone }}</td>
+            </tr>
+            <tr>
+              <td align="left">Email Address :</td>
+              <td align="left" class="lowertext">{{ shipmentDetail?.sender?.email || "--" }}</td>
+            </tr>
+          </table>
+       </div>
+   </div>
+   <div class="col-lg-6 padding-right">
+       <div class="white-form-card1">
+           <div class="edit-servces">
+               <p class="float-left">Receiver Information</p>
+           </div>
+           <table class="sender-info" width="100%">
+            <tr>
+              <td align="left">Name :</td>
+              <td align="left">{{ shipmentDetail?.receiver?.name || "--" }}</td>
+            </tr>
+            <tr>
+              <td align="left">Company Name :</td>
+              <td align="left">{{ shipmentDetail?.receiver?.companyName || "--"}}</td>
+            </tr>
+            <tr>
+              <td align="left">Address :</td>
+              <td align="left">
+                {{
+                  shipmentDetail?.receiver?.address1 +
+                    " " +
+                    shipmentDetail?.receiver?.address2 +
+                    " " +
+                    shipmentDetail?.receiver?.address3
+                }}
+              </td>
+            </tr>
+            <tr class="font-600">
+              <td align="left">Zip Code :</td>
+              <td align="left">{{ shipmentDetail?.receiver?.zipCode }}</td>
+            </tr>
+            <tr>
+              <td align="left">State and Country :</td>
+              <td align="left">
+                {{ shipmentDetail?.receiver?.state }},{{
+                  shipmentDetail?.receiver?.country
+                }}
+              </td>
+            </tr>
+            <tr>
+              <td align="left">Phone No. :</td>
+              <td align="left">{{ shipmentDetail?.receiver?.phone }}</td>
+            </tr>
+            <tr>
+              <td align="left">Email Address :</td>
+              <td align="left"class="lowertext">{{ shipmentDetail?.receiver?.email || "--" }}</td>
+            </tr>
+          </table>
+       </div>
+   </div>
+</div>
+<div class="row">
+   <div class="edit-servces pl-3 pt-3">
+       <p class="float-left">Package Information</p>
+   </div>
+</div>
+<div class="row">
+   <div class="col-lg-12 padding-main mailbox">
+       <div class="white-form-card1 tble-re">
+           <table class="sender-info package-units table table-responsive mailbox-admin" >
+               <tr>
+                   <th>Package Type </th>
+                   <th>Units </th>
+                   <th>Dimensions </th>
+                   <th>Weight </th>
+                   <th>Quantity</th>
+                   <th>Insurance Declared </th>
+                   <th>Content Description </th>
+               </tr>
+               <!-- <tr class="active package-info"> -->
+                <tr *ngFor="let data of shipmentDetail?.packages" class="package-info">
+                    <td>{{ data?.packageType }}</td>
+                    <td>{{ data?.dimension?.unit }}</td>
+                    <td>
+                      {{ data?.dimension?.length }}<span *ngIf="data?.dimension?.width">*</span>{{ data?.dimension?.width }}<span *ngIf="data?.dimension?.height">*</span>{{
+                        data?.dimension?.height
+                      }}
+                    </td>
+                    <td>{{ data?.weight }} {{data?.weightUnits}}</td>
+                    <td>{{data?.numberOfPackages}}</td>
+                    <td><span *ngIf="data?.insuranceDeclared">$</span> {{ data?.insuranceDeclared || "--" }}</td>
+                    <td>{{ data?.contentDescription || "--" }}</td>
+                  </tr>
+           </table>
+       </div>
+   </div>
+</div>
+<div class="row pb-3">
+   <div class="col-lg-6 padding-both">
+    <div class="white-form-card1">
+        <div class="edit-servces">
+          <p class="float-left">Quotations</p>
+        </div>
+        <table class="sender-info" width="100%">
+          <tr>
+            <td align="left">
+              <span class="font-weight"
+                >{{ shipmentDetail?.selectedService?.serviceType }}: </span
+              ><P>{{ shipmentDetail?.selectedService?.time }}</P>
+            </td>
+            <td align="right" class="font-22 maincolor">
+              ${{ this.updatedData?.totalNetCharge }} 
+            </td>
+          </tr>
+           <!-- <tr *ngFor="let data of shipmentDetail?.serviceQuote">
+              <td align="left">{{data?.name}} :</td>
+               <td align="right">$ {{ data?.value }}</td> 
+            </tr> -->
+            <tr>
+              <td align="left">Original Price</td>
+              <td align="right">{{this.updatedData?.originalPrice?'$'+' '+this.updatedData?.originalPrice:'--' }}</td>
+            </tr>
+            <tr>
+              <td align="left">Service Fee</td>
+              <td align="right">${{ this.updatedData?.serviceFee }} </td>
+            </tr>
+            <tr *ngIf="this.updatedData?.discount>0">
+              <td align="left">Discount</td>
+              <td align="right">${{ this.updatedData?.discount}}  </td>
+            </tr>
+            <tr>
+            <tr>
+              <td align="left">Payment Status :</td>
+              <td align="right" class="green-color"> {{shipmentDetail?.isPaymentComplete?'Successful':'Pending'}}</td>
+           </tr>
+          <!-- <tr *ngIf="updatedData?.totalNetCharge">
+              <td align="left">Total Net Charge :</td>
+               <td align="right">$ {{ updatedData?.totalNetCharge|| "--"}}</td> 
+            </tr>
+          <tr *ngIf="updatedData?.totalBaseCharge">
+            <td align="left">Total Base Charge :</td>
+             <td align="right">$ {{ updatedData?.totalBaseCharge || "--"}} </td> 
+          </tr>
+          
+          <tr *ngIf="updatedData?.FUEL">
+            <td align="left">Fuel</td>
+             <td align="right">$ {{ updatedData?.FUEL || "--"}} </td> 
+          </tr>
+          <tr *ngIf="updatedData?.INSURED_VALUE">
+            <td align="left">INSURED VALUE :</td>
+             <td align="right">$ {{ updatedData?.INSURED_VALUE || "--"}} </td> 
+          </tr> -->
+          <!-- <tr>
+                    <td align="left">Fuel Surcharge :</td>
+                    <td align="right">120 $</td>
+                 </tr>
+                 <tr>
+                    <td align="left">Residential Surcharge :</td>
+                    <td align="right">110 $</td>
+                 </tr>
+                 <tr class="maincolor">
+                    <td align="left">Discount :</td>
+                    <td align="right">40 $</td>
+                 </tr>
+                 <tr>
+                    <td align="left">Additional Charges :</td>
+                    <td align="right">85 $</td>
+                 </tr> -->
+          <!-- <tr>
+                    <td align="left">Payment Status :</td>
+                    <td align="right" class="green-color">Successful</td>
+                 </tr> -->
+        </table>
+      </div>
+  </div>
+  <div class="col-lg-6  padding-right">
+    <div class="white-form-card1">
+        <div class="edit-servces">
+          <p class="float-left">Additional Information</p>
+        </div>
+        <table class="sender-info" width="100%">
+          <tr>
+            <td align="left">Signature Required :</td>
+            <td align="left">
+              {{ shipmentDetail?.additionalInformation?.sign || "No" }}
+            </td>
+          </tr>
+          <tr>
+            <td align="left">Alcohol :</td>
+            <td align="left">{{ shipmentDetail?.additionalInformation?.alcoholRecipientType ? "Yes": "No"}}</td>
+          </tr>
+          <tr *ngIf="shipmentDetail?.additionalInformation?.alcoholRecipientType">
+            <td align="left">Alcohol Recipient Type :</td>
+            <td align="left">{{ shipmentDetail?.additionalInformation?.alcoholRecipientType || "--"}}</td>
+          </tr>
+          <tr>
+            <td align="left">Lithium Batteries :</td>
+            <td align="left">{{ shipmentDetail?.additionalInformation?.batteryPackingType? "Yes": "No"}}</td>
+          </tr>
+  
+          <tr *ngIf="shipmentDetail?.additionalInformation?.batteryPackingType">
+            <td align="left">Battery Packing Type :</td>
+            <td align="left"> {{ shipmentDetail?.additionalInformation?.batteryPackingType || "--"}}</td>
+          </tr>
+          <tr *ngIf="shipmentDetail?.additionalInformation?.batteryPackingType">
+            <td align="left">batteryRegulatoryType :</td>
+            <td align="left">{{ shipmentDetail?.additionalInformation?.batteryRegulatoryType || "--"}}</td>
+          </tr>
+          <tr *ngIf="shipmentDetail?.additionalInformation?.batteryPackingType">
+            <td align="left">Battery Material Type :</td>
+            <td align="left">{{ shipmentDetail?.additionalInformation?.batteryMaterialType || "--"}}</td>
+          </tr>
+          <tr>
+            <td align="left">Billing Party :</td>
+            <td align="left">{{ shipmentDetail?.additionalInformation?.paymentType || "Receiver"}}</td>
+          </tr>
+          <!-- <tr>
+            <td align="left">Special Instruction :</td>
+            <td align="left">Special Instruction</td>
+          </tr> -->
+        </table>
+      </div>
+</div>
+</div>

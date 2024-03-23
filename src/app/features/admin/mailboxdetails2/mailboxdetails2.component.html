@@ -1,0 +1,380 @@
+<!-- <p>dashboard works!</p> -->
+<app-admin-header [pageName]=""></app-admin-header>
+<div class="d-none" [class.loading]="isLoading">
+  <mat-progress-spinner
+    *ngIf="isLoading"
+    class="loader"
+    [color]="'warn'"
+    [mode]="'indeterminate'"
+    [value]="'30'"
+    stroke="f44336"
+  >
+  </mat-progress-spinner>
+</div>
+<div class="row">
+  <div class="col-lg-6 col-xl-6 padding-both">
+    <div class="white-form-card1">
+      <div class="edit-servces">
+        <p class="float-left">Forward Mail Sender Information</p>
+      </div>
+      <table class="sender-info" width="100%">
+        <tr>
+          <td align="left">Name :</td>
+          <td align="left">{{ forwardRequestDetail?.profileId?.name }}</td>
+        </tr>
+        <tr>
+          <td align="left">Company Name :</td>
+          <td align="left">
+            {{ forwardRequestDetail?.profileId?.companyName || "--" }}
+          </td>
+        </tr>
+        <tr>
+          <td align="left">Address :</td>
+          <td align="left">{{ forwardRequestDetail?.profileId?.address1 }}</td>
+        </tr>
+        <tr>
+          <td align="left">Zip Code :</td>
+          <td align="left">{{ forwardRequestDetail?.profileId?.zipCode }}</td>
+        </tr>
+        <tr>
+          <td align="left">city :</td>
+          <td align="left">{{ forwardRequestDetail?.profileId?.city }}</td>
+        </tr>
+        <tr>
+          <td align="left">State and Country :</td>
+          <td align="left">
+            {{ forwardRequestDetail?.profileId?.state }},{{
+              forwardRequestDetail?.profileId?.country
+            }}
+          </td>
+        </tr>
+
+        <tr>
+          <td align="left">Phone No. :</td>
+          <td align="left">
+            {{ forwardRequestDetail?.profileId?.phone || "--" }}
+          </td>
+        </tr>
+        <!-- <tr>
+                   <td align="left">Email Address :</td>
+                   <td align="left">johnsmith@gmail.com</td>
+               </tr> -->
+      </table>
+    </div>
+  </div>
+  <div class="col-lg-6 col-xl-6 padding-right">
+    <div class="white-form-card1">
+      <div class="edit-servces">
+        <p class="float-left">
+          Forward Mail Receiver Information ({{
+            forwardRequestDetail?.forwardedAddress?.type || "new Address"
+              | titlecase
+          }})
+        </p>
+      </div>
+      <table class="sender-info" width="100%">
+        <tr>
+          <td align="left">Name :</td>
+          <td align="left">
+            {{ forwardRequestDetail?.forwardedAddress?.name }}
+          </td>
+        </tr>
+        <tr>
+          <td align="left">Company Name :</td>
+          <td align="left">
+            {{ forwardRequestDetail?.forwardedAddress?.companyName || "--" }}
+          </td>
+        </tr>
+        <tr>
+          <td align="left">Address :</td>
+          <td align="left">
+            {{ forwardRequestDetail?.forwardedAddress?.address1 }}
+          </td>
+        </tr>
+        <tr>
+          <td align="left">Zip Code :</td>
+          <td align="left">
+            {{ forwardRequestDetail?.forwardedAddress?.zipCode }}
+          </td>
+        </tr>
+        <tr>
+          <td align="left">city :</td>
+          <td align="left">
+            {{ forwardRequestDetail?.forwardedAddress?.city }}
+          </td>
+        </tr>
+        <tr>
+          <td align="left">State and Country :</td>
+          <td align="left">
+            {{ forwardRequestDetail?.forwardedAddress?.state }},{{
+              forwardRequestDetail?.forwardedAddress?.country
+            }}
+          </td>
+        </tr>
+        <tr>
+          <td align="left">Phone No. :</td>
+          <td align="left">
+            {{ forwardRequestDetail?.forwardedAddress?.phone || "--" }}
+          </td>
+        </tr>
+        <!-- <tr>
+                   <td align="left">Email Address :</td>
+                   <td align="left">johnsmith@gmail.com</td>
+               </tr> -->
+      </table>
+    </div>
+  </div>
+</div>
+<!-- <div class="row">
+   <div class="edit-servces pl-3 pt-3">
+       <p class="float-left">Package Information</p>
+   </div>
+</div> -->
+<!-- <div class="row">
+   <div class="col-lg-12 padding-main mailbox">
+       <div class="white-form-card1 tble-re">
+           <table class="sender-info package-units table table-responsive mailbox-admin table-striped"  >
+               <tr>
+                   <th>Package Type</th>
+                   <th>Units</th>
+                   <th>Dimensions</th>
+                   <th>Weight</th>
+                   <th>Insurance Declared</th>
+                   <th>Content Description</th>
+               </tr>
+               <tr class="package-info">
+                   <td>Package Type</td>
+                   <td>Inch</td>
+                   <td>10*11*12</td>
+                   <td>10</td>
+                   <td>$</td>
+                   <td>Content Description</td>
+               </tr>
+           </table>
+       </div>
+   </div>
+</div> -->
+<div class="row">
+  <div class="col-lg-6 col-xl-6 padding-both fordmil">
+    <div class="white-form-card1">
+      <div class="edit-servces">
+        <p class="">Forward Mail Shipping Charge</p>
+        <span
+          >Number of Requested scans:
+          {{ forwardRequestDetail?.childLabels?.length || "1" }}</span
+        >
+      </div>
+      <form
+        [formGroup]="form"
+        *ngIf="!forwardRequestDetail?.selectedForwardMailCharges?.name"
+      >
+        <table class="sender-info" width="100%">
+          <tr>
+            <td align="left">
+              5-7 days delivery to
+              {{ forwardRequestDetail?.forwardedAddress?.city }}
+            </td>
+            <td align="left">
+              <span class="days-doller">
+                <form-field
+                  class="form-h"
+                  [errorControl]="form.get('fiveToSevenDays')"
+                  name="five to seven days price"
+                >
+                  <input
+                    formControlName="fiveToSevenDays"
+                    type="text"
+                    class=""
+                    class="form-control"
+                    placeholder="2.00"
+                  />
+                  <span class="form-prefix">$</span>
+                </form-field>
+              </span>
+            </td>
+          </tr>
+
+          <tr>
+            <td align="left">
+              3-4 days delivery to
+              {{ forwardRequestDetail?.forwardedAddress?.city }}
+            </td>
+            <td align="left">
+              <span class="days-doller">
+                <form-field
+                  class="form-h"
+                  [errorControl]="form.get('threeToFourDays')"
+                  name="three To four days price"
+                >
+                  <input
+                    type="text"
+                    formControlName="threeToFourDays"
+                    class=""
+                    class="form-control"
+                    placeholder="5.00"
+                  />
+                  <span class="form-prefix">$</span>
+                </form-field>
+              </span>
+            </td>
+          </tr>
+
+          <tr>
+            <td align="left">
+              2-3 days delivery to
+              {{ forwardRequestDetail?.forwardedAddress?.city }}
+            </td>
+            <td align="left">
+              <span class="days-doller">
+                <form-field
+                  class="form-h"
+                  [errorControl]="form.get('twoToThreeDays')"
+                  name="two to three days price"
+                >
+                  <input
+                    type="text"
+                    formControlName="twoToThreeDays"
+                    class=""
+                    class="form-control"
+                    placeholder="13.00"
+                  />
+                  <span class="form-prefix">$</span>
+                </form-field>
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td align="left">
+              1 day delivery to
+              {{ forwardRequestDetail?.forwardedAddress?.city }}
+            </td>
+            <td align="left">
+              <span class="days-doller">
+                <form-field
+                  class="form-h"
+                  [errorControl]="form.get('oneDayDays')"
+                  name="one day price"
+                >
+                  <input
+                    type="text"
+                    formControlName="oneDayDays"
+                    class=""
+                    class="form-control"
+                    placeholder="20"
+                  />
+                  <span class="form-prefix">$</span>
+                </form-field>
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td align="left">
+              Same day delivery to
+              {{ forwardRequestDetail?.forwardedAddress?.city }}
+            </td>
+            <td align="left">
+              <span class="days-doller">
+                <form-field
+                  class="form-h"
+                  [errorControl]="form.get('SameDayDelivery')"
+                  name="same day price"
+                >
+                  <input
+                    type="text"
+                    formControlName="SameDayDelivery"
+                    class=""
+                    class="form-control"
+                    placeholder="25"
+                  />
+                  <span class="form-prefix">$</span>
+                </form-field>
+              </span>
+            </td>
+          </tr>
+        </table>
+
+        <div class="col-lg-12 col-xl-12 justify-center">
+          <button type="button" class="theme-btn red sent" (click)="back()">
+            Back
+          </button>
+          <button type="button" (click)="submit()" class="theme-btn red sent">
+            Update Quote
+          </button>
+        </div>
+      </form>
+
+      <div
+        class="bgHeight justify-center align-center"
+        *ngIf="forwardRequestDetail?.selectedForwardMailCharges?.name"
+      >
+        <div class="">
+          <p>
+            User selected plan is
+            {{
+              getName(forwardRequestDetail?.selectedForwardMailCharges?.name)
+            }}
+            and price is $
+            {{ forwardRequestDetail?.selectedForwardMailCharges?.price }}
+          </p>
+        </div>
+      </div>
+      <div
+        *ngIf="forwardRequestDetail?.selectedForwardMailCharges?.name"
+        class="justify-center"
+      >
+        <button type="button" class="theme-btn red" (click)="back()">
+          Back
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- forwardLabelTrackingNumber
+forwardLabelDeliveryDate -->
+  <div class="col-lg-6 col-xl-6 padding-both fordmil" *ngIf="forwardRequestDetail?.lastActionUser=='planSelected'">
+    <div class="white-form-card1">
+      <div class="edit-servces">
+        <p class="">Add shipment details</p> 
+      </div>
+      <div class="d-flex" *ngIf="!forwardRequestDetail?.forwardLabelSuccess && forwardRequestDetail?.lastActionUser=='planSelected'">
+      <div>
+        <label class="l-black fw-5 font-14">Tracking No.</label>
+        <form-field>
+          <input type="text" [(ngModel)]="trackingNo" NumberInput maxLength="40" [minlength]="'10'" placeholder="Tracking No." class="form-control font-family" />
+        </form-field>
+      </div>
+      <div class="shipmentDetailForm mx-3">
+
+          <label class="l-black fw-5 font-14">Shipment Date</label>
+        <div class="filter-date">
+          <input
+            type="text"
+            [(ngModel)]="shipmentDate"
+            (click)="startDate.open()"
+            readonly
+            [min]="minDate"
+            placeholder="Shipment Date"
+            [matDatepicker]="startDate"
+            class="form-control"
+          />
+          <img
+            class="form-append mr-2"
+            (click)="startDate.open()"
+            src="../../../../assets/images/arrow-down.svg"
+            alt=""
+          />
+          <mat-datepicker #startDate></mat-datepicker>
+        </div>
+      </div>
+      </div>
+      <div class="col-lg-12 col-xl-12 justify-center">
+      <button *ngIf="!forwardRequestDetail?.forwardLabelSuccess" type="button" class="theme-btn red sent" (click)="enterDetails()">
+        Add
+      </button>
+      <!-- Request responded  -->
+      <div *ngIf="forwardRequestDetail?.forwardLabelSuccess "> <br> shipment date is :  {{ forwardRequestDetail?.forwardLabelDeliveryDate | date}}
+      <p *ngIf="forwardRequestDetail?.forwardLabelTrackingNumber"> Tracking # is : {{forwardRequestDetail?.forwardLabelTrackingNumber}}</p>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>

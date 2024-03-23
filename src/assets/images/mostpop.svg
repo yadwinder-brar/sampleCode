@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="142.186" height="139.669" viewBox="0 0 142.186 139.669">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#fff"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <clipPath id="clip-path">
+      <path id="Rectangle_27135" data-name="Rectangle 27135" d="M0,0H99a20,20,0,0,1,20,20v92a0,0,0,0,1,0,0H20A20,20,0,0,1,0,92V0A0,0,0,0,1,0,0Z" transform="translate(577 357)" fill="url(#linear-gradient)"/>
+    </clipPath>
+    <filter id="Most_Popular" x="0" y="0" width="142.186" height="139.669" filterUnits="userSpaceOnUse">
+      <feOffset dy="8" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="11" result="blur"/>
+      <feFlood flood-opacity="0.102"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Group_69259" data-name="Group 69259" transform="translate(-576.983 -338.71)">
+    <g id="Mask_Group_158" data-name="Mask Group 158" clip-path="url(#clip-path)">
+      <rect id="Rectangle_27134" data-name="Rectangle 27134" width="31" height="188" transform="translate(569.396 348.222) rotate(-47)" fill="#d25050"/>
+    </g>
+    <g transform="matrix(1, 0, 0, 1, 576.98, 338.71)" filter="url(#Most_Popular)">
+      <text id="Most_Popular-2" data-name="Most Popular" transform="matrix(0.73, 0.69, -0.69, 0.73, 36.44, 35.16)" fill="#fffefe" font-size="13" font-family="Poppins-SemiBold, Poppins" font-weight="600"><tspan x="0" y="0">Most Popular</tspan></text>
+    </g>
+  </g>
+</svg>

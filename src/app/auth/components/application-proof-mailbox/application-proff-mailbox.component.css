@@ -1,0 +1,39 @@
+.getStarted {
+    cursor: pointer;
+}
+
+@media (max-width:768px) {
+    .header-post-mail img {
+        width: 120px;
+        padding-left: 10px;
+    }
+}
+
+@media (max-width:992px) {
+    .contactBtn {
+        top: 42px;
+        right: 16px;
+    }
+}
+
+@media (min-width:515px){
+    .plus-icon{
+        flex-wrap: unset;
+    }
+    /* .upload-proof{
+        align-items: center;
+    } */
+}
+
+@media (max-width:514px){
+    .upload-proof{
+        align-items: center;
+    }
+    .upload-proof > img {
+        object-fit: cover;
+        display: block;
+        width: 50%;
+        border-radius: 10px;
+        height: 100px;
+    }
+}

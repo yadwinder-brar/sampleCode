@@ -1,0 +1,27 @@
+<div class="row">
+    <div class="col-lg-12 justify-between-md-center">
+        <h3 class="text-center font-18 font-600">Add Tags</h3>
+    </div>
+</div>
+<div class="row pt-4">
+    <div class="col-lg-12">
+        <div class="tag-div">
+            <div class="tag-div1" (click)="selectTags('family')">
+                <p class="tag-span" [ngClass]="selectedTagsData.includes('family')? 'active':''">Family</p>
+            </div>
+            <div class="tag-div1" (click)="selectTags('friend')" >
+                <p class="tag-span" [ngClass]="selectedTagsData.includes('friend')? 'active':''">Friend</p>
+            </div>
+            <div class="tag-div1" (click)="selectTags('business')">
+                <p class="tag-span" [ngClass]="selectedTagsData.includes('business')? 'active':''">Business</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="row justify-center mt-5">
+    <div class="justify-center">
+        <button class="theme-btn white-btn mr-2 back-red" (click)="dialogRef.close(false);" >Cancel</button>
+        <button class="theme-btn red ml-2"(click)="addTags()">Add</button>
+    </div>
+</div>

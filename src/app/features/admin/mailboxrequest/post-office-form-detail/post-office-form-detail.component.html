@@ -1,0 +1,315 @@
+
+<section>
+    <div class="row justify-between">
+      <div class="col-lg-2 pl-2">
+        <img class="img-logo1" src="../../../../assets/images/newLogo4.png" alt="" />
+      </div>
+      <div class="col-lg-6 mt-3 order-2">
+        <div class="text-center font-36 fw-6">Application for Mailbox Rental</div>
+        <div class="text-center font-16 l-black">
+          Fill in all the details required to submit your application.
+        </div>
+      </div>
+      <div class="col-lg-2 text-right pr-3 order-3">
+        <div>
+          <button class="theme-btn border-white contactBtn"><a href="tel:+123456890">Contact Us </a></button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="mx-3">
+    <div class="row justify-content-md-center">
+    <div class="col-lg-12 px-3 mt-2 mb-5">
+      <div class="mt-4">
+        <form class="white-form-card aggre-ment" [formGroup]="form">
+          <p>This Agreement is made on<span>
+            <input
+            readonly
+            formControlName="contractDate"
+            type="text" class="Agreement">
+            <mat-datepicker #picker></mat-datepicker></span> by and between
+             <span class="inupt-errr">
+              <input readonly matInput formControlName="name"
+                type="text" class="Agreement">
+                
+                <!-- <mat-error class="error"></mat-error> -->
+              </span>, hereinafter referred to as <span
+              class="text-uderline">“Applicant"</span>, and <span class="text-uderline">ShipDistrict®</span> ,
+            hereinafter referred to as “Mail Service”, shall be governed by these terms to which each party agrees:</p>
+          <p><b>1.</b> By completing this form and USPS Form 1583, a copy of which will be made available to the United
+            States Postal Service, applicant appoints Mail Service as agent for the receipt for a period not to exceed
+            that for which rent has been paid in advance. Applicant will pick up mail or packages at least once each
+            month or make other suitable arrangements, in advance, with Mail Service. Applicant may pick up mail or
+            packages within the business hours of the Mail Service. Applicant also promises to pay Mail Service any, and
+            all charges/invoices within no more than 14 days or Applicant is subject to late fees or a reinstatement
+            fee.</p>
+          <p><b>2.</b> If a key to a lockbox is loaned to applicant, the key remains the property of Mail Service and
+            shall not be duplicated or modified by applicant. The key shall be returned prior or at the time of
+            termination of service. Applicant understands that the relationship of the parties hereto is one of bailment
+            and not landlord and tenant.</p>
+          <p><b>3.</b> Once Mail Service has received applicant’s mail or package from the carrier and has sent the user
+            a scan, the mail shall be deemed to have been delivered, and Mail Service shall not be responsible for loss,
+            theft, or damage. When receiving mail or packages from third parties, Mail Service is not engaged in the
+            delivery of mail or packages and cannot be responsible for failure of the United States Postal Service or
+            any carrier to deliver the mail or packages, or to deliver them in a timely fashion or undamaged condition.
+          </p>
+          <p><b>4.</b> Applicant agrees to use services in accordance with Mail Service rules and in compliance with all
+            U.S. Postal regulations, as well as local, state, and federal statutes and regulations. Failure to do so may
+            result in cancellation of service without notice, refund, or mail forwarding.</p>
+          <p><b>5.</b> Information provided by applicant will be kept confidential and will not knowingly be disclosed
+            without applicant’s prior consent, except for law enforcement or postal operation purposes, in which case
+            Mail Service intends to cooperate fully. Law enforcement is further clarified to include all city, county,
+            state or federal agencies or their representatives.</p>
+          <p><b>6.</b> Mail will be accepted for no more than three (3) persons or organizations to a single address,
+            and each must complete a USPS Form 1583 and provide photo identification. If applicant consistently receives
+            substantially more mail than should be received by an address, Mail Service reserves the right to require
+            applicant to pay a fee. Charges for service are based upon average daily volume and activity. Special
+            circumstances, e.g., high number of parcels, etc. may require assessment of additional fees. An unusually
+            high volume of mail will result in either a higher fee being charged, or termination of the mail receiving
+            service. Applicant further agrees that parcels delivered to this address for the applicant will be delivered
+            by common carrier only, that no truck line (freight) deliveries will be made WITHOUT PRIOR NOTIFICATION AND
+            ACCEPTENCE OF MAIL SERVICE, that parcels will be retrieved within 24 hours after delivery, and that no
+            hazardous or dangerous material will be delivered to applicant. Failure to adhere to any of these parcel
+            delivery stipulations will result in termination of service.</p>
+          <p><b>7.</b> Applicant agrees to protect, indemnify, and hold harmless Mail Service from and against any, and
+            all claims, demands and causes of action any nature whatsoever relative to use of Mail Service facilities or
+            services.</p>
+          <p><b>8.</b> Should Mail Service commit or fail to commit any act that results in disruption of service and
+            applicant thereby suffers a loss, Mail Service's liability shall be limited to not more than the rental fees
+            paid by applicant for service not yet received. Mail Service shall not be liable for incidental or
+            consequential damages.</p>
+          <p><b>9.</b> Per USPS regulations, certified, registered, insured, or C.O.D. mail or packages will be accepted
+            by Mail Service on the behalf of applicant. Full, advance payment of any charges must be made to Mail
+            Service prior to acceptance of any packages that need payment to be accepted.</p>
+          <p><b>10.</b> Mail Service fees are due and payable in advance or on due date, and notice thereof will be
+            communicated via in person, telephone, email, or online portal. No other notice will be required. Failure to
+            pay such fees when due may result in disruption or cancellation of services. Mail Service does not prorate
+            fees and does not provide refunds in the event of cancellation by applicant. The Applicant's use of service
+            can also be terminated if Applicant remains in default with Mail Service for 14 days or greater for any, and
+            all charges/invoices.</p>
+          <p><b>11.</b> Customer herein agrees that total liability of Mail Service for any, and all claims is limited to
+            one hundred dollars ($100.00) regardless of the nature of the claim.</p>
+            <span><b> Customer Initial </b></span>
+            <p>  <span class="inupt-errr"><input readonly formControlName="initial"
+            type="text" class="Agreement"> </span></p>
+          <p><b>12.</b> Applicant shall use only the address designation “PMB” or "#" to designate their address. NO
+            OTHER DESIGNATION IS VALID. Specifically excluded is the use of suite, apt., dept., or other designators.
+            The U.S. Postal service may refuse to deliver any piece of mail that does not include the PMB or # sign
+            designation. Applicant is also subject to a “Wrong Address/Missing PMB #” fee. Applicant is responsible for
+            notifying correspondents of the above address.</p>
+          <p>The address to be used by applicant for the purpose of receiving mail is as follows:</p>
+          <div class="Applicant_bussiness">
+            <p>Applicant’s Name/Business Name</p>
+            <p><b>225 E 12th St</b></p>
+            <p><b>PMB#(Assigned Number) or </b></p>
+            <p><b>#(Assigned Number)</b> </p>
+            <p><b>Los Angeles CA 90015</b></p>
+          </div>
+          <p><b>13.</b> Customer agrees to abide by all Postal Regulations for providing proper address information to
+            senders. Customer agrees to hold Mail Service free and harmless for failure to receive packages and/or mail
+            when not properly addressed.</p>
+          <p><b>14.</b> Upon termination of services by Mail Service or failure to pay rent in advance by applicant,
+            Mail Service shall not make applicant’s mail available without payment theretofore. Applicant understands
+            that the United States Postal service will not forward or return mail without payment and will not accept a
+            Change of Address. At termination of service, applicant, if he wishes mail forwarded after that date, shall
+            provide Mail Service with a forwarding address, and pay the required fees. In the event applicant fails to
+            do this, Mail Service shall refuse any further mail and, in the case of mail already received handle such
+            mail in accordance with USPS DMM D042.2.6 regulations. By Signing/ Printing name below, Customer agrees to
+            all terms and conditions of this contract.</p>
+            <p><b>15.</b> Are you using this mailbox for </p>
+              <div class="radioButton mt-2">
+                <mat-radio-group formControlName="mailboxType" aria-label="Select an option" >
+                  <mat-radio-button  color="warn" class="mx-2" value="personal">Personal</mat-radio-button>
+                  <mat-radio-button  color="warn" class="mx-2"  value="business">Business</mat-radio-button>
+                  <mat-radio-button  color="warn" class="mx-2" value="both">Both</mat-radio-button>
+                </mat-radio-group>
+              </div>
+            <!-- </p> -->
+          <div class="col-lg-4">
+            <p>  <span class="inupt-errr"><input type="text" readonly formControlName="signature" class="Agreement-sgn"> </span></p>
+            <span class="font-14">Applicant Printed Name / Signature</span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="row justify-content-md-center">
+    <div class="col-lg-12 px-3 mt-2 mb-5">
+      <div class="mt-4">
+        <div class="white-form-card aggre-ment">
+          <p class="pt-50"></p>
+          <p>
+            This acknowledgment is required by Section 17538.5 of the Business and
+            Professions Code of the State of California. Any person obtaining
+            private mailbox receiving service in the State of California must read
+            and acknowledge receipt of the following statement, which is to be
+            kept on file at this Commercial Mail Receiving Agency and will be made
+            available, upon demand, to the Department of Consumer Affairs or any
+            law enforcement agency conducting an investigation
+          </p>
+          <p>
+            By obtaining use of a private mailbox receiving service in the State
+            of California, I acknowledge that:
+          </p>
+          <p>
+            <b>1.</b> I am obligated to disclose my actual home address or place
+            of residence on a USPS Form 1583 or other form as may later be
+            developed and I further agree that I will provide prompt written
+            notice to this CMRA of any subsequent change in my home address or
+            place of residence
+          </p>
+          <p>
+            <b>2. </b>By signing/printing name below, I irrevocably authorize this
+            CMRA to act as my agent for service of process to receive any legal
+            documents that may be served upon me. This authorization shall
+            continue from the date of this agreement until two years after my mail
+            receiving service has been terminated. I understand that this CMRA
+            will (A) place a copy of the documents or a notice that the documents
+            were received into my mailbox or other place where I usually receive
+            my mail, unless my mail receiving service has been terminated, and (B)
+            send all documents by first-class mail to the home or other address
+            last known to the CMRA
+          </p>
+          <p>
+            <b>3. </b>I further acknowledge that I understand that use of a
+            private mailbox receiving service for commercial purposes in the State
+            of California requires the user to comply with all applicable laws,
+            including Section 17538.5 of the Business and Professions Code and
+            laws prohibiting unfair competition and false advertising as set forth
+            in Sections 17200 and 17500 of the Business and Professions Code.
+            Violation of these laws may result in civil or criminal penalties or
+            both. I understand that the United States Postal Service Form 1583
+            that must be prepared for each private mailbox receiving service
+            customer shall be delivered to the local United States Post Office and
+            a copy of the must be retained by this CMRA and made available upon
+            demand to the Department of Consumer Affairs or any law enforcement
+            agency conducting an investigation. I hereby agree to accept and abide
+            by the foregoing requirements.
+          </p>
+          <form [formGroup]="form">
+            <div class="col-lg-4">
+              <p>
+                <span class="inupt-errr"
+                  ><input
+                  readonly
+                    type="text"
+                    formControlName="signature"
+                    class="Agreement-sgn"
+                  /></span
+                >
+              </p>
+              <span class="font-14">Applicant Printed Name / Signature</span>
+            </div>
+            <div class="font-16 mt-3">
+              <b>Please verify the information entered below is correct.</b>
+            </div>
+            <div class="row pt-50">
+              <div class="col-lg-6 pr-3">
+                <div>
+                  <label class="l-black fw-5 font-14">Name (Printed)</label>
+                  <form-field>
+                    <input
+                      type="text"
+                      readonly
+                      formControlName="name"
+                      placeholder="Name (Printed)"
+                      class="form-control font-family"
+                    />
+                  </form-field>
+                </div>
+              </div>
+              <div class="col-lg-6 pr-3">
+                <div>
+                  <label class="l-black fw-5 font-14">Street Address</label>
+                  <form-field>
+                    <input
+                      type="text"
+                      formControlName="address1"
+                      placeholder="Street Address"
+                      class="form-control font-family"
+                    />
+                  </form-field>
+                </div>
+              </div>
+              <div class="col-lg-4 pr-3">
+                <div>
+                  <label class="l-black fw-5 font-14">City</label>
+                  <form-field>
+                    <input
+                      type="text"
+                      formControlName="city"
+                      placeholder="City"
+                      class="form-control font-family"
+                    />
+                  </form-field>
+                </div>
+              </div>
+              <div class="col-lg-4 pr-3">
+                <div>
+                  <label class="l-black fw-5 font-14">State</label>
+                  <form-field>
+                    <input
+                      type="text"
+                      formControlName="state"
+                      placeholder="State"
+                      class="form-control font-family"
+                    />
+                  </form-field>
+                </div>
+              </div>
+              <div class="col-lg-4 pr-3">
+                <div>
+                  <label class="l-black fw-5 font-14">ZIP Code</label>
+                  <form-field>
+                    <input
+                      type="text"
+                      formControlName="zipCode"
+                      placeholder="ZIP Code"
+                      class="form-control font-family"
+                    />
+                  </form-field>
+                </div>
+              </div>
+              <div class="col-lg-6 pr-3">
+                <div>
+                  <label class="l-black fw-5 font-14">Email</label>
+                  <form-field>
+                    <input
+                      type="text"
+                      formControlName="email"
+                      placeholder="Email"
+                      class="form-control font-family"
+                    />
+                  </form-field>
+                </div>
+              </div>
+              <div class="col-lg-6 pr-3">
+                <div>
+                  <label class="l-black fw-5 font-14">Phone Number</label>
+                  <form-field>
+                    <input
+                      type="text"
+                      formControlName="phone"
+                      [mask]="mask"
+                      [maxLength]="14"
+                      placeholder="Phone Number"
+                      class="form-control font-family"
+                    />
+                  </form-field>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-12 col-xl-12 padding-right">
+    <div class="btn-div mt-5">
+        <button class="btn btn-reject" (click)="dialogRef.close()">Close</button>
+        
+    </div>
+  
+ </div>
+  

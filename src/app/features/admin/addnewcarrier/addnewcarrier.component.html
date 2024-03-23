@@ -1,0 +1,28 @@
+<div class="row">
+    <div class="col-lg-12 justify-between-md-center pt-3">
+        <div class="invit-div">
+            <p class="font-500 text-center">Add New <span class="getStarted font-600">Carrier</span> </p>
+           
+        </div>
+    </div>
+</div>
+<div class="row justify-center">
+    <div class="col-lg-9 col-xl-9 justify-between-md-center">
+        <div class="logo-upload">
+            <p>Add Logo</p>
+        </div>
+        <label class="font-14">Carrier </label>
+        <form-field>
+            <mat-select class="form-control" placeholder="Select Carrier">
+             <mat-option>Pallet</mat-option>
+             <mat-option>Create</mat-option>
+             <mat-option>Barrel</mat-option>
+            </mat-select>                      
+           </form-field>
+    </div>
+    <div class="justify-center my-2">
+        <button class="theme-btn white-btn mr-2 back-red" (click)="this.dialogRef.close(false)">Back</button>
+        <button class="theme-btn red ml-2" (click)="this.dialogRef.close(false)">Add </button>
+    </div>
+
+</div>

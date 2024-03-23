@@ -1,0 +1,26 @@
+<div class="row">
+    <div class="col-lg-12 justify-between-md-center pt-3">
+        <div class="invit-div assign1">
+            <p class="font-500 text-center">Assign Mailbox </p>
+        </div>
+    </div>
+</div>
+<div class="row justify-center">
+    <div class="col-lg-9 col-xl-9 justify-between-md-center">
+        <label class="font-14">Mailbox Address </label>
+        <form-field [errorControl]="vertualId" name="mailBox address" >
+            <input type="text" class="form-control forgot-pass"
+                placeholder="Address" [formControl]="vertualId" />
+        </form-field>
+    </div>
+    <div class="justify-center my-3">
+        <button class="theme-btn white-btn mr-2 back-red" (click)="this.dialogRef.close(false)">Cancel</button>
+        <button class="theme-btn red ml-2"(click)="approveRequest();"> Assign<mat-spinner
+            [diameter]="18"
+            class="ml-2"
+            [strokeWidth]="1"
+            *ngIf="isLoading"
+          ></mat-spinner> </button>
+    </div>
+
+</div>

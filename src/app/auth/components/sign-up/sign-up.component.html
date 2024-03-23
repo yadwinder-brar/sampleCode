@@ -1,0 +1,118 @@
+<div class="bg-video-wrap">
+  <div class="header">
+    <div class="row justify-between">
+      <div class="col-2 pl-2">
+        <img
+          class="img-logo-1"
+          src="../../../../assets/images/newLogo5.png"
+          alt=""
+        />
+      </div>
+      <div class="col-2 text-right pr-3">
+        <div>
+          <button class="theme-btn border-white contactBtn"><a href="tel:+123456890">Contact Us </a></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <video autoplay loop class="video-tag" >
+    <source
+      src="https://shipdistrict-prod.s3.us-west-2.amazonaws.com/shipdistrict/cd411f2114b45ef2c6ceb27290c7d8f54118a615.mp4"
+      type="video/mp4"
+    />
+  </video>
+  <div class="row form-login">
+    <div class="col-lg-12">
+      <div class="form form-width">
+        <div class="font-40 fw-7 topText">
+          Get <span class="getStarted1">started</span> with <br />
+          easy Sign up
+        </div>
+        <div class="font-14 my-2 l-black">Please enter your details below.</div>
+        <form class="" [formGroup]="signUpForm">
+          <label class="font-14">Email Address</label>
+          <form-field [errorControl]="signUpForm.get('email')" name='email'>
+            <input
+              type="text"
+              class="form-control forgot-pass"
+              formControlName="email"
+              placeholder="Email address"
+            />
+          </form-field>
+          <label class="font-14">Password</label>
+          <form-field [errorControl]="signUpForm.get('password')" name="password">
+            <input
+              type="password"
+              class="form-control forgot-pass"
+              #newPassRef formControlName="password"
+              placeholder="Password"
+            />
+            <!-- <img class="form-append" src="../../../../assets/images/eye-off.svg" alt=""> -->
+            <img
+        (click)="
+        newPassword = !newPassword;
+          newPassRef.type = newPassRef.type == 'password' ? 'text' : 'password'
+        "
+        class="form-append cursor"
+        [src]="
+        newPassword
+            ? '../../../../assets/images/eye-on.svg'
+            :'../../../../assets/images/eye-off.svg' 
+        "
+        alt=""
+      />
+          </form-field>
+          <label class="font-14">Confirm Password</label>
+          <form-field [errorControl]="signUpForm.get('conPassword')" name="confirm password">
+            <input
+              type="password"
+              class="form-control forgot-pass"
+              #conPassRef formControlName="conPassword"
+              placeholder="Confirm password"
+            />
+            <img
+        (click)="
+          confirmPassword = !confirmPassword;
+          conPassRef.type = conPassRef.type == 'password' ? 'text' : 'password'
+        "
+        class="form-append cursor"
+        [src]="
+          confirmPassword
+            ? 'assets/images/eye-on.svg'
+            : 'assets/images/eye-off.svg'
+            "
+            alt=""
+            />
+          </form-field>
+        
+        <div class="font-14 agree ">
+            <mat-checkbox class="agree signup" formControlName="accept"></mat-checkbox>I agree with 
+              <span class="getStarted font-600" (click)="$event.stopPropagation();openPrivacy($event); "> Privacy policy </span> and
+              <span class="getStarted font-600" (click)="$event.stopPropagation();openTermAndCondition($event); ">Terms and conditions</span>
+             <br/>
+            <mat-error class="error" *ngIf="signUpForm.controls['accept'].touched && signUpForm.controls['accept'].hasError('required')">Please accept term and conditions</mat-error>
+          
+        </div>
+          <footer class="text-center mt-3">
+            <button type="button" class="theme-btn red signupbtn" (click)="submit()">Get started <mat-spinner
+              [diameter]="18"
+              class="ml-2"
+              [strokeWidth]="1"
+              *ngIf="isLoading"
+            ></mat-spinner></button>
+          </footer>
+        </form>
+      
+      </div>
+    
+   
+
+        <div class="account text-center cursor dont font-14">
+          Have an account?<span class="getStarted1" (click)="sigIn()"><span class="font-family getStarted1"> Sign in</span></span>
+        </div>
+      </div>
+    </div>
+  <div class="overlay">
+  </div>
+</div>
+    

@@ -1,0 +1,14 @@
+<div class="form-group">
+  <div class="form-prefix">
+    <ng-content select=".form-prefix"></ng-content>
+  </div>
+  <div class="form-control-wapper">
+    <ng-content select=".form-control"></ng-content>
+  </div>
+  <div class="form-append">
+    <ng-content select=".form-append"></ng-content>
+  </div>
+</div>
+<div class="error" *ngIf="control?.touched && control?.invalid && error">
+  {{ error }}
+</div>

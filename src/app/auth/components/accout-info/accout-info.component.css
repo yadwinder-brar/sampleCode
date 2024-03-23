@@ -1,0 +1,13 @@
+
+
+@media (max-width:768px) {
+    .header-post-mail img {
+      width: 120px;
+      padding-left: 10px;
+    }
+    .contactBtn {
+        top: 42px;
+        right: 16px;
+      }
+  }
+  

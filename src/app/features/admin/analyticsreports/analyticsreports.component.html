@@ -1,0 +1,137 @@
+<!-- <p>dashboard works!</p> -->
+<app-admin-header [pageName]="'Analytics and Reports'"></app-admin-header>
+<div class="content">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="map" *ngIf="locations && locations.length>0">
+                <!-- <img src="../../../../assets/images/admin/map.png"> -->
+                <agm-map [latitude]="lat" [longitude]="lng" [fullscreenControl]="true" [zoom]="zoom" [disableDefaultUI]="false" [zoomControl]="true"  [disableDefaultUI]="true">
+                    <agm-marker *ngFor="let m of locations || []; let i = index" [latitude]="m?.locationCoordinate?.latitude" [longitude]="m?.locationCoordinate?.longitude">
+                    </agm-marker>
+                </agm-map>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="Shipment-logs">
+                <div class="shippment-form-card logs">
+                    <p class=" d-inline font-600">Shipment Logs</p>  <img
+                    class="QuotesImg"
+                    (click)="getlogs()"
+                    src="../../../../../../assets/images/refersh.svg"
+                  />
+                    <ul class="square logs" *ngIf="logs && logs.length>0 && !isLogsLoading">
+                        <li *ngFor="let data of logs">{{data?.message}}</li>
+                    </ul>
+                    <div class="noRequest" *ngIf="logs && logs.length==0 && !isLogsLoading">
+                        No Shipments Logs found
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="content">
+    <div class="inner-dashbaord pt-2">
+        <div class="shippment-form-card">
+            <div class="row">
+                <div class="col-lg-6 col-xl-3 pr-2 pl-2 padding-l">
+                    <div>
+                        <img src="../../../../assets/images/search.svg" class="searching-icon" />
+                        <form-field>
+                            <input type="text" placeholder="Search by Carrier" class="form-control font-family" />
+                        </form-field>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-xl-2 pr-2">
+                    <div>
+                        <img src="../../../../assets/images/fillter-date.svg" class="filter-icon" />
+                        <div class="Filter-status">
+                            <form-field>
+                                <mat-select class="form-control filter-status1" placeholder="Filter by Carrier">
+                                    <mat-option>Fed ex</mat-option>>
+                                </mat-select>
+                            </form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xl-2 pr-2 cursor">
+                    <div>
+                        <img *ngIf="!startDate" src="../../../../assets/images/fillter-date.svg" class="filter-icon" />
+                        <img *ngIf="startDate" (click)="startDate = '';endDate='';searchBydate($event);" src="../../../../assets/images/close-icon.svg" class="filter-icon" />
+
+
+                        <div class="filter-date">
+                            <input type="text" [(ngModel)]="startDate" (dateChange)="searchBydate($event)" (click)="startedDate.open()" readonly placeholder="From Date"
+                                [matDatepicker]="startedDate" class="form-control" />
+                            <img class="form-append mr-2" (click)="startedDate.open()"
+                                src="../../../../assets/images/arrow-down.svg" alt="" />
+                            <mat-datepicker #startedDate></mat-datepicker>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xl-2 pr-2 cursor">
+                    <div>
+                        <img *ngIf="!endDate" src="../../../../assets/images/fillter-date.svg" class="filter-icon" />
+                        <img *ngIf="endDate" (click)="endDate = ''; " src="../../../../assets/images/close-icon.svg" class="filter-icon" />
+
+
+                        <div class="filter-date">
+                            <input type="text" [(ngModel)]="endDate" (dateChange)="searchBydate($event)" (click)="endedDate.open()" readonly placeholder="To Date"
+                                [matDatepicker]="endedDate" class="form-control" />
+                            <img class="form-append mr-2" (click)="endedDate.open()"
+                                src="../../../../assets/images/arrow-down.svg" alt="" />
+                            <mat-datepicker #endedDate></mat-datepicker>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-12 tble-res" *ngIf="revenue && revenue.length>0 && !isRevenueLoading">
+                    <table class="table table-responsive address-table ">
+                        <tr>
+                            <th>Carrier Name </th>
+                            <!-- <i class="short"><img src="../../../../assets/images/shorting-icon.svg"></i> -->
+                            <th align="center">Total Shipments </th>
+                            <th align="center">Shipments Delivered</th>
+                            <th align="center">Order Created</th>
+                            <th align="center">Intransit</th>
+                            <th align="center">Revenue</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        <tr *ngFor="let data of revenue; i as index">
+                            <td>Fedex</td>
+                            <td align="center">{{data?.totalShipments}}</td>
+                            <td align="center">{{data?.completed}}</td>
+                            <td align="center">{{data?.inOrderCreated}}</td>
+                            <td align="center">{{data?.inTransit}}</td>
+                            <td align="center">{{data?.totalRevenueS}}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <!-- <td><img src="../../../../assets/images/dots.svg"></td> -->
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <pagination *ngIf="revenue && revenue.length>0 && !isRevenueLoading"
+    [(pageNo)]="pageNo"
+    [(pageSize)]="pageSize"
+    (page)="getRevenue()"
+    [totalRecords]="totalRecords || 0"
+  ></pagination> -->
+</div>

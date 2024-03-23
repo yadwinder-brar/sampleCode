@@ -1,0 +1,140 @@
+<section class="py-3">
+  <div class="row justify-between">
+    <div class="col-lg-2 pl-2 header-post-mail">
+      <img
+        class="img-logo1"
+        src="../../../../assets/images/newLogo4.png"
+        alt=""
+      />
+    </div>
+    <div class="col-lg-6 mt-5 order-2">
+      <div class="text-center font-40 fw-6">
+        <span class="getStarted font-600">Mailbox</span> Application
+      </div>
+      <div class="text-center font-14 l-black font-family">
+        Please submit two forms of ID to be provided for USPS Form 1583.
+      </div>
+    </div>
+    <div class="col-lg-2 text-right pr-3 order-3">
+      <div>
+        <button class="theme-btn border-white contactBtn"><a href="tel:+123456890">Contact Us </a></button>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-md-center">
+    <div class="col-lg-8 px-5 mt-2">
+      <div class="mt-4">
+        <div class="white-form-card">
+          <div class="padding-both-side">
+            <div class="font-14 l-black text-center">
+              Upload your ID's by clicking in the Proof 1 & 2 boxes and upload very clear photos or scans.
+            </div>
+            <div class="row justify-between plus-icon">
+              <div class="col-lg-5 pr-2">
+                <div class="text-center font-14 mt-3 mb-2 l-black">Proof 1</div>
+                <file-uploader #fileUploader="FileUploader"></file-uploader>
+                <image-cropper #cropper="ImageCropper"></image-cropper>
+                <app-uploader-ui
+                  #selectFile1
+                  [cropper]="cropper"
+                  [fileUploader]="fileUploader"
+                  (afterUploadFile)="proof1Upload($event)"
+                ></app-uploader-ui>
+                <div
+                  class="upload-proof"
+                  *ngIf="!firstProffImg"
+                  (click)="selectFile1.selectFile()"
+                >
+                  <img src="../../../../assets/images/plus-icon.svg" alt="" />
+                </div>
+                <div class="upload-proof" *ngIf="firstProffImg">
+                  <mat-icon class="first_icon" (click)="firstProffImg = ''">close</mat-icon>
+                  <img [src]="firstProffImg" alt="" />
+                </div>
+              </div>
+
+              <div class="col-lg-5 pl-2">
+                <div class="text-center font-14 mt-3 mb-2 l-black">Proof 2</div>
+                <file-uploader #fileUploader="FileUploader"></file-uploader>
+                <image-cropper #cropper="ImageCropper"></image-cropper>
+                <app-uploader-ui
+                  #selectFile2
+                  [cropper]="cropper"
+                  [fileUploader]="fileUploader"
+                  (afterUploadFile)="proof2Upload($event)"
+                ></app-uploader-ui>
+                <div
+                  class="upload-proof"
+                  *ngIf="!secProffImg"
+                  (click)="selectFile2.selectFile()"
+                >
+                  <img src="../../../../assets/images/plus-icon.svg" alt="" />
+                </div>
+                <div class="upload-proof" *ngIf="secProffImg">
+                  <mat-icon class="first_icon" (click)="secProffImg = ''">close</mat-icon>
+                  <!-- <img src="" (click)="removeImage()" /> -->
+                  <img [src]="secProffImg" alt="" />
+                </div>
+              </div>
+            </div>
+            <div class="mt-3">
+              <div class="font-14 l-black">
+                <img
+                  src="../../../../assets/images/tooltip-icon.svg"
+                  alt=""
+                  class="ml-2 doit"
+                />
+                Do's and don'ts for uploading your document
+              </div>
+              <div>
+                <ul class="uloading-instruction">
+                  <li class="font-12 l-black">
+                    One proof must contain a photograph of your current address.
+                  </li>
+                  <li class="font-12 l-black">
+                    Social Security Cards, Credit Cards, & Birth Certificates are not accepted.
+                  </li>
+                  <li class="font-12 l-black">
+                    Accepted proofs of ID are Driver's Licenses, Passports, Armed forces, 
+                    Government, State, Alien, Recognizable Corporate, University 
+                    Identification cards, Current Leases, Mortgages/Deeds, Voter Registration Cards,
+                     Home or Vehicle Insurance Policies, & Vehicle Registration Cards.
+                  </li>
+                </ul>
+              </div>
+              <div class="text-center font-12 my-3 fw-5">
+                <img
+                  width="16px"
+                  src="../../../../assets/images/bulb.svg"
+                  alt=""
+                  class="mr-2"
+                />Having issue getting notary?
+                <span class="getStarted font-500"(click)="goTo()" >Schedule with Ship District</span>
+              </div>
+            </div>
+
+            <div class="justify-center mt-4">
+              <button
+                class="theme-btn white-btn mr-2"
+                routerLink="/post-mail-box2"
+              >
+                Back
+              </button>
+              <button class="theme-btn red ml-2" (click)="next()">Next <mat-spinner
+                [diameter]="18"
+                class="ml-2"
+                [strokeWidth]="1"
+                *ngIf="isLoading"
+              ></mat-spinner></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- <section class="footer">
+    <div class="footer-bar">
+    </div>
+     </section> -->

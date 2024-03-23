@@ -1,0 +1,178 @@
+<section class="bg-info">
+  <div class="d-none" [class.loading]="isloading">
+    <mat-progress-spinner
+      *ngIf="isloading"
+      class="loader"
+      [color]="'warn'"
+      [mode]="'indeterminate'"
+      [value]="'30'"
+      stroke="f44336"
+    >
+    </mat-progress-spinner>
+  </div>
+  <div class="row justify-between-md-center">
+    <div class="col-lg-4 pl-2">
+      <img
+        class="img-logo1"
+        src="../../../../assets/images/newLogo4.png"
+        alt=""
+      />
+    </div>
+    <div class="col-lg-6 mt-3 create-ship order-3">
+      <div class="text-center font-36 fw-6">
+        Create New <span class="getStarted font-600">Shipment</span>
+      </div>
+      <div class="text-center font-16 l-black">
+        Make Payment to Complete Shipment
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-4 pl-3 mt-2 padding-r addi-sender1">
+      <div class="row">
+        <div class="col-lg-12 mt-2 mb-2">
+          <div class="white-form-card1">
+            <div class="edit-servces">
+              <p class="float-left">Quote</p>
+              <a class="refersh"
+                ><img
+                  (click)="updateQuotes()"
+                  src="../../../../assets/images/refresh-red.svg"
+              /></a>
+            </div>
+            <table class="sender-info" width="100%">
+              <tr>
+                <td align="left">
+                  <span class="font-weight"
+                    >{{ shipmentInfo?.selectedService?.serviceType }}
+                  </span>
+                  <p>{{ shipmentInfo?.selectedService?.time }}</p>
+                </td>
+                <td align="right" class="font-22 maincolor">
+                  ${{
+                    updatedData?.totalNetCharge ||
+                      shipmentInfo?.selectedService?.shipmentPrice
+                  }}
+                  
+                </td>
+              </tr>
+
+              
+                <tr *ngFor="let data of updatedData">
+                  <td align="left">{{data?.name}} :</td>
+                   <td align="right">$ {{ data?.value }}</td> 
+                </tr>
+              <!-- </div> -->
+              <!-- <tr *ngIf="updatedData">
+                <td align="left">Base Rate</td>
+                <td align="right">${{ updatedData?.totalBaseCharge }} </td>
+              </tr>
+              <tr *ngIf="updatedData">
+                <td align="left">Fuel Surcharge</td>
+                <td align="right">${{ updatedData?.FUEL }} </td>
+              </tr>
+              <tr *ngIf="updatedData?.INSURED_VALUE">
+                <td align="left">INSURED_VALUE</td>
+                <td align="right">${{updatedData?.INSURED_VALUE }} </td>
+              </tr> -->
+             <!--  <tr class="maincolor">
+                <td align="left">Discount</td>
+                <td align="right">40 $</td>
+              </tr> -->
+              <!-- <tr>
+                <td align="left">Additional Charges</td>
+                <td align="right">85 $</td>
+              </tr> -->
+            </table>
+          </div>
+        </div>
+        <div class="col-lg-12 mt-2 mb-2">
+          <div class="white-form-card1">
+            <div class="edit-servces">
+              <p class="float-left">Sender Information</p>
+            </div>
+            <table class="sender-info" width="100%">
+              <tr>
+                <td align="left">Name :</td>
+                <td align="right">{{ shipmentInfo?.sender?.name }}</td>
+              </tr>
+              <tr>
+                <td align="left">Email :</td>
+                <td align="right" class="emailText">{{ shipmentInfo?.sender?.email || '--' }}</td>
+              </tr>
+              <tr>
+                <td align="left">Phone No.</td>
+                <td align="right">{{ shipmentInfo?.sender?.phone }}</td>
+              </tr>
+              <tr>
+                <!-- 36 west havenue,denver, Z4858 CA, US  -->
+                <td align="left">Address :</td>
+                <td align="right">
+                  {{ shipmentInfo?.sender?.address1 +' ' }}{{
+                    shipmentInfo?.sender?.address2 + ' '
+                  }}{{ shipmentInfo?.sender?.address3}}
+                </td>
+              </tr>
+            </table>
+            <div class="edit-servces pt-3">
+              <p class="float-left">Receiver Information</p>
+              <table class="sender-info" width="100%">
+                <tr>
+                  <td align="left">Name :</td>
+                  <td align="right">{{ shipmentInfo?.receiver?.name }}</td>
+                </tr>
+                <tr>
+                  <td align="left">Email :</td>
+                  <td align="right"  class="emailText">
+                    {{ shipmentInfo?.receiver?.email || "--" }}
+                  </td>
+                </tr>
+                <tr>
+                  <td align="left">Phone No.</td>
+                  <td align="right">{{ shipmentInfo?.receiver?.phone }}</td>
+                </tr>
+                <tr>
+                  <td align="left">Address :</td>
+                  <td align="right">
+                    {{ shipmentInfo?.receiver?.address1 +' ' }}{{
+                      shipmentInfo?.receiver?.address2 + ' '
+                    }}{{ shipmentInfo?.receiver?.address3}}
+                  </td>
+                  <!-- 36 west havenue,denver, Z4858 CA, US</td> -->
+                </tr>
+              </table>
+            </div>
+            <div class="edit-servces pt-3">
+              <p class="float-left">Package Information</p>
+              <table class="sender-info" width="100%">
+                <div class="my-2" *ngFor="let data of shipmentInfo?.packages">
+                  <div class="packageInfo">
+                    <span >Package :</span>
+                    <span 
+                      >({{ data?.numberOfPackages }}) Qty</span
+                    >
+                  </div>
+                  <div class="packageInfo">
+                    <span>Dimensions:</span>
+                    <span >
+                      {{ data?.dimension?.length }}X{{
+                        data?.dimension?.height
+                      }}X{{ data?.dimension?.width }}
+                    </span>
+                  </div>
+                  <div class="packageInfo">
+                    <span >Insurance Declared:</span>
+                    <span>{{ data?.insuranceDeclared? "$"+data?.insuranceDeclared: '--' }}</span>
+                  </div>
+                </div>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-8 px-3 mt-2">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</section>

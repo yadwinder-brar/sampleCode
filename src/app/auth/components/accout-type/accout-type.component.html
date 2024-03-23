@@ -1,0 +1,130 @@
+<section class="main-padding atype pt-4">
+  <div class="row justify-between">
+    <div class="col-lg-2 pl-2 header-post-mail">
+      <img
+      class="img-logo1"
+        src="../../../../assets/images/newLogo4.png"
+        alt=""
+      />
+       </div>
+       <div class="col-lg-2 text-right pr-3 order-3">
+        <div>
+          <button class="theme-btn border-white contactBtn"><a href="tel:+123456890">Contact Us </a></button>
+        </div>
+      </div>
+    </div>
+  <div class="row">
+    <div class="col-lg-6 order-2">
+      <div class="px-5 pt-2">
+        <div class="font-40 fw-6 topText">
+          Get <span class="getStarted1">started</span> with <br />
+          easy Sign up
+        </div>
+        <div class="font-14 mt-3 mb-2 l-black">Please Select your account type.</div>
+        <div class="font-14 my-2 l-black align-center">
+        <img width="16px" class="mr-2 re" src="../../../../assets/images/bulb.svg" alt="">  You may choose to register for both a Shipping and Mailbox account.
+        </div>
+
+        <!-- card -->
+
+        <div class="row mt-4">
+          <div class="col-lg-6 col-sm-6 pr-2 margin-top margin-bottom">
+            <div class="white-card ">
+              <div class="font-15 my-2">I will need account for</div>
+               <div class="d-flex mb-3 Virtual">
+                  <div class="checkbox-section virtual-section">
+                    <!-- [disableRipple]="true" -->
+                    <mat-checkbox 
+                    [checked]="shipmentAccount"
+                    (change)="selectShipmentAccount($event)" class="mr-2 "></mat-checkbox>
+                  </div>
+                  <div>
+                    <div class="font-20 fw-6 align-center virtual-account"> Shipping Account <img class="ml-1" src="../../../../assets/images/tooltip-icon.svg" alt=""></div>
+                    <div class="font-13">
+                      Create labels to ship domestic and international
+                    </div>
+                  </div>
+                
+              </div>
+              <div class="card-list">
+                <ul>
+                  <li>Easy to use</li>
+                  <li>Rate-Quote Comparision</li>
+                  <li>Preferred Carrier options</li>
+                  <li>Discounted shipping rates</li>
+                </ul>
+                </div>
+              <div>
+                <img class="shipping-icon" src="../../../../assets/images/shipping-icon.svg" alt="">
+            </div>
+            </div>
+          </div>
+          <div class="col-lg-6 col-sm-6 pl-2 margin-top ">
+            <div class="white-card">
+                <div class="font-15 my-2">I will need account for</div>
+                <div class="d-flex mb-3 Virtual">
+                  <div class="checkbox-section virtual-section">
+                   
+                    <mat-checkbox [checked]="mailBoxAccount" (change)="selectMailboxAccount($event)" class="mr-1"></mat-checkbox>
+                  </div>
+                  <div>
+                    <div class="font-22 fw-6 align-center virtual-account "> Virtual Mailbox  <img class="ml-1" src="../../../../assets/images/tooltip-icon.svg" alt=""></div>
+                    <div class="font-13">
+                      With a physical address
+                    </div>
+                  </div>
+                
+              </div>
+                <!-- <div class="align-center mb-3">
+                 
+                  <div>
+                    <div class="font-22 fw-6 align-center">
+                      <input type="checkbox" /> 
+                    </div>
+                    <div class="font-13">
+                       
+                    </div>
+                  </div>
+                </div> -->
+                <div class="card-list">
+                  <ul>
+                    <li>Virtual Mailbox</li>
+                    <li>OTP verification on Pickup</li>
+                    <li>Mail/Junk Mail Shredding</li>
+                    <li>Cost effective plan</li>
+                  </ul>
+                  <!-- <div class="list-item"><span></span>Virtual Mailbox</div>
+                  <div class="list-item"><span></span>OTP verification on Pickup</div>
+                  <div class="list-item">
+                    <span></span>Mail/Junk Mail Shredding
+                  </div>
+                  <div class="list-item">
+                    <span></span>Cost effective plan
+                  </div> -->
+                </div>
+                <div>
+                    <img class="mailBox-icon" src="../../../../assets/images/mailbox-icon.svg" alt="">
+                </div>
+              </div>
+          </div>
+        </div>
+        <div class="text-center mt-2 py-2 mb-1">
+    
+          <button (click)="next()" class="theme-btn red signupbtn">Next</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6 position-relative">
+      <div class="sideImg shipping-img">
+        <!-- <img src="../../../../assets/images/account-type.png" alt="" /> -->
+      </div>
+    
+    </div>
+  </div>
+ 
+</section>
+<!-- <section class="footer">
+  <div class="footer-bar">  
+  </div>
+   </section> -->

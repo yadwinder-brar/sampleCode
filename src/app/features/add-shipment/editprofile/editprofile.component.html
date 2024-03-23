@@ -1,0 +1,238 @@
+<section class="bg-info">
+  <div class="d-none" [class.loading]="isloading">
+    <mat-progress-spinner
+    *ngIf="isloading"
+      class="loader"
+      [color]="'warn'"
+      [mode]="'indeterminate'"
+      [value]="'30'"
+      stroke="f44336"
+    >
+    </mat-progress-spinner>
+  </div>
+  <div class="row">
+    <div class="col-lg-4 pl-2">
+      <img
+        class="img-logo1"
+        src="../../../../assets/images/newLogo4.png"
+        alt=""
+      />
+    </div>
+    <div class="col-lg-4 mt-3 order-2 create-ship">
+      <div class="text-center font-36 fw-6">
+        Edit <span class="getStarted font-600"> Profile</span>
+      </div>
+    </div>
+  </div>
+<!-- {{editProfileForm.value | json}}//// -->
+  <div class="row justify-content-md-center pb-5">
+    <div class="col-lg-12 px-3 mt-2">
+      <div class="mt-2">
+        <form class="white-form-card" [formGroup]="editProfileForm">
+          <div class="edit-icon-profile">
+            <img (click)="selectFile.selectFile()"
+              src="../../../../assets/images/edit-icon.svg"
+              class="edit-icon"
+            />
+            <file-uploader #fileUploader="FileUploader"></file-uploader>
+                <image-cropper #cropper="ImageCropper"></image-cropper>
+                <app-uploader-ui
+                  #selectFile
+                  [cropper]="cropper"
+                  [fileUploader]="fileUploader"
+                  (afterUploadFile)="imgUpload($event)"
+                ></app-uploader-ui>
+                <!-- <div
+                  class="upload-proof"
+                  *ngIf="!profileImg"
+
+                >
+                </div> -->
+            <div class="log-edit">
+              <img class="" [ngClass]="profileImg?'log-img1':'log-img' " [src]="this.profileImg || '../../../../assets/images/ShipDistrict-logo.png'" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 pr-3">
+              <div>
+                <label class="fw-5 font-14">Name</label>
+
+                <form-field [errorControl]="editProfileForm.get('name')" name="name">
+                  <input
+                    type="text"
+                    formControlName="name"
+                    placeholder="Johnsmith"
+                    class="form-control font-family"
+                  />
+                </form-field>
+              </div>
+            </div>
+            <div class="col-lg-4 pr-3">
+              <div>
+                <label class="fw-5 font-14">Company Name</label>
+                <form-field [errorControl]="editProfileForm.get('companyName')" name="company name">
+                  <input
+                    type="text"
+                    formControlName="companyName"
+                    placeholder="Company Name"
+                    class="form-control font-family"
+                  />
+                </form-field>
+              </div>
+            </div>
+            <div class="col-lg-4 ">
+              <div>
+                <label class=" fw-5 font-14">Country</label>
+                <form-field
+                  [errorControl]="editProfileForm.get('country')"
+                  name="country name"
+                >
+                  <!-- <input type="text" formControlName="country" placeholder="Country" class="form-control font-family" /> -->
+                  <mat-select
+                    #selectCountry
+                    (selectionChange)="selectCountryName($event)"
+                    placeholder="Country"
+                    class="form-control w-100"
+                    formControlName="country"
+                  >
+                    <mat-option
+                      *ngFor="let item of countries"
+                      [value]="item.name"
+                      >{{ item.name }}</mat-option
+                    >
+                  </mat-select>
+                </form-field>
+              </div>
+            </div>
+            <div class="col-lg-4 pr-3">
+              <div>
+                <label class="fw-5 font-14">Address 1</label>
+                <form-field [errorControl]="editProfileForm.get('address1')" name="address 1">
+                  <input
+                    type="text"
+                    formControlName="address1"
+                    placeholder="Address 1"
+                    class="form-control font-family"
+                  />
+                </form-field>
+              </div>
+            </div>
+
+            <div class="col-lg-4 pr-3">
+              <div>
+                <label class="fw-5 font-14">Address 2</label>
+                <form-field [errorControl]="editProfileForm.get('address2')" name="address 2">
+                  <input
+                    type="text"
+                    placeholder="Address 2"
+                    formControlName="address2"
+                    class="form-control font-family"
+                  />
+                </form-field>
+              </div>
+            </div>
+
+
+
+            <div class="col-lg-4">
+              <div>
+                <label class=" fw-5 font-14">State</label>
+                <form-field
+                  [errorControl]="editProfileForm.get('state')"
+                  name="state name"
+                >
+                  <!-- <input type="text" formControlName="state" placeholder="State" class="form-control font-family" /> -->
+                  <mat-select
+                    #selectState
+                    [disabled]="!editProfileForm.controls['country'].value"
+                    (selectionChange)="selectStateName($event)"
+                    placeholder="State"
+                    class="form-control"
+                    formControlName="state"
+                  >
+                    <mat-option
+                      *ngFor="let item of states"
+                      [value]="item.name"
+                      >{{ item.name }}</mat-option
+                    >
+                  </mat-select>
+                </form-field>
+              </div>
+            </div>
+
+            <div class="col-lg-4 pr-3">
+              <!-- {{cities | json}}/// -->
+              <div>
+                <label class=" fw-5 font-14">City</label>
+                <form-field
+                  [errorControl]="editProfileForm.get('city')"
+                  name="city name"
+                >
+                  <!-- <mat-select
+                    #selectState
+                    [disabled]="!editProfileForm.controls['state'].value"
+                    placeholder="City"
+                    class="form-control"
+                    formControlName="city"
+                  >
+                    <mat-option *ngFor="let item of cities" [value]="item">{{
+                      item
+                    }}</mat-option>
+                    <mat-option *ngIf="cities && !cities.length"
+                      >no city found for this selected state</mat-option
+                    >
+                  </mat-select> -->
+                  <input type="text" formControlName="city" placeholder="City" class="form-control font-family" />
+                </form-field>
+              </div>
+            </div>
+            <div class="col-lg-4 pr-3">
+              <div>
+                <label class="fw-5 font-14">Zip Code</label>
+                <form-field [errorControl]="editProfileForm.get('zipCode')" name="zip code">
+                  <input
+                    type="text"
+                    formControlName="zipCode"
+                    placeholder="Zip Code"
+                    class="form-control font-family"
+                  />
+                </form-field>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div>
+                <label class="fw-5 font-14">Phone No</label>
+                <form-field
+                  [errorControl]="editProfileForm.get('phone')"
+                  name="phone"
+                >
+                  <!-- (input)="onValueChange($event)" -->
+                  <input
+                    type="text"
+                    formControlName="phone"
+                    placeholder="Phone No."
+                    [mask]="mask"
+                      [maxLength]="14"
+                    class="form-control font-family"
+                  />
+                </form-field>
+              </div>
+            </div>
+          </div>
+
+          <div class="justify-center mt-4 pb-4">
+            <button
+              class="theme-btn white-btn mr-2 back-red"
+              routerLink="/client/dashboard"
+            >
+              Back
+            </button>
+            <button class="theme-btn red ml-2" type="button" (click)="submit()">
+              Save Details
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,427 @@
+<section class="bg-info">
+  <div class="row justify-between">
+    <div class="col-lg-2 pl-2">
+      <!-- {{ this.PackegeInfoForm.value | json }} -->
+      <img
+        class="img-logo1"
+        src="../../../../assets/images/newLogo4.png"
+        alt=""
+      />
+    </div>
+    <div class="d-none" [class.loading]="isloading">
+      <mat-progress-spinner
+        *ngIf="isloading"
+        class="loader"
+        [color]="'warn'"
+        [mode]="'indeterminate'"
+        [value]="'30'"
+        stroke="f44336"
+      >
+      </mat-progress-spinner>
+    </div>
+    <div class="col-lg-6 mt-3 order-2 create-ship">
+      <div class="text-center font-36 fw-6">
+        Create New <span class="getStarted font-600">Shipment</span>
+      </div>
+      <div class="text-center font-16 l-black">
+        Please add your Shipment details
+      </div>
+    </div>
+    <div class="col-lg-1 d-flex order-3 close-file">
+      <div class="file" (click)="saveToDraft()">
+        <img src="../../../../assets/images/file-layer.svg" />
+      </div>
+      <div class="close" (click)="close()" >
+        <img src="../../../../assets/images/ic_sidemenu.svg" />
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12 px-3">
+      <div class="mt-2 info-page">
+        <div class="d-flex align-center">
+          <p class="float-right pack-info">Package Information</p>
+          <button class="theme-btn border-red float-right mx-3 bulkBtn" (click)="selectFile.selectFile()">Bulk Shipment</button>
+          <p class="per float-right">60%</p>
+          <file-uploader
+              #fileUploader="FileUploader"
+              [path]="apiPath"
+            ></file-uploader>
+            <app-uploader-ui
+              #selectFile
+              [fileUploader]="fileUploader"
+              [selectFileType]="'xlsx'"
+              (afterUploadFile)="afterUpload($event)"
+            ></app-uploader-ui>
+        </div>
+        <mat-progress-bar
+          color="warn"
+          mode="determinate"
+          value="60"
+        ></mat-progress-bar>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-md-center pb-5">
+    <div class="col-lg-12 px-3 mt-2">
+      <div class="mt-2">
+        <!-- {{PackegeInfoForm.valid | json}} -->
+        <!-- {{PackegeInfoForm.value | json}} -->
+        <form class="white-form-card" [formGroup]="PackegeInfoForm">
+          <div>
+            <p class="scondry-color">Package Information</p>
+          </div>
+
+          <div
+            class=""
+            formArrayName="packages"
+            *ngFor="let item of packages.controls; let i = index"
+          >
+            <div [formGroupName]="i">
+              <div class="row">
+                <div class="col-lg-4 pr-3">
+                  <div class="search-icon-div">
+                    <label class="k fw-5 font-14"
+                      >Select Package
+                      <span class="package"
+                        ><img
+                          matTooltip="Info about the action"
+                          matTooltipPosition="right"
+                          aria-label="Button that displays a tooltip when focused or hovered over"
+                          src="../../../../assets/images/tooltip-icon1.svg" /></span
+                    ></label>
+                    <img *ngIf="i==0"
+                      src="../../../../assets/images/search.svg"
+                      class="search-icon"
+                    />
+                    <form-field
+                      [errorControl]="item.get('packageName')"
+                      name="package name"
+                    ><input
+                    type="text" *ngIf="i==0"
+                    [disabled]="i > 0 || this.packages.length > 1"
+                    [matAutocomplete]="auto"
+                    formControlName="packageName"
+                    placeholder="Enter or select from packages"
+                    class="form-control font-family"
+                  />
+                  <mat-autocomplete
+                    #auto="matAutocomplete"
+                    (optionSelected)="onSelectionChange($event,item)"
+                  >
+                    <div *ngIf="options && options.length > 0">
+                      <mat-option
+                        *ngFor="let items of filteredOptions | async"
+                        [value]="items"
+                      >
+                        {{ items.packageName }}
+                      </mat-option>
+                    </div>
+                  </mat-autocomplete>
+                      <input *ngIf="i!=0"
+                        type="text"
+                        formControlName="packageName"
+                        placeholder="Enter Package name"
+                        class="form-control font-family"
+                      />
+                    </form-field>
+                  </div>
+                </div>
+                <div class="col-lg-4 pr-3">
+                  <!-- {{packageslist | json}}//// -->
+                  <div>
+                    <label class="fw-5 font-14"
+                      >Package Type
+                      <span class="package"
+                        ><img
+                          matTooltip="Info about the action"
+                          matTooltipPosition="right"
+                          aria-label="Button that displays a tooltip when focused or hovered over"
+                          src="../../../../assets/images/tooltip-icon1.svg" /></span
+                    ></label>
+                    <form-field
+                      [errorControl]="item.get('packageType')"
+                      name="package type"
+                    >
+                      <mat-select
+                        [disabled]="i > 0 || this.packages.length > 1"
+                        class="form-control"
+
+                        (selectionChange)="
+                          selectPackage($event, item?.controls)
+                        "
+                        formControlName="packageType"
+                        placeholder="Please select your package type"
+                      >
+                        <mat-option
+                          [value]="data.package_type"
+                          *ngFor="let data of packageslist"
+                        >
+                          {{ data.package_name }}</mat-option
+                        >
+                      </mat-select>
+                    </form-field>
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="row">
+                    <div class="col-lg-6 pr-3">
+                      <label class="fw-5 font-14"
+                        >Units
+                        <span class="package"
+                          ><img
+                            matTooltip="Info about the action"
+                            matTooltipPosition="right"
+                            aria-label="Button that displays a tooltip when focused or hovered over"
+                            src="../../../../assets/images/tooltip-icon1.svg" /></span
+                      ></label>
+                      <form-field
+                        [errorControl]="item.get('weightUnits')"
+                        name="weight unit"
+                      >
+                        <!-- [disabled]="this.PackegeInfoForm?.value?.packages[0]?.packageType
+                        !== 'YOUR_PACKAGING'" -->
+                        <mat-select
+                          formControlName="weightUnits"
+                          class="form-control"
+                          placeholder="Weight Unit"
+                        >
+                          <mat-option value="LB">LBS</mat-option>
+                          <mat-option value="KG">KG</mat-option>
+                        </mat-select>
+                      </form-field>
+                    </div>
+                    <div class="col-lg-6">
+                      <label class="fw-5 font-14"
+                        >Weight
+                        <span class="package"
+                          ><img
+                            matTooltip="Info about the action"
+                            matTooltipPosition="right"
+                            aria-label="Button that displays a tooltip when focused or hovered over"
+                            src="../../../../assets/images/tooltip-icon1.svg" /></span
+                      ></label>
+                      <form-field
+                        [errorControl]="item.get('weight')"
+                        name="weight"
+                      >
+                        <input
+                          type="text"
+                          formControlName="weight"
+                          TwoDigitDecimaNumberDirective
+                          maxlength="6"
+                          placeholder="kg/Lbs"
+                          class="form-control font-family"
+                        />
+                      </form-field>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-2 pr-3">
+                  <div formGroupName="dimension">
+                    <label class="fw-5 font-14">Dimension Unit</label>
+                    <form-field
+                      [errorControl]="item.get('dimension.unit')"
+                      name=" Dimension unit"
+                    >
+                      <mat-select
+                        formControlName="unit"
+                        (selectionChange)="
+                          changeDimensionUnit($event, item?.controls)
+                        "
+                        class="form-control"
+                        placeholder="Dimension Unit"
+                      >
+                        <mat-option value="IN">Inch</mat-option>
+                        <mat-option value="CM">CM</mat-option>
+                      </mat-select>
+                    </form-field>
+                  </div>
+                </div>
+
+                <div class="col-lg-6 pr-3">
+                  <div class="row" formGroupName="dimension">
+                    <div class="col-lg-4 pr-3">
+                      <div>
+                        <label class="fw-5 font-14">Dimensions
+                          <span class="package">
+                            <img
+                              matTooltip="Info about the action"
+                              matTooltipPosition="right"
+                              aria-label="Button that displays a tooltip when focused or hovered over"
+                              src="../../../../assets/images/tooltip-icon1.svg" /></span
+                        ></label>
+                        <form-field
+                          [errorControl]="item.get('dimension.length')"
+                          name="length"
+                        >
+                          <input
+                            type="text"
+                            matInput
+                            formControlName="length"
+                            placeholder="Length"
+                            NumberInput
+                            maxlength="6"
+                            class="form-control font-family"
+                          />
+                        </form-field>
+                      </div>
+                    </div>
+                      <div class="col-lg-4 pr-3">
+                        <div>
+                          <label class="fw-5 font-14 label-l">&nbsp;</label>
+                          <form-field
+                            [errorControl]="item.get('dimension.width')"
+                            name="width"
+                          >
+                            <input
+                              type="text"
+                              matInput
+                              placeholder="Width"
+                              NumberInput
+                              maxlength="5"
+                              formControlName="width"
+                              class="form-control font-family"
+                            />
+                          </form-field>
+                        </div>
+                      </div>
+                    
+                    <div
+                      class="col-lg-4"
+                      *ngIf="
+                        item.get('packageType').value !== 'FEDEX_ENVELOPE' &&
+                        item.get('packageType').value !== 'FEDEX_PAK'
+                      "
+                    >
+                      <div>
+                        <label class="fw-5 font-14 label-l">&nbsp;</label>
+                        <form-field
+                          [errorControl]="item.get('dimension.height')"
+                          name="height"
+                        >
+                          <input
+                            type="text"
+                            matInput
+                            placeholder="Height"
+                            NumberInput
+                            maxlength="6"
+                            formControlName="height"
+                            class="form-control font-family"
+                          />
+                        </form-field>
+                      </div>
+                    </div>
+                    
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div>
+                    <label class="fw-5 font-14"
+                      >Insurance Declared
+                      <span class="package"
+                        ><img
+                          matTooltip="Info about the action"
+                          matTooltipPosition="right"
+                          aria-label="Button that displays a tooltip when focused or hovered over"
+                          src="../../../../assets/images/tooltip-icon1.svg" /></span
+                    ></label>
+                    <div class="doller-img">
+                      <span class="doller-icon"
+                        ><img src="../../../../assets/images/doller.svg"
+                      /></span>
+                    </div>
+                    <div class="doller-input">
+                      <form-field
+                        [errorControl]="item.get('insuranceDeclared')"
+                        name="insurance"
+                      >
+                        <input
+                          type="text"
+                          formControlName="insuranceDeclared"
+                          placeholder=""
+                          NumberInput
+                          maxlength="5"
+                          class="form-control font-family"
+                        />
+                      </form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-12">
+                  <div>
+                    <label class="fw-5 font-14"
+                      >Content Description
+                      <span class="package"
+                        ><img
+                          matTooltip="Info about the action"
+                          matTooltipPosition="right"
+                          aria-label="Button that displays a tooltip when focused or hovered over"
+                          src="../../../../assets/images/tooltip-icon1.svg" /></span
+                    ></label>
+                    <form-field
+                      class="text-field"
+                      [errorControl]="item.get('contentDescription')"
+                      name="description"
+                    >
+                      <textarea
+                        class="form-control textarea"
+                        formControlName="contentDescription"
+                        placeholder="Content Description"
+                        rows="3"
+                      ></textarea>
+                    </form-field>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="addpackage">
+                    <span (click)="addPackage()" class=""
+                      ><img
+                        src="../../../../assets/images/addpackageplus.svg"
+                      />
+                      Add Package</span
+                    >
+                    <span *ngIf="i !== 0" (click)="removePackage(i)">
+                      <img src="../../../../assets/images/min.svg" />Remove
+                      Package</span
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="number justify-center mt-3">
+                <p>Number of Packages</p>
+              </div>
+              <div class="number1 justify-center mt-2" 
+              >
+                <span (click)="item.get('packageType').value !== 'YOUR_PACKAGING'?decreseCount(item, i):''"
+                  ><img src="../../../../assets/images/min.svg"
+                /></span>
+                <span class="mx-3 count">{{
+                  item.controls["numberOfPackages"].value
+                }}</span>
+                <span (click)="item.get('packageType').value !== 'YOUR_PACKAGING'?increaseCount(item, i):''"
+                  ><img src="../../../../assets/images/plus.svg"
+                /></span>
+              </div>
+            </div>
+          </div>
+          <!-- </div> -->
+
+          <!-- form array end -->
+          <div class="justify-center my-5">
+            <button
+              class="theme-btn white-btn mr-2 back-red"
+              (click)="goBack()"
+            >
+              Back
+            </button>
+            <button class="theme-btn red ml-2" (click)="addPackages()">
+              Next
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

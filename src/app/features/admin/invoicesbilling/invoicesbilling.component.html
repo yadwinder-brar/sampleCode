@@ -1,0 +1,207 @@
+<!-- <p>dashboard works!</p> -->
+<app-admin-header [pageName]="'Invoices/Billing'" ></app-admin-header>
+<div class="d-none" [class.loading]="isloading">
+    <mat-progress-spinner
+      *ngIf="isloading"
+      class="loader"
+      [color]="'warn'"
+      [mode]="'indeterminate'"
+      [value]="'30'"
+      stroke="f44336"
+    >
+    </mat-progress-spinner>
+  </div>
+<div class="content">
+    <div class="inner-dashbaord  pt-3">
+        <div class="shippment-form-card">
+            <div class="row">
+                <div class="col-lg-6  col-xl-3 pr-2 pl-2 padding-l mobile-serach">
+                    <div>
+                        <!-- <img src="../../../../assets/images/search.svg" class="searching-icon" /> -->
+                        <form-field>
+                            <input [(ngModel)]="search"
+                            (keyup)="searchInvoice($event)" type="text" placeholder="Searching..." class="form-control font-family" />
+                            <img *ngIf="!search"
+                src="../../../../assets/images/search.svg"
+                class="form-append searching-icon"
+              />
+              <img *ngIf="search" (click)="search = ''; searchInvoice($event);" src="../../../../assets/images/close-icon.svg" class="form-append" />
+                        </form-field>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-xl-2 col-md-12 col-sm-12 pr-2 cursor">
+                    <div>
+                        <img *ngIf="!date" src="../../../../assets/images/fillter-date.svg" class="filter-icon" />
+                        <img *ngIf="date" (click)="date = ''; searchInvoice($event)" src="../../../../assets/images/close-icon.svg" class="filter-icon" />
+                        <div class="filter-date">
+                            <input type="text" [(ngModel)]="date" (dateChange)="searchInvoice($event)" (click)="startDate.open()" readonly placeholder="Filter by Date"
+                                [matDatepicker]="startDate" class="form-control" />
+                            <img class="form-append mr-2" (click)="startDate.open()"
+                                src="../../../../assets/images/arrow-down.svg" alt="" />
+                            <mat-datepicker #startDate></mat-datepicker>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-xl-2 col-md-12 col-sm-12 pr-2 cursor">
+                    <div>
+                        <img src="../../../../assets/images/fillter-date.svg" class="filter-icon" />
+                        <div class="Filter-status">
+                            <form-field>
+                                <mat-select (selectionChange)=" paymentStatus='paid';viewInvoice($event)" [(ngModel)]="accountType" class="form-control filter-status1" placeholder="Invoice Type">
+                                    <mat-option value="shipment">Shipment</mat-option>
+                                    <mat-option value="mailbox" >Mailbox</mat-option>
+                                    <!-- <mat-option>Pond</mat-option> -->
+                                </mat-select>
+                            </form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-xl-2 col-md-12 col-sm-12 pr-2 cursor">
+                    <div>
+                        <img src="../../../../assets/images/fillter-date.svg" class="filter-icon" />
+                        <div class="Filter-status">
+                            <form-field>
+                                <mat-select (selectionChange)="viewInvoiceType($event)" [(ngModel)]="paymentStatus" class="form-control filter-status1" placeholder="Invoice Type">
+                                    <mat-option value="paid">Paid</mat-option>
+                                    <mat-option value="{{this.accountType=='shipment'?'unpaid':'pending'}}" >Unpaid</mat-option>
+                                    <!-- <mat-option>Pond</mat-option> -->
+                                </mat-select>
+                            </form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xl-2  offset-xl-3 pr-2 tab-e  d-none">
+                    <mat-tab-group class="tab-unpaid" [(selectedIndex)]="paidStatus" (selectedTabChange)="onTabChanged($event);">
+                        <mat-tab label="Paid"> </mat-tab>
+                        <mat-tab label="Unpaid"> </mat-tab>
+
+                    </mat-tab-group>
+
+                </div>
+                <div class="col-lg-4 col-xl-2  offset-xl-1 pr-2 tab-e">
+                    <button [matMenuTriggerFor]="menu" type="button" class="theme-btn orange ml-1 create-shipment">Create Invoice</button>
+
+                
+                    <mat-menu xPosition="before" #menu="matMenu">
+                        <button  (click)="createInvoice()" class="font-10  mat-menu-item">
+                           Create Invoice
+                        </button>
+                        <button (click)="createProInvoice()" class="font-10  mat-menu-item">Create Pro Invoice</button>
+                    </mat-menu>
+            </div>
+            </div>
+
+            <div class="row" *ngIf="this.accountType =='shipment'">
+                <div class="col-lg-12 tble-res" *ngIf="InvoiceList && InvoiceList.length>0">
+                    <table class="table table-responsive address-table packages-table">
+                        <tr>
+                            <th>Invoice #
+                                <!-- <i class="short"><img src="../../../../assets/images/shorting-icon.svg"></i> -->
+                            </th>
+                            <th>Tracking No.</th>
+                            <th>Billed To</th>
+                            <th>Invoice Date <i class="short"><img (click)="sortInvoices();" src="../../../../assets/images/shorting-icon.svg"></i></th>
+                            <th>Total Amount
+                                <!-- <i class="short"><img src="../../../../assets/images/shorting-icon.svg"></i> -->
+                            </th>
+                            <th>Reason</th>
+                            <th>Invoice type</th>
+                            <th>Status
+                                <!-- <i class="short"><img src="../../../../assets/images/shorting-icon.svg"></i> -->
+                            </th>
+                            <!-- <th *ngIf="paidStatus == '0'">Due Date <i class="short"><img src="../../../../assets/images/shorting-icon.svg"></i></th> -->
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        <tr class="" *ngFor="let item of InvoiceList; let i =index">
+                            <td>{{item?.invoiceId || '--'}}</td>
+                            <td>{{item?.shipmentTrackingNumber || '--'}}</td>
+                            <td>{{item?.userId?.fullName || '--'}}</td>
+
+                            <td>{{(item?.createdAt | date:'MM-dd-YYYY') || '--'}}</td>
+                            <td >{{ item?.amount?  '$' +" " +(item?.amount) :'--'}}</td>
+                            <td>{{item?.reason || '--'}}</td>
+                            <td>{{item?.invoiceVersion || '--'}}</td>
+                            <td>{{item?.paymentStatus || '--'}}</td>
+                            <!-- <td *ngIf="paidStatus == '0'" >02/02/2021</td> -->
+                            <td  ></td>
+                            <td>
+                                <span *ngIf="item?.paymentStatus == 'paid'" class="icons-innovices" (click)="downloadInvoice(item?.id)"><img
+                                        src="../../../../assets/images/download-invoices.svg"></span>
+                                <span *ngIf="item?.paymentStatus != 'paid'" class="icons-innovices" (click)="cancelInvoice(item)"><img
+                                            src="../../../../assets/images/cancelinvoice.svg"></span>
+
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+                <div class="col-lg-12 noRequest" *ngIf="InvoiceList && InvoiceList.length==0 && !isloading">
+                    <span> No Invoice found</span>
+                  </div>
+            </div>
+            <div class="row" *ngIf="this.accountType !='shipment'">
+                <div class="col-lg-12 tble-res" *ngIf="mailboxInvoiceList && mailboxInvoiceList.length>0">
+                    <table class="table table-responsive address-table packages-table table-striped">
+                        <tr>
+                            <th>Invoice #
+                                <!-- <i class="short"><img src="../../../../assets/images/shorting-icon.svg"></i> -->
+                            </th>
+                            <th>Billed To</th>
+                            <th>Invoice Date <i class="short"><img (click)="sortInvoices()" src="../../../../assets/images/shorting-icon.svg"></i></th>
+                            <th>Total Amount
+                                <!-- <i class="short"><img src="../../../../assets/images/shorting-icon.svg"></i> -->
+                            </th>
+                            <th>Status
+                                <!-- <i class="short"><img src="../../../../assets/images/shorting-icon.svg"></i> -->
+                            </th>
+                            <!-- <th *ngIf="paidStatus == '0'">Due Date <i class="short"><img src="../../../../assets/images/shorting-icon.svg"></i></th> -->
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        <tr class="" *ngFor="let item of mailboxInvoiceList; let i =index">
+                            <td>{{item?.invoiceId || '--'}}</td>
+                            <td>{{item?.userId?.fullName  || '--'}}</td>
+                            <td>{{(item?.createdAt | date :'MM-dd-YYYY') || '--'}}</td>
+                            <td >{{ item?.amount?  '$' +" " +item?.amount :'--'}}</td>
+                            <td>{{item?.paymentStatus || '--'}}</td>
+                            <!-- <td *ngIf="paidStatus == '0'" >02/02/2021</td> -->
+                            <td ></td>
+                            <td>
+                            <span *ngIf="item?.paymentStatus == 'paid'" class="icons-innovices" (click)="downloadMailboxInvoice(item?.id)"><img
+                                        src="../../../../assets/images/download-invoices.svg"></span>
+                            <span *ngIf="item?.paymentStatus != 'paid'"
+                           class="icons-innovices" (click)="cancelMailboxInvoice(item?.id)"><img
+                                        src="../../../../assets/images/cancelinvoice.svg"></span>
+                                <!-- <span *ngIf="item?.paymentStatus != 'paid'" class="icons-innovices" (click)="Pay(item?.id)">
+                                    <button class="theme-btn red">Pay</button>
+                                </span> -->
+
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+                <div class="col-lg-12 noRequest" *ngIf="mailboxInvoiceList && mailboxInvoiceList.length==0 && !isloading">
+                    <span> No Mailbox Invoice found</span>
+                  </div>
+            </div>
+        </div>
+    </div>
+    <div class="pagination"*ngIf="this.accountType =='shipment'" >
+      <pagination 
+        [(pageNo)]="pageNo"
+        [(pageSize)]="pageSize"
+        (page)="getInvoiceList()"
+        [totalRecords]="totalRecords || 0"
+      ></pagination>
+    </div>
+    <div class="pagination"*ngIf="this.accountType !='shipment'" >
+      <pagination *ngIf="mailboxInvoiceList && mailboxInvoiceList.length>0 && !isloading"
+        [(pageNo)]="pageNo"
+        [(pageSize)]="pageSize"
+        (page)="getMailboxInvoiceList()"
+        [totalRecords]="totalRecords || 0"
+      ></pagination>
+    </div>
+</div>

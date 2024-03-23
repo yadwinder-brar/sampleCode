@@ -1,0 +1,138 @@
+<section class="bg-info">
+  <div class="row justify-between">
+    <div class="col-lg-2 pl-2 header-post-mail">
+      <img class="img-logo1" src="../../../../assets/images/newLogo4.png" alt="" />
+    </div>
+    <div class="col-lg-6 mt-3 order-2">
+      <div class="text-center font-36 fw-6">New <span class="getStarted font-600">Account</span> Information</div>
+      <div class="text-center font-16 l-black">
+        Please add your account details
+      </div>
+    </div>
+    <div class="col-lg-2 text-right pr-3 order-3">
+      <div>
+        <button class="theme-btn border-white contactBtn"><a href="tel:+123456890">Contact Us </a></button>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-md-center">
+    <div class="col-lg-8 px-3 mt-2 mb-5">
+      <div class="mt-4">
+        <form class="white-form-card" [formGroup]="accountInfoForm">
+          <div class="row">
+            <div class="col-lg-6 pr-3">
+              <div>
+                <label class="l-black fw-5 font-14">Name</label>
+                <form-field [errorControl]="accountInfoForm.get('name')" name="name">
+                  <input type="text" formControlName="name" placeholder="Name" class="form-control font-family" />
+                </form-field>
+              </div>
+            </div>
+            <div class="col-lg-6 ">
+              <div>
+                <label class="l-black fw-5 font-14">Company Name</label>
+                <form-field [errorControl]="accountInfoForm.get('companyName')" name="company name">
+                  <input type="text" formControlName="companyName" placeholder="Company Name"
+                    class="form-control font-family" />
+                </form-field>
+              </div>
+            </div>
+            <div class="col-lg-6 pr-3">
+              <div>
+                <label class="l-black fw-5 font-14">Address 1</label>
+                <form-field [errorControl]="accountInfoForm.get('address1')" name="address1">
+                  <input type="text" formControlName="address1" placeholder="Address 1"
+                    class="form-control font-family" />
+                </form-field>
+              </div>
+            </div>
+            <div class="col-lg-6 ">
+              <div>
+                <label class="l-black fw-5 font-14">Address 2</label>
+                <form-field [errorControl]="accountInfoForm.get('address2')" name="address2">
+                  <input type="text" formControlName="address2" placeholder="Address 2"
+                    class="form-control font-family" />
+                </form-field>
+              </div>
+            </div>
+            <div class="col-lg-6 pr-3">
+              <div>
+                <label class="l-black fw-5 font-14">Country</label>
+                <form-field [errorControl]="accountInfoForm.get('country')" name="country name">
+                  <!-- <input type="text" formControlName="country" placeholder="Country" class="form-control font-family" /> -->
+                  <mat-select #selectCountry (selectionChange)="selectCountryName($event)" placeholder="Country"
+                    class="form-control w-100" formControlName="country">
+                    <mat-option *ngFor="let item of countries" [value]="item.name">{{item.name}}</mat-option>
+                  </mat-select>
+                </form-field>
+              </div>
+            </div>
+            <div class="col-lg-6 ">
+              <div>
+                <label class="l-black fw-5 font-14">State</label>
+                <form-field [errorControl]="accountInfoForm.get('state')" name="state name">
+                  <!-- <input type="text" formControlName="state" placeholder="State" class="form-control font-family" /> -->
+                  <mat-select #selectState [disabled]="!accountInfoForm.controls['country'].value"
+                    (selectionChange)="selectStateName($event)" placeholder="State" class="form-control"
+                    formControlName="state" panelClass="my-custom-class">
+                    <mat-option *ngFor="let item of states" [value]="item.name">{{item.name}}</mat-option>
+                  </mat-select>
+                </form-field>
+              </div>
+            </div>
+            <div class="col-lg-3 pr-3">
+              <div>
+                <label class="l-black fw-5 font-14">City</label>
+                <form-field [errorControl]="accountInfoForm.get('city')" name="city name">
+                  <!-- <mat-select
+                        #selectState
+                        [disabled]="!accountInfoForm.controls['state'].value"
+                        placeholder="City"
+                        class="form-control"
+                        formControlName="city"
+                      >
+                      <mat-option *ngFor="let item of cities" [value]="item">{{item}}</mat-option>
+                      <mat-option *ngIf="cities && !cities.length">no city found for this selected state</mat-option>
+                      </mat-select> -->
+                  <input type="text" formControlName="city" placeholder="City" class="form-control font-family" />
+                </form-field>
+              </div>
+            </div>
+            <div class="col-lg-3 pr-3">
+              <div>
+                <label class="l-black fw-5 font-14">Zip Code</label>
+                <form-field [errorControl]="accountInfoForm.get('zipCode')" name="zip code">
+                  <input type="text" formControlName="zipCode" placeholder="Zip Code"
+                    class="form-control font-family" />
+                </form-field>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div>
+                <label class="l-black fw-5 font-14">Phone No</label>
+                <form-field [errorControl]="accountInfoForm.get('phone')" name="phone">
+                  <!-- (input)="onValueChange($event)" -->
+                  <input type="text" formControlName="phone" placeholder="Phone No." [mask]="mask" [maxLength]="14"
+                    class="form-control font-family" />
+                </form-field>
+              </div>
+            </div>
+          </div>
+          <div class="justify-center mt-4">
+            <button class="theme-btn white-btn mr-2" routerLink="/account-type">Back</button>
+            <button class="theme-btn red ml-2" (click)="next()">Next <mat-spinner [diameter]="18" class="ml-2"
+                [strokeWidth]="1" *ngIf="isLoading"></mat-spinner></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- <section class="footer">
+  <div class="footer-bar">
+  </div>
+   </section> -->
+
+
+<!---New Data show-->
+

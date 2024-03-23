@@ -1,0 +1,140 @@
+<!-- <p>dashboard works!</p> -->
+<app-admin-header [pageName]="'Manage Mailbox'"></app-admin-header>
+<div class="content">
+    <div class="inner-dashbaord pt-3">
+        <div class="shippment-form-card">
+            <div class="row">
+                <div class="col-lg-6 col-xl-2 pr-2 pl-2 padding-l">
+                    <div>
+                        <form-field>
+                            <input [(ngModel)]="search" type="text" (keyup)="searchMailBoxDetail();" placeholder="Search..." class="form-control font-family" />
+                            <img *ngIf="!search" src="../../../../assets/images/search.svg" class="form-append searching-icon" />
+                            <img class="form-append" *ngIf="search" (click)="search = '';getMailBoxDetail();" src="../../../../assets/images/close-icon.svg" />
+                        </form-field>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-xl-2 pr-2">
+                    <div>
+                        <img *ngIf="!assigne" src="../../../../assets/images/fillter-date.svg" class="filter-icon" />
+                        <img *ngIf="assigne" (click)="assigne = ''; getMailBoxDetail();" src="../../../../assets/images/close-icon.svg" class="filter-icon" />
+                        <div class="Filter-status">
+                            <form-field>
+                                <mat-select [(ngModel)]="assigne" (selectionChange)="getMailBoxDetail()" class="form-control filter-status1" placeholder="Filter by Assign">
+                                    <mat-option value = 'assigne' >Assign</mat-option>
+                                    <mat-option value = 'reassigne' >Re-Assign</mat-option>
+                                    <!-- <mat-option value = 'assign3' >Assign3</mat-option> -->
+                                </mat-select>
+                            </form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xl-2 pr-2 cursor">
+                    <div>
+                        <img *ngIf="!fromDate" src="../../../../assets/images/calender.svg" class="cel-icon" />
+                        <img *ngIf="fromDate" (click)="fromDate = ''; toDate = ''; getMailBoxDetail();" src="../../../../assets/images/close-icon.svg" class="filter-icon" />
+                        <div class="filter-date">
+                            <input type="text" [(ngModel)]="fromDate" (dateChange)="getMailBoxDetailbyDate()" (click)="startDate.open()" [matDatepicker]="startDate" class="form-control"  placeholder="From Date"/>
+                            <img class="form-append mr-2" (click)="startDate.open()" src="../../../../assets/images/arrow-down.svg" alt="" />
+                            <mat-datepicker #startDate></mat-datepicker>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xl-2 pr-2 cursor">
+                    <div>
+                        <img *ngIf="!toDate" src="../../../../assets/images/calender.svg" class="cel-icon" />
+                        <img *ngIf="toDate" (click)="toDate = ''; getMailBoxDetail();" src="../../../../assets/images/close-icon.svg" class="filter-icon" />
+                          <div class="filter-date">
+                            <input type="text" [(ngModel)]="toDate" [disabled]="!fromDate" [min]="fromDate" (dateChange)="getMailBoxDetail()" (click)="endDate.open()" readonly placeholder="To Date" [matDatepicker]="endDate" class="form-control" />
+                            <img class="form-append mr-2" (click)="startDate.open()" src="../../../../assets/images/arrow-down.svg" alt="" />
+                            <mat-datepicker #endDate></mat-datepicker>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xl-2 pr-2">
+                    <img src="../../../../assets/images/fillter-date.svg" class="filter-icon" />
+                    <div class="Filter-status">
+                        <form-field>
+                            <mat-select [(ngModel)]="status" (selectionChange)="getMailBoxDetail()" class="form-control filter-status1" placeholder="Filter by Assign">
+                                <mat-option value="approved,inActive">All</mat-option>
+                                <mat-option value = 'approved' >Active</mat-option>
+                                <mat-option value = 'inActive' >InActive</mat-option>
+                                <!-- <mat-option value = 'assign3' >Assign3</mat-option> -->
+                            </mat-select>
+                        </form-field>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xl-2 justify-center pr-2 butn-display ml-auto">
+
+                    <button class="theme-btn orange ml-1 create-shipment" (click)="uploadscan('')">Upload Scan</button>
+                </div>
+            </div>
+            <div class="hr">
+                <hr />
+            </div>
+            <div class="row">
+                <div class="col-lg-12 tble-res" *ngIf="mailboxList &&mailboxList.length>0">
+                    <table class="table table-responsive shippment-table table-striped3">
+                        <tr>
+                            <th>Mailbox Address <i class="short"><img (click)="sortMailboxList()" src="../../../../assets/images/shorting-icon.svg"></i></th>
+                            <th>Assigned To</th>
+                            <th>Plan Name</th>
+                            <th>Package count</th>
+                            <th>Mail Scan</th>
+                            <th>Available Scans</th>
+                            <th>Due Date</th>
+                            <!-- <th>Package Scan</th> -->
+                            <th>Status</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        <tr class="pointer" *ngFor="let item of mailboxList"> 
+                            <td routerLink="/admin/mailbox/mailboxdetail/{{item?.id}}">{{item?.virtualId|| '--'}}</td>
+                            <td routerLink="/admin/mailbox/mailboxdetail/{{item?.id}}">{{item?.name || '--'}}</td>
+                            <td routerLink="/admin/mailbox/mailboxdetail/{{item?.id}}">{{item?.user?.userPlan?.planInfo?.planName?item?.user?.userPlan?.planInfo?.planName +'/'+item?.user?.userPlan?.planInfo?.validity : '--'}}</td>
+                            <td routerLink="/admin/mailbox/mailboxdetail/{{item?.id}}" align="center">{{item?.totalPackageCount || '0'}}</td>
+                            <td routerLink="/admin/mailbox/mailboxdetail/{{item?.id}}" align="center">{{item?.totalMailCount || '0'}}</td>
+                            <td routerLink="/admin/mailbox/mailboxdetail/{{item?.id}}" align="center">{{item?.user?.userPlan?.leftScanCount || '--'}}</td>
+                            <td routerLink="/admin/mailbox/mailboxdetail/{{item?.id}}" align="left">{{(item?.user?.userPlan?.endDate |date:'MM-dd-YYYY') || '--'}}</td>
+                            <!-- <td routerLink="/admin/mailbox/mailboxdetail/{{item?.id}}" align="center">{{item?.user?.userPlan?.scanCount || '--'}}</td> -->
+
+                            <td routerLink="/admin/mailbox/mailboxdetail/{{item?.id}}" ><button class="btn" [ngClass]="item?.status == 'approved'?'in-deliverd':'in-transit'">{{item?.status == 'approved'?'Active':item?.status}}</button></td>
+                            <td routerLink="/admin/mailbox/mailboxdetail/{{item?.id}}">
+                               <div class="d-flex"> 
+                                    <img *ngIf="item?.mailBoxMessage" src="../../../../assets/images/admin/mail-unread.svg" class="meesage">
+                                    <img class="x-icon mx-1" *ngIf="item?.mailBoxMessageX" src="../../../../assets/images/admin/cross-23.svg">
+                                </div>
+                            </td>
+                            <td>
+                                <img [matMenuTriggerFor]="menu" src="../../../../assets/images/dots.svg" />
+                                <mat-menu xPosition="before" #menu="matMenu">
+                                    <button class="font-10  mat-menu-item" (click)="uploadscan(item?.virtualId)">
+                                        Upload Scan
+                                    </button>
+                                    <button (click)="reAssignMailbox(item?.id)" class="font-10  mat-menu-item">Re-assign</button>
+                                    <button (click)="markActiveInactive(item)" class="font-10  mat-menu-item">Mark {{item?.status == 'inActive'?'Active':'Inactive'}}</button>
+                                    <!-- <button *ngIf="item?.status == 'inActive'" class="font-10  mat-menu-item">Mark Active</button> -->
+                                    <button *ngIf="item?.status!='inActive'" class="font-10  mat-menu-item" (click)="givePlan(item)">Give Plan</button>
+                                    <button *ngIf="item?.status!='inActive'&& item?.user?.isPlanPurchased" class="font-10  mat-menu-item" (click)="changeDueDate(item)">Change Due Date</button>
+                                </mat-menu>
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+                <div class="col-lg-12 tble-res" *ngIf="!isLoading&&mailboxList&& mailboxList.length==0">
+
+                    <div class="noRequest">
+                        <span>No mailbox account found</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <pagination *ngIf="mailboxList && mailboxList.length>0 && !isLoading"
+    [(pageNo)]="pageNo"
+    [(pageSize)]="pageSize"
+    (page)="getMailBoxDetail()"
+    [totalRecords]="totalRecords || 0"
+  ></pagination>
+</div>

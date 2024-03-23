@@ -1,0 +1,16 @@
+span.ImgLink {
+    width: 90%;
+    display: block;
+    white-space: nowrap;
+    overflow: scroll;
+    /* text-overflow: ellipsis; */
+}
+span.imgDelete {
+    width: 10%;
+    display: block;
+}
+mat-icon.mat-icon.deleteScans{
+    position: relative;
+    text-align: center;
+    left: 0px;
+}

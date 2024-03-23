@@ -1,0 +1,101 @@
+<!-- <p>dashboard works!</p> -->
+<app-sub-admin-header [pageName]="'Customer List'" *ngIf="!isLoading"></app-sub-admin-header>
+<div class="d-none" [class.loading]="isLoading">
+    <mat-progress-spinner
+      *ngIf="isLoading"
+      class="loader"
+      [color]="'warn'"
+      [mode]="'indeterminate'"
+      [value]="'30'"
+      stroke="f44336"
+    >
+    </mat-progress-spinner>
+  </div>
+<div class="content" *ngIf="!isLoading">
+    <div class="inner-dashbaord pt-3">
+        <div class="shippment-form-card">
+            <div class="row">
+                <div class="col-lg-6 col-xl-3 pr-2 pl-2 padding-l">
+                    <div>
+                        <form-field>
+                            <input type="text" [(ngModel)]="search" placeholder="Search..."
+                                class="form-control font-family" />
+                            <img *ngIf="!search" src="../../../../assets/images/search.svg" class="form-append" />
+                            <img *ngIf="search" (click)="search = ''; getCustomerList();"
+                                src="../../../../assets/images/close-icon.svg" class="form-append" />
+                        </form-field>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-xl-2 pr-2">
+                    <div>
+                        <img *ngIf="!status" src="../../../../assets/images/fillter-date.svg" class="filter-icon" />
+                        <img *ngIf="status" (click)="status = ''; getCustomerList();"
+                            src="../../../../assets/images/close-icon.svg" class="filter-icon" />
+                        <div class="Filter-status">
+                            <form-field>
+                                <mat-select [(ngModel)]="status" (selectionChange)="getCustomers();"
+                                    class="form-control filter-status1" placeholder="Filter by Status">
+                                    <mat-option value="active">Active</mat-option>
+                                    <mat-option value="inactive">Inactive</mat-option>
+                                </mat-select>
+                            </form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xl-3 justify-end pr-2 butn-display ml-auto">
+                    <button class="theme-btn orange ml-1 create-shipment" routerLink="/subAdmin/newcustomer">+ Add
+                        Customer</button>
+                </div>
+            </div>
+            <div class="hr">
+                <hr />
+            </div>
+            <div class="row">
+                <div class="col-lg-12 tble-res table-sub-admin" *ngIf="customerList && customerList.length > 0 && !isLoading">
+                    <table class="table table-responsive shippment-table mb-5">
+                        <tr>
+                            <th width="20%">Customer ID<i class="short"><img
+                                        src="../../../../assets/images/shorting-icon.svg"></i> </th>
+                            <th width="20%">Customer Name </th>
+                            <th width="20%">Email </th>
+                            <th width="20%">City </th>
+                            <th width="18%">Status </th>
+                            <th></th>
+                        </tr>
+                        <tr class=" pointer" *ngFor="let item of customerList">
+                            <td routerLink="customerdetail/{{item?.id}}">{{item?.UniqueId || "--"}}</td>
+                            <td routerLink="customerdetail/{{item?.id}}">{{item?.fullName || "--"}}</td>
+                            <td routerLink="customerdetail/{{item?.id}}">{{item?.email || '--' }}</td>
+                            <td routerLink="customerdetail/{{item?.id}}" class="lowerText"> {{item?.currentProfile?.city || "--"}}</td>
+                            <td><button class="btn"
+                                    [ngClass]="item?.status ==='active'? 'in-deliverd' : 'in-active' ">{{item?.status
+                                    | titlecase}}</button></td>
+                            <td>
+                                <img *ngIf="item?.status!=='deleted'" [matMenuTriggerFor]="menu"
+                                    src="../../../../assets/images/dots.svg" />
+                                <mat-menu xPosition="before" #menu="matMenu">
+                                    <button (click)="userAction(item?.id,'active')" *ngIf="item?.status!=='active'"
+                                        class="font-10  mat-menu-item">Active</button>
+                                    <button (click)="userAction(item?.id,'inactive')" *ngIf="item?.status=='active'"
+                                        class="font-10  mat-menu-item">Inactive</button>
+                                    <button (click)="userAction(item?.id,'deleted')"
+                                        class="font-10  mat-menu-item">Delete</button>
+                                    <button (click)="hardDelete(item?.id)" class="font-10  mat-menu-item">Permanently
+                                        Delete</button>
+                                </mat-menu>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="col-lg-12 tble-res" *ngIf="customerList && customerList.length==0 && !isLoading">
+                        <div class="noRequest">No Customer Found</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pagination" *ngIf="customerList && customerList.length>0 && !isLoading">
+        <pagination [(pageNo)]="pageNo" [(pageSize)]="pageSize" (page)="getCustomerList()"
+        [totalRecords]="totalRecords || 0"></pagination>
+    </div>
+</div>

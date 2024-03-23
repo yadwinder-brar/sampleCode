@@ -1,0 +1,12 @@
+ .mat-checkbox-frame {
+      border-radius: 10% !important;
+      border: 1px solid #575858 !important;
+    
+  }
+  button.theme-btn.border-white.contactBtn > a {
+    color: #fff;
+    text-decoration: none;
+}
+.getStarted{
+  cursor: pointer;
+}

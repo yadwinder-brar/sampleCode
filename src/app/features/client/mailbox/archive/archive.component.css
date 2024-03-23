@@ -1,0 +1,27 @@
+.forward{
+    background : #FC4149 0% 0% no-repeat padding-box;  
+}
+.holdForPickup{
+    background : #00B894 0% 0% no-repeat padding-box; 
+}
+
+.height{
+    height: 75%;
+}
+.height-60{
+    height: 60%;
+}
+
+@media (max-width:767px){
+    .icon-set{
+        height: unset !important;
+        margin-right: 0 !important;
+        margin-left: -10px;
+    }
+}
+
+@media (max-width:991px){
+    .inbox-card-mailbox {
+        padding: 20px 20px ;
+    }
+}

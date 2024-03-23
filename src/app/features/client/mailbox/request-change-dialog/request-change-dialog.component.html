@@ -1,0 +1,111 @@
+<div class="row">
+  <div class="col-12">
+    <div class="row">
+      <div class="col-lg-7">
+        <div class="inbox-card">
+          <div class="inbox-img"> 
+            <!-- {{getImageName(labelData?.labelLink)}}///
+            {{labelData?.labelLink | json}} -->
+            <!-- <img [src]="labelData?.labelLink" /> -->
+            <img *ngIf="getImageName(labelData?.labelLink) != 'pdf'"  [src]="labelData?.labelLink" />
+            <iframe class="iframeClass" *ngIf="getImageName(labelData?.labelLink) == 'pdf'" [src]="sanitizer.bypassSecurityTrustResourceUrl(labelData?.labelLink)"></iframe>
+            <span class="zoom-icon">
+              <img
+                (click)="viewImg(labelData)"
+                src="../../../../../assets/images/zoom-icon.svg"
+              />
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <div class="main-inbox">
+          <div class="date-div">
+            <span class="font-14">{{
+              labelData?.updatedAt | date : "fullDate"
+            }}</span>
+            <span class="font-12">{{
+              this.dialogData?.type == "trash" ? "Deleted On" : "Archived On"
+            }}</span>
+          </div>
+          <div class="Unread ml-auto">
+            <button type="button" class="btn in-Archived">
+              {{ this.dialogData?.type == "trash" ? "In Trash" : "Archived" }}
+            </button>
+          </div>
+          <div class="downlaod-icon">
+            <img src="../../../../../assets/images/download.svg" />
+          </div>
+        </div>
+        <div class="">
+          <div class="following-action pt-4">
+            <p class="font-12">Please select one of the following action</p>
+            <div class="action-perfom">
+              <!-- <div class="open-scan mr-3 cursor" (click)="openAndScan(labelData)">
+                <p class="">
+                  <img src="../../../../../assets/images/barcode-identification.png"/>Open and scan
+                </p>
+              </div> -->
+
+              <div *ngIf="labelData?.scanImages&& labelData?.scanImages.length == 0"
+              class="open-scan mr-3 cursor"
+              (click)="openAndScan(labelData)"
+            >
+              <p class="">
+                <img
+                  src="../../../../../assets/images/barcode-identification.png"
+                />Open and scan
+              </p>
+            </div>
+            <div *ngIf="labelData?.scanImages&& labelData?.scanImages.length> 0"
+              class="open-scan mr-3 cursor"
+              (click)="viewImages(labelData)"
+            >
+              <p class="">
+                <!-- <img
+                  src="../../../../../assets/images/barcode-identification.png"
+                /> -->
+                Click to view scan
+              </p>
+            </div>
+
+
+
+
+
+              <div class="Forward cursor" (click)="this.dialogRef.close();" routerLink="/client/forwardmailfirst/{{labelData?.id}}">
+                <p class="">
+                  <img src="../../../../../assets/images/forward.svg" />Forward
+                </p>
+              </div>
+              <div class="hold mr-3 cursor" (click)="holdForPickUp(labelData);">
+                <p class="">
+                    <img  src="../../../../../assets/images/home-delivery-icon.svg"/>Hold for pickup  
+                </p>
+              </div>
+              <!-- <div class="mail cursor" (click)="notMyMail(labelData?.id)">
+                <p class="">
+                  <img src="../../../../../assets/images/mail.svg" />Not my mail
+                </p>
+              </div> -->
+            </div>
+          </div>
+          <!-- <div class="send-trash pt-4 justify-center" *ngIf="this.dialogData?.type != 'trash'">
+            <button class="btn bnt-trash" (click)="sendToTrash(labelData?.id)">
+                <img src="../../../../../assets/images/send-trash.svg" class="send-tras" />Send to trash
+            </button>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 justify-center align-center pt-4">
+    <button type="button"
+      class="theme-btn white-btn back-red bulk-shipment mr-4"
+      (click)="this.dialogRef.close(false)"
+    >
+      Close
+    </button>
+  </div>
+</div>

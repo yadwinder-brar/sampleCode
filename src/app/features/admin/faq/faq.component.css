@@ -1,0 +1,14 @@
+.mat-expansion-panel-body {
+    padding: 0 32px 14px;
+}
+.mat-expansion-panel-spacing {
+    margin: 0px 0;
+}
+ p {
+    margin-bottom: 0px !important;
+}
+
+.mat-expansion-panel-header-title, .mat-expansion-panel-body {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+}

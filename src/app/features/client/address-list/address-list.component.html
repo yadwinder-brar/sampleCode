@@ -1,0 +1,251 @@
+<!-- <p>dashboard works!</p> -->
+<app-client-dashboard-header
+  [pageName]="'Address List'"
+></app-client-dashboard-header>
+<div class="content">
+  <div class="inner-dashbaord pt-3 mb-3 pb-4">
+    <div class="shippment-form-card">
+      <div class="row b-2">
+        <div class="col-lg-6 col-xl-3 pr-2 pl-2 padding-l mobile-serach">
+          <div class="addd-serch">
+            <!-- class="searching-icon cols" -->
+            <form-field class="form-field-addd">
+              <input
+                [(ngModel)]="search"
+                (keyup)="searchAddress($event)"
+                type="text"
+                placeholder="Search..."
+                class="form-control font-family"
+              />
+              <img
+                *ngIf="!search"
+                class="form-append"
+                src="../../../../assets/images/search.svg"
+                class="searching-icon custom-height"
+              />
+              <img
+                *ngIf="search"
+                class="form-append addlist-icon"
+                (click)="search = ''; getAddressList()"
+                src="../../../../assets/images/close-icon.svg"
+              />
+            </form-field>
+          </div>
+        </div>
+        <div class="col-lg-6 col-xl-2 pr-2 cursor">
+          <div>
+            <img
+              *ngIf="!addressTags"
+              src="../../../../assets/images/fillter-date.svg"
+              class="filter-icon custom-height"
+            />
+            <img
+              *ngIf="addressTags"
+              (click)="addressTags = ''; getAddressList()"
+              src="../../../../assets/images/close-icon.svg"
+              class="filter-icon"
+            />
+            <!-- <mat-icon class="filter-icon" >close</mat-icon> -->
+            <div class="Filter-status">
+              <form-field class="box-set">
+                <mat-select
+                  [(ngModel)]="addressTags"
+                  (selectionChange)="getAddressList()"
+                  class="form-control filter-status1"
+                  placeholder="Filter by Tags"
+                >
+                  <mat-option value="family">Family</mat-option>
+                  <mat-option value="friend">Friend</mat-option>
+                  <mat-option value="business">Business</mat-option>
+                </mat-select>
+              </form-field>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-xl-2 pr-2 cursor">
+          <div>
+            <img
+              src="../../../../assets/images/fillter-date.svg"
+              class="filter-icon"
+            />
+            <!-- <img *ngIf="addressType" (click)="addressType = ''; getAddressList();" src="../../../../assets/images/close-icon.svg" class="filter-icon" /> -->
+            <div class="Filter-status">
+              <form-field class="box-set">
+                <mat-select
+                  [(ngModel)]="addressType"
+                  (selectionChange)="getAddressList()"
+                  class="form-control filter-status1"
+                  placeholder="Filter by Tags"
+                >
+                  <mat-option value="byUser">Created</mat-option>
+                  <mat-option value="byExcel">Imported</mat-option>
+                </mat-select>
+              </form-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6 col-xl-3 justify-end ml-auto pr-2 addres-list">
+          <button
+            *ngIf="addressType != 'byExcel'"
+            class="theme-btn orange ml-1 create-shipment"
+            routerLink="/client/newaddress"
+          >
+            + New Address
+          </button>
+          <div
+            class="download-icon exportOnly"
+            *ngIf="addressType != 'byExcel'"
+          >
+            <span class="don-icon" (click)="exportAddressLIst()"
+              ><img src="../../../../assets/images/file-download.svg"
+            /></span>
+          </div>
+          <div class="download-icon" *ngIf="addressType == 'byExcel'">
+            <span class="file-icon" (click)="selectFile.selectFile()"
+              ><img src="../../../../assets/images/file-up.svg"
+            /></span>
+            <file-uploader
+              #fileUploader="FileUploader"
+              [path]="'addresses/import'"
+            ></file-uploader>
+            <app-uploader-ui
+              #selectFile
+              [fileUploader]="fileUploader"
+              (afterUploadFile)="selectFiles($event)"
+            ></app-uploader-ui>
+            <span class="don-icon"
+              ><img
+                (click)="exportAddressLIst()"
+                src="../../../../assets/images/file-download.svg"
+            /></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div
+          class="col-12 tble-res"
+          *ngIf="addressList && addressList.length > 0 && !isloading"
+        >
+          <table class="table table-responsive address-table">
+            <tr>
+              <th>
+                Customer
+                <i class="short"
+                  ><img
+                    (click)="sortAddress()"
+                    src="../../../../assets/images/shorting-icon.svg"
+                /></i>
+                <!-- <i class="short"><img src="../../../../assets/images/shorting-icon.svg"></i> -->
+              </th>
+              <th>
+                Company
+                <!-- <i class="short"><img src="../../../../assets/images/shorting-icon.svg"></i> -->
+              </th>
+              <th>
+                Address
+                <!-- <i class="short"><img src="../../../../assets/images/shorting-icon.svg"></i> -->
+              </th>
+              <th>
+                City
+                <!-- <i class="short"><img src="../../../../assets/images/shorting-icon.svg"></i> -->
+              </th>
+              <th>
+                State
+                <!-- <i class="short"><img src="../../../../assets/images/shorting-icon.svg"></i> -->
+              </th>
+              <th>
+                Country
+                <!-- <i class="short"><img src="../../../../assets/images/shorting-icon.svg"></i> -->
+              </th>
+              <th>
+                Zip
+                <!-- <i class="short"><img src="../../../../assets/images/shorting-icon.svg"></i> -->
+              </th>
+              <th>
+                Phone
+                <!-- <i class="short"><img src="../../../../assets/images/shorting-icon.svg"></i> -->
+              </th>
+              <th>Tags</th>
+              <th></th>
+              <th></th>
+            </tr>
+            <tr *ngFor="let item of addressList" class="">
+              <td>{{ item?.name }}</td>
+              <td>{{ item?.companyName || "--" }}</td>
+              <td>
+                {{ item?.address1 }}{{ item?.address2 }}{{ item?.address3 }}
+              </td>
+              <td>{{ item?.city }}</td>
+              <td>{{ item?.state }}</td>
+              <td>{{ item?.country }}</td>
+              <td>{{ item?.zipCode }}</td>
+              <td>{{ item?.phone }}</td>
+              <!-- {{item?.tags | json}} -->
+              <td>
+                <button
+                  class="btn"
+                  [ngClass]="item?.tags[0] ? 'add-old' : 'add-tag'"
+                  (click)="openDialog(item?.tags, item?.id)"
+                >
+                  {{ item?.tags[0] ? item?.tags[0] : "+ Add Tag" }}
+                </button>
+              </td>
+              <td>
+                <button
+                  class="btn"
+                  [ngClass]="item?.tags[1] ? 'add-old' : 'add-tag'"
+                  (click)="openDialog(item?.tags, item?.id)"
+                >
+                  {{ item?.tags[1] ? item?.tags[1] : "+ Add Tag" }}
+                </button>
+              </td>
+              <td>
+                <div>
+                  <img
+                    [matMenuTriggerFor]="menu"
+                    src="../../../../assets/images/dots.svg"
+                  />
+                </div>
+                <mat-menu xPosition="before" #menu="matMenu">
+                  <button
+                    routerLink="/client/edit-address/{{ item?.id }}"
+                    class="font-10 mat-menu-item"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    (click)="deleteAddress(item?.id)"
+                    class="font-10 mat-menu-item"
+                  >
+                    Delete
+                  </button>
+                </mat-menu>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div
+          class="col-12"
+          *ngIf="addressList && addressList.length == 0 && !isloading"
+        >
+          <div class="addresNot my-5">
+            <sapn class="">No address found</sapn>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="pagination"
+    *ngIf="addressList && addressList.length > 0 && !isloading"
+  >
+    <pagination
+      [(pageNo)]="pageNo"
+      [(pageSize)]="pageSize"
+      (page)="getAddressList()"
+      [totalRecords]="totalRecords || 0"
+    ></pagination>
+  </div>
+</div>

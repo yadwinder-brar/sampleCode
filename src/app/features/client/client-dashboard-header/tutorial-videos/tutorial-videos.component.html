@@ -1,0 +1,30 @@
+<div class="video-div">
+  <div class="justify-end" (click)="dialogRef.close()">
+    <div class="close-tut"><img src="../../../../assets/images/ic_sidemenu.svg">
+  </div></div>
+  <!-- <div class="row"> -->
+  <!-- <div class="col-5 video-links-content">
+            <p *ngFor="let item of links; let i = index" class="mb-1 pointer" (click)="playVideo(item)">{{i+1}}. video</p>
+        </div> -->
+  <!-- <div class="justify-end"> -->
+  <div class="">
+    <video
+      #videos
+      preload="auto"
+      controls
+      autoplay
+      muted
+      loop
+      class="video-tut"
+    >
+      <source [src]="linksvideo" type="video/mp4" />
+    </video>
+  </div>
+  <!-- </div> -->
+  <!-- </div> -->
+  <!-- <div class="mt-2 pt-2">
+    <button class="theme-btn signupbtn red mb-3" (click)="dialogRef.close()">
+      Close
+    </button>
+  </div> -->
+</div>

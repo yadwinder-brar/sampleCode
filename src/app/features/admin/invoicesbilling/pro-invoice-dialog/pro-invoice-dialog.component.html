@@ -1,0 +1,121 @@
+<div class="font-20 fw-6 text-center mb-3">Create Pro Invoice</div>
+<form class="" [formGroup]="proInvoiceForm">
+  <div class="row">
+    <div class="col-lg-12">
+      <label class="font-14">User</label>
+      <form-field [errorControl]="proInvoiceForm.get('userId')" name="user">
+        <mat-select
+          placeholder="select user"
+          (selectionChange)="
+            selectUser($event); proInvoiceForm.get('invoiceIds')?.setValue('');proInvoiceForm.get('amount')?.setValue('')
+          "
+          class="form-control"
+          formControlName="userId"
+        >
+          <mat-option [value]="item?.id" *ngFor="let item of userList">{{
+            item?.name
+          }}</mat-option>
+        </mat-select>
+      </form-field>
+    </div>
+    <div class="col-lg-12">
+    <label class="font-14">Select Invoices</label>
+    <form-field
+      [errorControl]="proInvoiceForm.get('invoiceIds')"
+      name="invoices"
+    >
+      <mat-select
+        [disabled]="!proInvoiceForm.get('userId')?.value"
+        placeholder="select user's account"
+        class="form-control"
+        (selectionChange)="proInvoiceForm.get('amount')?.setValue('')"
+        formControlName="invoiceIds"
+        multiple
+      >
+
+      <span *ngIf="invoiceList && invoiceList.length>0" class="m-3"><mat-checkbox [checked]="selectedAll" (change)="selectToggle($event)">Select all</mat-checkbox></span>
+        <mat-option (click)="singleSelect('')" #allSelect [value]='items?.id' *ngFor="let items of invoiceList">{{items?.invoiceId}}({{'$ '+items?.amount}})</mat-option>
+        <!-- <mat-option >No invoice found for this user</mat-option> -->
+      </mat-select>
+    </form-field>
+    <!-- {{proInvoiceForm.value?.invoiceIds | json}} -->
+</div>
+<div class="col-lg-6">
+    <label class="font-14">Amount</label>
+    <form-field [errorControl]="proInvoiceForm.get('amount')" name="amount">
+      <span class="form-prefix cursor"> $</span>
+      <input
+        type="text"
+        disabled
+        NumberInput
+        formControlName="amount"
+        class="form-control forgot-pass"
+        placeholder="Amount"
+      />
+    </form-field>
+</div>
+<div class="col-lg-6 mt-3 align-center justify-center">
+    <button type="button" class="theme-btn red amountButton" (click)="calculateAmount()">
+        Calculate Amount
+        <mat-spinner
+          [diameter]="18"
+          class="ml-2"
+          [strokeWidth]="1"
+          *ngIf="isLoading"
+        ></mat-spinner>
+      </button>
+</div>
+<div class="col-lg-12">
+    <label class="font-14">Additional Amount</label>
+    <form-field
+      [errorControl]="proInvoiceForm.get('additionalAmount')"
+      name="additionalAmount"
+    >
+      <span class="form-prefix cursor"> $</span>
+      <input
+        type="text"
+        Separator
+        formControlName="additionalAmount"
+        class="form-control forgot-pass"
+        placeholder="Additional Amount"
+      />
+    </form-field>
+    </div>
+    <div class="col-lg-12">
+    <label class="font-14">Reason</label>
+    <form-field [errorControl]="proInvoiceForm.get('reason')" name="reason">
+      <textarea
+        placeholder="Reason"
+        class="form-control"
+        rows="4"
+        id="comment"
+        formControlName="reason"
+      ></textarea>
+    </form-field>
+</div>
+  </div>
+</form>
+<div class="text-center mt-4 centerButton">
+  <button
+    type="button"
+    class="theme-btn white-btn mr-2 back-red"
+    (click)="dialogRef.close(false)"
+  >
+    Cancel
+    <mat-spinner
+      [diameter]="18"
+      class="ml-2"
+      [strokeWidth]="1"
+      *ngIf="isLoading"
+    ></mat-spinner>
+  </button>
+  <button type="button" class="theme-btn red" (click)="submit()">
+    Create Invoice
+    <mat-spinner
+      [diameter]="18"
+      class="ml-2"
+      [strokeWidth]="1"
+      *ngIf="isLoading"
+    ></mat-spinner>
+  </button>
+</div>

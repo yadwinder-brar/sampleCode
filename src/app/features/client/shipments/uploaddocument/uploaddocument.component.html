@@ -1,0 +1,73 @@
+
+<section class="py-4 bg-info post-office">
+    <div class="row justify-between">
+      <div class="col-lg-2 pl-2">
+        <img
+        class="img-logo1"
+          src="../../../../assets/images/newLogo4.png"
+          alt=""
+        />
+         </div>
+         
+      <div class="col-lg-6  mt-3 order-2">
+        <div class="text-center font-40 fw-6">
+          <span class="getStarted font-600">Upload </span> Document
+        </div>
+        <div class="text-center font-14 l-black">
+            Please upload your Excel document
+        </div>
+      </div>
+  
+         <div class="col-lg-2 text-right pr-3 order-3">
+          <div>
+            <button class="theme-btn border-red contactBtn">Contact Us</button>
+          </div>
+        </div>
+      </div>
+    <div class="row justify-content-md-center my-4 mb-5">
+    
+      <div class="col-lg-3 padding-m">
+        <div class="mt-4">
+          <div class="white-form-card">
+            <div class=" justify-between-md-center">
+              <div class="font-14 font-600 text-center">Excel File</div>
+             
+            </div>
+  
+            <div class="upload-file my-3" (click)="selectFile.click()">
+              <div class="d-flex flex-column text-center">
+                <!-- <file-uploader #fileUploader="FileUploader"></file-uploader> -->
+                <!-- <app-uploader-ui
+                  #selectFile1
+                  (afterUploadFile)="selectFile($event)"
+                ></app-uploader-ui> -->
+                <input mat-input type="file" #selectFile id="uploadFile" placeholder="Upload Csv" (click)="changeFile($event)"
+            (change)="uploadFile($event)" name="uploadFile" hidden accept=".csv" />
+                <img width="30px" class="mx-auto"  src="../../../../assets/images/upload-icon.svg" alt="" />
+                <span class="font-10 grey my-2">Upload your file</span>
+                <div class="text-center">
+                  <button type="button" class="theme-btn upload-btn">Upload</button>
+                </div>
+               
+              </div>
+            </div>
+              <div class="hr-line"><hr></div>
+            <div class="upload-bar align-center justify-between my-2 py-3 px-3" *ngIf="url">
+              <div class="align-center font-12 fw-5">
+                  <img width="12px" class="mr-2" src="../../../../assets/images/pdf-file.svg" alt="">Shipment.xls
+              </div>
+              <div class="font-12 dark-red">
+                  Uploaded 100%
+              </div>
+            </div>
+  
+            <div class="justify-between mt-4">
+              <button type="button"class="theme-btn white-btn mr-2 back-red" routerLink="/client/shipments">Cancel</button>
+              <button type="button" class="theme-btn red ml-2" (click)="submitFile(selectFile)" >Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  

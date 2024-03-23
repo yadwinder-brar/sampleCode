@@ -1,0 +1,113 @@
+<mat-drawer-container>
+  <mat-drawer #drawer opened mode="side">
+    <!-- <app-side-nav></app-side-nav> -->
+    <div class="side-container" [ngClass]="isSmallNav ? 'sm-width' : ''">
+      <div class="pointer fw-6 font-18 logo1 justify-between align-center" [ngClass]="isSmallNav ? 'logs' : ''"
+        routerLink="/client/dashboard">
+        <img src="../../../../assets/images/newLogo4.png" *ngIf="!isSmallNav" />
+        <img width="40px" src="../../../../assets/images/logo-small.png" *ngIf="isSmallNav" />
+        <div class="hidden-lg-up" *ngIf="!isSmallNav">
+          <img (click)="$event.stopPropagation();$event.preventDefault(); toggleSmallNav()"
+            src="../../../assets/images/close-icon.svg">
+        </div>
+      </div>
+
+      <section class="">
+        <div class="mobile-icon-shipment">
+          <div class="ship-mobile">
+            <div>
+
+              <img (click)="dashboardType = 'shipment';changeAccountTypeMobile('shipment');"
+                *ngIf="shipmentProfile && shipmentProfile.length>0 && shipmentProfile[0]?.isShipmentAccountVerified"
+                [src]="this.dashboardType =='shipment'?'../../../assets/images/shipping-fast-red.svg':'../../../assets/images/shipping-fast-gray.svg'">
+            </div>
+            <img (click)="dashboardType='mailBox';changeAccountTypeMobile('mailBox');"
+              *ngIf="this.virtualProfile && virtualProfile.length>0 && virtualProfile[0]?.isMailBoxAccountVerified && virtualProfile[0]?.status != 'inActive'"
+              [src]="this.dashboardType =='mailBox'?'../../../assets/images/mailbox-red.svg':'../../../assets/images/mailbox-34f.svg'">
+          </div>
+        </div>
+        <!-- {{shipmentProfile | json}}////{{!virtualProfile[0]?.isMailBoxAccountVerified}} -->
+        <!-- ///{{virtualProfile[0]?.isMailBoxAccountVerified | json}} -->
+        <div class="dropdown">
+          <span class="shipment-red"><img *ngIf="dashboardType == 'shipment'"
+              src="../../../assets/images/shipping-fast-red.svg"></span>
+          <span class="shipment-red"><img *ngIf="dashboardType !== 'shipment'"
+              src="../../../assets/images/mailbox-red.svg" class="mailbox-red"></span>
+          <mat-select #account [(ngModel)]="dashboardType" (selectionChange)="changeAccountType($event)"
+            class="shipment-dropdown" placeholder="Shipment Account">
+            <mat-option
+              *ngIf="shipmentProfile && shipmentProfile.length>0 && shipmentProfile[0]?.isShipmentAccountVerified"
+              value="shipment"><span class="shipment-red"><img
+                  src="../../../assets/images/shipping-fast-red.svg"></span> Shipping Account</mat-option>
+            <!-- *ngIf="userData?.profiles && userData?.profiles.length>1 && userData?.profiles[0].isMailBoxAccountVerified" -->
+            <mat-option
+              *ngIf="this.virtualProfile && virtualProfile.length>0 && virtualProfile[0]?.isMailBoxAccountVerified && virtualProfile[0]?.status != 'inActive'"
+              value="mailBox"> <span class="shipment-red"><img
+                  src="../../../assets/images/mailbox-red.svg"></span>Mailbox Account</mat-option>
+          </mat-select>
+        </div>
+        <!-- {{ mailBoxTabs | json}} -->
+        <ul class="ul-dash">
+          <li (done)="onSkip()" [joyrideStep]="item?.joyrideStep"  [stepContent]="customContent"
+          [stepContentParams]="{'name': item?.customContent}" stepPosition="right" class="cursor" *ngFor="let item of tabs" [routerLink]="item.navigation"
+            routerLinkActive="active" [title]="item?.title">
+            <div class="w-100 align-center">
+              <div class="">
+                <img class="navicon" src="{{ item.grayImg }}" />
+                <img class="navicon-active" src="{{ item.activeImg }}" />
+              </div>
+              <div class="nav-item pl-2 ml-1" *ngIf="!isSmallNav">
+                {{ item.title }}
+              </div>
+            </div>
+            <ng-template #customContent let-person="name"> {{person}} </ng-template>
+          </li>
+        </ul>
+
+        <div class="bg-img">
+          <img src="../../../../assets/images/ship-dashboard.png" />
+        </div>
+        <div class="justify-center mt-2 options">
+          <a class="help-btn help" [joyrideStep]="'help'" title="Frequently Asked Questions"  [stepContent]="customContent"
+          [stepContentParams]="{'name': 'The help button will lead you to the FAQs page that will be updated periodically.'}"  [ngClass]="this.currentRoute == '/client/help'?'active':''" routerLink="/client/help">
+            <img src="../../../../assets/images/help.svg" />
+            <span>Help</span>
+          </a>
+          <ng-template #customContent let-help="name"> {{help}} </ng-template>
+          <a href="mailto:support@shipdistrict.com" [joyrideStep]="'email'" title="Email Us" [stepContent]="customContent"
+          [stepContentParams]="{'name': 'Use this button to send an email to the Admin immediately.'}"  class="help-btn emails" stepDefaultPosition="top">
+            <img src="../../../../assets/images/email-1.svg" />
+            <span>Email</span>
+          </a>
+          <ng-template #customContent let-email="name"> {{email}} </ng-template>
+        </div>
+
+
+
+      
+
+
+        <footer class="footer-bottom">
+          <p>
+            <span><img src="../../../../assets/images/arrow-left.png" /></span>Copyright {{copyRightYear | date
+            :'YYYY'}} Shipdistrict
+          </p>
+        </footer>
+      </section>
+    </div>
+  </mat-drawer>
+  <mat-drawer-content [ngClass]="isSmallNav?'md-width':''">
+    <div class="main">
+      <!-- <span>{{this.currentRoute}}</span> -->
+      <router-outlet></router-outlet>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>
+<!-- <img
+            class="mr-2 cursor"
+            (click)="isSmallNav = !isSmallNav; toggleSmallNav()"
+            src="assets/images/menu-bar.svg"
+            alt=""
+          /> -->
+
+

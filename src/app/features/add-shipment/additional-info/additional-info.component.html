@@ -1,0 +1,463 @@
+<section class="bg-info">
+  <div class="d-none" [class.loading]="isloading">
+    <mat-progress-spinner
+    *ngIf="isloading"
+      class="loader"
+      [color]="'warn'"
+      [mode]="'indeterminate'"
+      [value]="'30'"
+      stroke="f44336"
+    >
+    </mat-progress-spinner>
+  </div>
+  <!-- <pre>{{ shipmentInfo?.selectedService | json }}</pre> -->
+  <div class="row justify-between">
+    <div class="col-lg-2 pl-2">
+      <img
+        class="img-logo1"
+        src="../../../../assets/images/newLogo4.png"
+        alt=""
+      />
+    </div>
+
+    <div class="col-lg-6 mt-3 order-2 create-ship">
+      <div class="text-center font-36 fw-6">
+        Create New <span class="getStarted font-600">Shipment</span>
+      </div>
+      <div class="text-center font-16 l-black">
+        Please add your Shipment details
+      </div>
+    </div>
+    <div class="col-lg-1 d-flex order-3 close-file">
+      <!-- <div class="file">
+        <img src="../../../../assets/images/file-layer.svg" />
+      </div> -->
+      <div class="close" routerLink="/client/dashboard">
+        <img src="../../../../assets/images/ic_sidemenu.svg" />
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12 px-3">
+      <div class="mt-2 info-page">
+        <div class="d-flex">
+          <p class="float-right pack-info">Sender Address</p>
+          <p class="per float-right">100%</p>
+        </div>
+        <mat-progress-bar
+          color="warn"
+          mode="determinate"
+          value="100"
+        ></mat-progress-bar>
+      </div>
+    </div>
+  </div>
+  <div class="row pb-5">
+    <div class="col-lg-4 pl-3 mt-2 padding-r addi-sender1">
+      <div class="row">
+        <div class="col-lg-12 mt-2 mb-2">
+          <div class="white-form-card1 ">
+            <div class="edit-servces">
+              <p class="float-left">Sender Information</p>
+              <img
+                class="edit icns"
+                (click)="editSender()"
+                src="../../../../../../assets/images/edit.svg"
+              />
+            </div>
+            <div class="col-lg-12">
+              <table class="sender-info" width="100%">
+                <tr>
+                  <td align="left">Name :</td>
+                  <td align="right">{{ shipmentInfo?.sender?.name }}</td>
+                </tr>
+                <tr>
+                  <td align="left">Email :</td>
+                  <td align="right" class="emailText">{{ shipmentInfo?.sender?.email || "--" }}</td>
+                </tr>
+                <tr>
+                  <td align="left">Phone No.</td>
+                  <td align="right">{{ shipmentInfo?.sender?.phone }}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12 mt-2 mb-2  addi-sender d-none">
+          <div class="white-form-card1">
+            <div class="edit-servces">
+              <p class="float-left">Shipment</p>
+              <img
+                class="edit icns"
+                (click)="editshipmentServices()"
+                src="../../../../../../assets/images/edit.svg"
+              />
+            </div>
+            <table class="sender-info" width="100%">
+              <tr>
+                <td align="left">
+                  <span class="font-weight">{{
+                    shipmentInfo?.selectedService?.serviceType
+                  }}</span
+                  ><P>{{ shipmentInfo?.selectedService?.day | date }}</P>
+                  <P>{{ shipmentInfo?.selectedService?.time}}</P>
+                </td>
+                <td align="right" class="font-22 maincolor">
+                  ${{ shipmentInfo?.selectedService?.shipmentPrice || "--" }}
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="col-lg-12 mt-2 mb-2 addi-sender">
+          <div class="white-form-card1 QuotesCard">
+            <div class="edit-servces">
+              <p class="float-left">Shipment Detail</p>
+              <img
+                class="QuotesImg"
+                (click)="updateQuotes()"
+                src="../../../../../../assets/images/refersh.svg"
+              />
+            </div>
+            <table class="sender-info" width="100%">
+              <tr>
+                <td align="left">
+                  <span class="font-weight"
+                    >{{ shipmentInfo?.selectedService?.serviceType }} </span
+                  ><P>{{ shipmentInfo?.selectedService?.day | date }}</P>
+                  <P>{{ shipmentInfo?.selectedService?.time}}</P>
+                </td>
+                <td align="right" class="font-22 maincolor">
+                  ${{
+                    this.updatedData?.totalNetCharge 
+                  }}
+                </td>
+              </tr>
+              <tr>
+                <td align="left">Service Fee</td>
+                <td align="right">${{ this.updatedData?.serviceFee }} </td>
+              </tr>
+              <tr *ngIf="this.updatedData?.discount>0">
+                <td align="left">Discount</td>
+                <td align="right">${{ this.updatedData?.discount  }}  </td>
+              </tr>
+              <tr>
+                <td align="left">Total Amount</td>
+                <td align="right"> ${{
+                  this.updatedData?.totalNetCharge
+                }} </td>
+              </tr>
+              <!-- <tr>
+                <td align="left">Residential Surcharge</td>
+                <td align="right">110 $</td>
+              </tr>
+              <tr>
+                <td align="left">Discount</td>
+                <td align="right">40 $</td>
+              </tr> -->
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-8 px-3 mt-2 adde">
+      <div class="row">
+        <div class="col-lg-6 mt-2 pr-2">
+          <div class="white-form-card1">
+            <div class="edit-servces">
+              <p class="float-left">Receiver Information</p>
+              <img
+                class="edit icns"
+                (click)="editReceiver()"
+                src="../../../../../../assets/images/edit.svg"
+              />
+            </div>
+            <div class="col-12">
+              <table class="sender-info" width="100%">
+                <tr>
+                  <td align="left">Name :</td>
+                  <td align="right">{{ shipmentInfo?.receiver?.name }}</td>
+                </tr>
+                <tr>
+                  <td align="left">Email :</td>
+                  <td align="right" class="lowertext">{{ shipmentInfo?.receiver?.email || "--" }}</td>
+                </tr>
+                <tr>
+                  <td align="left">Phone No.</td>
+                  <td align="right">{{ shipmentInfo?.receiver?.phone }}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 px-1 mt-2">
+          <div class="white-form-card1">
+            <div class="edit-servces">
+              <p class="float-left">Package Information</p>
+              <img
+                class="edit icns"
+                (click)="editPackage()"
+                src="../../../../../../assets/images/edit.svg"
+              />
+            </div>
+            <div class="col-lg-12 packageInfoCard">
+              <table
+                class="sender-info my-1"
+                width="100%"
+                *ngFor="let items of this.shipmentInfo?.packages"
+              >
+                <tr>
+                  <td align="left">Package :</td>
+                  <td align="right">({{ items?.numberOfPackages }})Qty</td>
+                </tr>
+                <tr>
+                  <td align="left">Units :</td>
+                  <td align="right">
+                    <p>
+                      {{ items?.dimension.length }}x{{
+                        items?.dimension.width
+                      }}x{{ items?.dimension.height }}
+                    </p>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="left">Insurance Declared :</td>
+                  <td align="right">
+                    <p>{{ items?.insuranceDeclared || "--" }}</p>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12 mt-3">
+          <div class="white-form-card1">
+            <!-- <pre>{{this.additinalInfoForm.value | json}}</pre> -->
+            <div class="mt-2">
+              <form class="" [formGroup]="additinalInfoForm">
+                <div class="row">
+                  <div class="col-lg-10 float-left">
+                    <p class="scondry-color">Additional Information</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-6 pr-3">
+                    <div class="dropdown1">
+                      <label class="fw-5 font-14"
+                        >Signature Required
+                        <span class="package"
+                          ><img  matTooltip="Info about the action"
+                          matTooltipPosition="right"
+                         aria-label="Button that displays a tooltip when focused or hovered over"
+                            src="../../../../assets/images/tooltip-icon1.svg" /></span
+                      ></label>
+
+                      <form-field [errorControl]="additinalInfoForm.get('signature')" name="signature">
+                        <mat-select
+                          class="form-control Additional-dropdown"
+                          placeholder="Signature Required" formControlName="signature"
+                        >
+                          <mat-option value="yes">Yes</mat-option>
+                          <mat-option value="no">No</mat-option>
+                        </mat-select>
+                      </form-field>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 pr-3">
+                    <div>
+                      <label class="fw-5 font-14"
+                        >Lithium Batteries
+                        <span class="package"
+                          ><img  matTooltip="Info about the action"
+                          matTooltipPosition="right"
+                         aria-label="Button that displays a tooltip when focused or hovered over"
+                            src="../../../../assets/images/tooltip-icon1.svg" /></span
+                      ></label>
+                      <form-field>
+                        <mat-select
+                          class="form-control" (selectionChange)="batteryRequired($event)"
+                          formControlName="LithiumBatteries"
+                          placeholder="Lithium Batteries"
+                        >
+                          <mat-option value="yes">Yes</mat-option>
+                          <mat-option value="no">No</mat-option>
+                        </mat-select>
+                      </form-field>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-6 pr-3" *ngIf="this.additinalInfoForm.controls['LithiumBatteries'].value == 'yes'">
+                    <div class="row">
+                      <div class="col-lg-6 pr-3">
+                        <div>
+                          <label class="fw-5 font-14"
+                            >Battery Packing Type
+                            <span class="package"
+                              ><img  matTooltip="Info about the action"
+                              matTooltipPosition="right"
+                             aria-label="Button that displays a tooltip when focused or hovered over"
+                                src="../../../../assets/images/tooltip-icon1.svg" /></span
+                          ></label>
+                          <form-field [errorControl]="additinalInfoForm.get('batteryPackingType')" name="battery packing type">
+                            <mat-select class="form-control" formControlName="batteryPackingType" placeholder="Battery Packing Type">
+                              <mat-option value="CONTAINED_IN_EQUIPMENT"
+                                >Contained In Equipment</mat-option
+                              >
+                              <mat-option value="PACKED_WITH_EQUIPMENT"
+                                >Packed With Equipment</mat-option
+                              >
+                            </mat-select>
+                          </form-field>
+                        </div>
+                      </div>
+                      <div class="col-lg-6" *ngIf="this.additinalInfoForm.controls['LithiumBatteries'].value == 'yes'">
+                        <div>
+                          <label class="fw-5 font-14"
+                            >Battery Material Type
+                            <span class="package"
+                              ><img  matTooltip="Info about the action"
+                              matTooltipPosition="right"
+                             aria-label="Button that displays a tooltip when focused or hovered over"
+                                src="../../../../assets/images/tooltip-icon1.svg" /></span
+                          ></label>
+                          <form-field [errorControl]="additinalInfoForm.get('batteryMaterialType')" name="battery material type">
+                            <mat-select
+                              class="form-control" formControlName="batteryMaterialType"
+                              placeholder="Battery Material Type"
+                            >
+                              <mat-option value="LITHIUM_METAL"
+                                >Lithium Metal</mat-option
+                              >
+                              <mat-option value="LITHIUM_ION"
+                                >Lithium Ion</mat-option
+                              >
+                            </mat-select>
+                          </form-field>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 pr-3">
+                    <div>
+                      <label class="fw-5 font-14"
+                        >Special Instruction
+                        <span class="package"
+                          ><img  matTooltip="Info about the action"
+                          matTooltipPosition="right"
+                         aria-label="Button that displays a tooltip when focused or hovered over"
+                            src="../../../../assets/images/tooltip-icon1.svg" /></span
+                      ></label>
+                      <form-field>
+                        <mat-select
+                          class="form-control"
+                          placeholder="Special Instruction"
+                        >
+                          <mat-option
+                            value="volvo"
+                            placeholder="Signature Required"
+                            >Special Instruction</mat-option
+                          >
+                          <!-- <mat-option value="saab">Saab</mat-option>
+                          <mat-option value="mercedes">Mercedes</mat-option>
+                          <mat-option value="audi">Audi</mat-option> -->
+                        </mat-select>
+                      </form-field>
+                    </div>
+                  </div>
+                  <div class="pr-3" [ngClass]="this.additinalInfoForm.controls['alcohole'].value == 'yes'?'col-lg-3':'col-lg-6'" >
+                    <div>
+                      <label class="fw-5 font-14"
+                        >Alcohol
+                        <span class="package"
+                          ><img  matTooltip="Info about the action"
+                          matTooltipPosition="right"
+                         aria-label="Button that displays a tooltip when focused or hovered over"
+                            src="../../../../assets/images/tooltip-icon1.svg" /></span
+                      ></label>
+                      <form-field>
+                        <mat-select (selectionChange)="alcholeRequired($event)" class="form-control" formControlName="alcohole"  placeholder="Alcohol">
+                          <mat-option value="yes">Yes</mat-option>
+                          <mat-option value="no">No</mat-option>
+                        </mat-select>
+                      </form-field>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 pr-3" *ngIf="this.additinalInfoForm.controls['alcohole'].value == 'yes'">
+                    <div>
+                      <label class="fw-5 font-14"
+                        >Alcohol Recipient Type
+                        <span class="package"
+                          ><img  matTooltip="Info about the action"
+                          matTooltipPosition="right"
+                         aria-label="Button that displays a tooltip when focused or hovered over"
+                            src="../../../../assets/images/tooltip-icon1.svg" /></span
+                      ></label>
+                      <form-field [errorControl]="additinalInfoForm.get('alcoholRecipientType')" name="alcohol recipient type">
+                        <mat-select formControlName="alcoholRecipientType" class="form-control" placeholder="Alcohol Recipient Type">
+                          <mat-option value="LICENSEE">Licensee</mat-option>
+                          <mat-option value="CONSUMER">Consumer</mat-option>
+                        </mat-select>
+                      </form-field>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 pr-3">
+                    <div>
+                      <label class="fw-5 font-14"
+                        >Billing Party
+                        <span class="package"
+                          ><img  matTooltip="Info about the action"
+                          matTooltipPosition="right"
+                         aria-label="Button that displays a tooltip when focused or hovered over"
+                            src="../../../../assets/images/tooltip-icon1.svg" /></span
+                      ></label>
+                      <form-field [errorControl]="additinalInfoForm.get('paymentType')" name ="payment type" >
+                        <mat-select
+                          class="form-control"
+                           formControlName="paymentType"
+                          placeholder="Billing Party"
+                        >
+                          <mat-option value="Sender">Sender</mat-option>
+                          <!-- <mat-option value="Receiver">Receiver</mat-option> -->
+                        </mat-select>
+                      </form-field>
+                    </div>
+                  </div>
+
+                  <div class="font-14">
+                    <!-- <mat-checkbox class="mr-2" formControlName="accept">
+                                <span class="getStarted"> Residential </span>
+                               </mat-checkbox>  -->
+                  </div>
+                </div>
+                <div class="justify-center mt-4">
+                  <button
+                    class="theme-btn white-btn mr-2 back-red"
+                    (click)="editshipmentServices()"
+                  >
+                    Back
+                  </button>
+                  <button
+                    class="theme-btn red ml-2"
+                    type="button"
+                    (click)="updateQuotes()"
+                  >
+                    Update Quote
+                  </button>
+                  <button
+                    class="theme-btn orange ml-3"
+                    type="button"
+                    (click)="createShipment()"
+                  >
+                    Ship Now
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

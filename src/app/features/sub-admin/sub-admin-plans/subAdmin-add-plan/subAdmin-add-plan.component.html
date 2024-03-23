@@ -1,0 +1,317 @@
+<section class="bg-info">
+  <div class="row justify-between-md-center">
+    <div class="col-lg-4 col-xl-4 pl-2">
+      <img
+        class="img-logo1"
+        src="../../../../assets/images/newLogo4.png"
+        alt=""
+      />
+    </div>
+    <div class="col-lg-5 col-xl-5 mt-3">
+      <div class="text-center font-36 fw-6">
+        {{ planId ? "Update" : "Add"
+        }}<span class="getStarted font-600"> Plan </span>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-md-center pb-5">
+    <div class="col-lg-12 px-3 mt-2">
+      <!-- {{planForm.value |json}} -->
+      <div class="mt-2">
+        <form class="white-form-card" [formGroup]="planForm">
+            <div class="row">
+                <div class="col-lg-10 col-xl-10 float-left pt-3">
+                <p class="scondry-color">Plan Details</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-xl-4 pr-3">
+                <div>
+                    <label class="fw-5 font-11">Title</label>
+                    <form-field
+                    [errorControl]="planForm.get('planName')"
+                    name="Plan title"
+                    >
+                    <input
+                        type="text"
+                        formControlName="planName"
+                        placeholder="Basic"
+                        class="form-control font-family"
+                    />
+                    </form-field>
+                </div>
+                </div>
+
+                <div class="col-lg-4 col-xl-4 pr-3">
+                <div>
+                    <label class="fw-5 font-11">Price ($)</label>
+                    <form-field
+                    [errorControl]="planForm.get('planPrice')"
+                    name="Plan price"
+                    >
+                    <input
+                        type="text"
+                        formControlName="planPrice"
+                        NumberInput
+                        placeholder="$ 19.90"
+                        class="form-control font-family"
+                    />
+                    </form-field>
+                </div>
+                </div>
+
+                <div class="col-lg-4 col-xl-4 pr-2">
+                <div>
+                    <!-- <label class="fw-5 font-11">Scan Count Mail & Packages/month</label> -->
+                    <label class="fw-5 font-11">Scan Count</label>
+                    <form-field
+                    [errorControl]="planForm.get('scanCount')"
+                    name="Scan count"
+                    >
+                    <input
+                        type="text"
+                        formControlName="scanCount"
+                        NumberInput
+                        placeholder="40"
+                        class="form-control font-family"
+                    />
+                    </form-field>
+                </div>
+                </div>
+
+                <div class="col-lg-4 col-xl-4 pr-3">
+                <div>
+                    <label class="fw-5 font-11">Select Type</label>
+                    <form-field
+                    [errorControl]="planForm.get('validity')"
+                    name="plan validity"
+                    >
+                    <mat-select
+                        formControlName="validity"
+                        class="form-control"
+                        placeholder="Select Type"
+                    >
+                        <mat-option value="monthly">Monthly</mat-option>
+                        <mat-option value="annually">Annually</mat-option>
+                    </mat-select>
+                    </form-field>
+                </div>
+                </div>
+
+                <div formGroupName="additionalFee" class="col-12 pr-3">
+                <h3>Additional Charges</h3>
+                <div class="row">
+                    <div class="col-lg-4 col-xl-4 pr-3">
+                    <div>
+                        <!-- <label class="fw-5 font-11">Packages Receiving/month</label> -->
+                        <label class="fw-5 font-11">Packages Receiving Fee ($)</label>
+                        <form-field
+                        [errorControl]="
+                            planForm.get('additionalFee.packageReceiving')
+                        "
+                        name="packages receiving count"
+                        >
+                        <input
+                            type="text"
+                            NumberInput
+                            formControlName="packageReceiving"
+                            placeholder="$ 12"
+                            class="form-control font-family"
+                        />
+                        </form-field>
+                    </div>
+                    </div>
+                    <div class="col-lg-4 col-xl-4 pr-3">
+                    <div>
+                        <label class="fw-5 font-11">Package Consolidation Fee ($)</label>
+                        <form-field
+                        [errorControl]="
+                            planForm.get('additionalFee.packageConsolidation')
+                        "
+                        name="packages Consolidation"
+                        >
+                        <input
+                            type="text"
+                            NumberInput
+                            formControlName="packageConsolidation"
+                            placeholder="$ 50"
+                            class="form-control font-family"
+                        />
+                        </form-field>
+                    </div>
+                    </div>
+
+                    <div class="col-lg-4 col-xl-4 pr-2">
+                    <div>
+                        <!-- <label class="fw-5 font-11">Overweight Package (50-150 lbs) Receiving/month</label> -->
+                        <label class="fw-5 font-11"
+                        > Overweight/Oversized Package (50-150 lbs) Receiving Fee ($)</label
+                        >
+                        <form-field
+                        [errorControl]="planForm.get('additionalFee.overWeight')"
+                        name="overWeight/Oversized package fee"
+                        >
+                        <input
+                            type="text"
+                            NumberInput
+                            formControlName="overWeight"
+                            placeholder="$ 10"
+                            class="form-control font-family"
+                        />
+                        </form-field>
+                    </div>
+                    </div>
+
+                    <div class="col-lg-4 col-xl-4 pr-3">
+                    <div>
+                        <label class="fw-5 font-11">Mail Storage Fee ($)</label>
+                        <form-field
+                        [errorControl]="planForm.get('additionalFee.mailStorage')"
+                        name="mail delivery price"
+                        >
+                        <input
+                            type="text"
+                            NumberInput
+                            formControlName="mailStorage"
+                            placeholder="$ 2"
+                            class="form-control font-family"
+                        />
+                        </form-field>
+                    </div>
+                    </div>
+                    <div class="col-lg-4 col-xl-4 pr-3">
+                    <div>
+                        <label class="fw-5 font-11">Pallet Receiving Fee ($)</label>
+                        <form-field
+                        [errorControl]="planForm.get('additionalFee.palletReceiving')"
+                        name="pallet receiving fee"
+                        >
+                        <input
+                            type="text"
+                            NumberInput
+                            formControlName="palletReceiving"
+                            placeholder="$ 24"
+                            class="form-control font-family"
+                        />
+                        </form-field>
+                    </div>
+                    </div>
+                    <div class="col-lg-4 col-xl-4 pr-3">
+                    <div>
+                        <label class="fw-5 font-11">Pallet Storage Fee ($)</label>
+                        <form-field
+                        [errorControl]="planForm.get('additionalFee.palletStorage')"
+                        name="pallet storage fee"
+                        >
+                        <input
+                            type="text"
+                            NumberInput
+                            formControlName="palletStorage"
+                            placeholder="$ 46"
+                            class="form-control font-family"
+                        />
+                        </form-field>
+                    </div>
+                    </div>
+                    <div class="col-lg-4 col-xl-4 pr-3">
+                    <div>
+                        <label class="fw-5 font-11">package Storage Fee ($)</label>
+                        <form-field
+                        [errorControl]="planForm.get('additionalFee.packageStorage')"
+                        name="package storage fee"
+                        >
+                        <input
+                            type="text"
+                            NumberInput
+                            formControlName="packageStorage"
+                            placeholder="$ 46"
+                            class="form-control font-family"
+                        />
+                        </form-field>
+                    </div>
+                    </div>
+                </div>
+                </div>
+                <div class="col-12 pr-3" formGroupName="penaltyFee">
+                    <h3>Penalty Fee</h3>
+                    <div class="row">
+                        <div class="col-lg-4 col-xl-4 pr-3">
+                            <div>
+                            <label class="fw-5 font-11"
+                                >Wrong Address Fee (Incorrect or Missing Mailbox
+                                Number) ($)</label
+                            >
+                            <form-field
+                                [errorControl]="planForm.get('penaltyFee.wrongAddress')"
+                                name="wrong address fee"
+                            >
+                                <input
+                                type="text"
+                                NumberInput
+                                formControlName="wrongAddress"
+                                placeholder="$ 5"
+                                class="form-control font-family"
+                                />
+                            </form-field>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-xl-4 pr-3">
+                            <div>
+                                <label class="fw-5 font-11"
+                                    >Reinstatement Fee (Termination after 14 days of non
+                                    payment) ($)</label>
+                                <form-field
+                                    [errorControl]="planForm.get('penaltyFee.reinstatement')"
+                                    name="reinstatement fee"
+                                >
+                                    <input
+                                    type="text"
+                                    NumberInput
+                                    formControlName="reinstatement"
+                                    placeholder="$ 80"
+                                    class="form-control font-family"
+                                    />
+                                </form-field>
+                            </div>
+                        </div>
+                       
+                        <div class="col-lg-4 col-xl-4 pr-2">
+                            <div>
+                            <label class="fw-5 font-11"
+                                >Late Fee ($)</label
+                            >
+                            <form-field
+                                [errorControl]="planForm.get('penaltyFee.late')"
+                                name="late fee"
+                            >
+                                <input
+                                type="text"
+                                NumberInput
+                                formControlName="late"
+                                placeholder="$ 2"
+                                class="form-control font-family"
+                                />
+                            </form-field>
+                            </div>
+                        </div>
+                        
+                    </div>
+                
+                </div>
+            </div>
+            <div class="justify-center mt-4 mb-4 pt-3">
+                <button
+                class="theme-btn white-btn mr-2 back-red"
+                routerLink="/subAdmin/plan"
+                >
+                Back
+                </button>
+                <button class="theme-btn red ml-2" (click)="addEditPlan()">
+                {{ planId ? "Update" : "Add" }}
+                </button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,237 @@
+<!-- <section class="py-4 bg-info post-office d-none">
+  <div class="row justify-between">
+    <div class="col-lg-2 pl-2">
+      <img
+      class="img-logo1"
+        src="../../../../assets/images/newLogo4.png"
+        alt=""
+      />
+       </div>
+
+    <div class="col-lg-6  mt-3 order-2">
+      <div class="text-center font-40 fw-6">
+        <span class="getStarted font-600">Mailbox</span> Application
+      </div>
+      <div class="text-center font-14 l-black">
+        Please download the Post Office form below and Upload it after filling
+        <br />
+        all the details required to submit to Post Office.
+      </div>
+    </div>
+
+       <div class="col-lg-2 text-right pr-3 order-3">
+        <div>
+          <button class="theme-btn border-white contactBtn"><a href="tel:+123456890">Contact Us </a></button>
+        </div>
+      </div>
+    </div>
+  <div class="row justify-content-md-center my-4 mb-5 padding-both">
+
+    <div class="col-lg-3">
+      <div class="mt-4">
+        <div class="white-form-card">
+          <div class="align-center justify-between">
+            <div class="font-14 font-600">Post Office Form</div>
+            <div class="align-center font-12">
+
+              <a class="dowanloadForm" href ="../../../../assets/images/SHIPDISTRICTPMBFORM.pdf" attributes-list download >
+                <span class="download-icon1"><img
+                width="12px"
+                class="mr-1 "
+                src="../../../../assets/images/download-icon.svg"
+                alt=""
+              /></span>Download Form
+             </a>
+            </div>
+          </div>
+
+          <div class="upload-file my-3" (click)="selectFile1.selectFile()">
+            <div class="d-flex flex-column text-center">
+              <file-uploader #fileUploader="FileUploader"></file-uploader>
+                <app-uploader-ui
+                  #selectFile1
+                  [fileUploader]="fileUploader"
+                  (afterUploadFile)="selectFile($event)"
+                ></app-uploader-ui>
+              <img width="30px" class="mx-auto"  src="../../../../assets/images/upload-icon.svg" alt="" />
+              <span class="font-10 grey my-2">Upload your file</span>
+              <div class="text-center">
+                <button type="button" class="theme-btn upload-btn">Upload</button>
+              </div>
+
+            </div>
+          </div>
+            <div class="hr-line">
+             <p class="font-12"> <a class="dowanloadForm formColor" href ="../../../../assets/images/Mail-boxExampleForm.pdf" target="blank" attributes-list >
+                <span class="download-icon1"><img
+                width="12px"
+                class="mr-1 "
+                src="../../../../assets/images/download-icon.svg"
+                alt=""
+              /></span>Need help to fill out the mailbox form? Click Here
+             </a>
+            </p>
+             <hr></div>
+          <div class="upload-bar align-center justify-between my-2 py-3 px-3" *ngIf="url">
+            <div class="align-center font-12 fw-5">
+                <img width="12px" class="mr-2" src="../../../../assets/images/pdf-file.svg" alt="">Post Office form
+            </div>
+            <div class="font-12 dark-red">
+                Uploaded 100%
+            </div>
+          </div>
+
+          <div class="justify-between mt-4">
+            <button class="theme-btn white-btn mr-2 back-red" routerLink="/account-info">Cancel</button>
+            <button class="theme-btn red ml-2" (click)="next()">Next</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+<section>
+  <div class="row justify-between">
+    <div class="col-lg-2 pl-2 header-post-mail">
+      <img class="img-logo1" src="../../../../assets/images/newLogo4.png" alt="" />
+    </div>
+    <div class="col-lg-6 mt-3 order-2">
+      <div class="text-center font-36 fw-6">Application for Mailbox Rental</div>
+      <div class="text-center font-16 l-black">
+        Fill in all the details required to submit your application.
+      </div>
+    </div>
+    <div class="col-lg-2 text-right pr-3 order-3">
+      <div>
+        <button class="theme-btn border-white contactBtn"><a href="tel:+123456890">Contact Us </a></button>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="mx-3">
+  <div class="justify-between">
+<span>Step 1</span><span>1/2</span></div>
+<mat-progress-bar color="warn" mode="determinate" [value]="50"
+          ></mat-progress-bar
+        >
+      </div>
+<div class="row justify-content-md-center">
+  <div class="col-lg-12 px-3 mt-2 mb-5">
+    <div class="mt-4">
+      <form class="white-form-card aggre-ment" [formGroup]="form">
+        <p>This Agreement is made on<span>
+          <input
+          readonly
+          [value]="this.minDate"
+          [min]="minDate"
+          type="text" class="Agreement">
+          <mat-datepicker #picker></mat-datepicker></span> by and between
+           <span class="inupt-errr">
+            <input matInput formControlName="name"
+              type="text" class="Agreement">
+              <span *ngIf="error(this.form.get('name'),'name')" class="mat-err set-err"> <mat-error class="error" >{{error(this.form.get('name'),'name')}}</mat-error> </span>
+              <!-- <mat-error class="error"></mat-error> -->
+            </span>, hereinafter referred to as <span
+            class="text-uderline">“Applicant"</span>, and <span class="text-uderline">ShipDistrict®</span> ,
+          hereinafter referred to as “Mail Service”, shall be governed by these terms to which each party agrees:</p>
+        <p><b>1.</b> By completing this form and USPS Form 1583, a copy of which will be made available to the United
+          States Postal Service, applicant appoints Mail Service as agent for the receipt for a period not to exceed
+          that for which rent has been paid in advance. Applicant will pick up mail or packages at least once each
+          month or make other suitable arrangements, in advance, with Mail Service. Applicant may pick up mail or
+          packages within the business hours of the Mail Service. Applicant also promises to pay Mail Service any, and
+          all charges/invoices within no more than 14 days or Applicant is subject to late fees or a reinstatement
+          fee.</p>
+        <p><b>2.</b> If a key to a lockbox is loaned to applicant, the key remains the property of Mail Service and
+          shall not be duplicated or modified by applicant. The key shall be returned prior or at the time of
+          termination of service. Applicant understands that the relationship of the parties hereto is one of bailment
+          and not landlord and tenant.</p>
+        <p><b>3.</b> Once Mail Service has received applicant’s mail or package from the carrier and has sent the user
+          a scan, the mail shall be deemed to have been delivered, and Mail Service shall not be responsible for loss,
+          theft, or damage. When receiving mail or packages from third parties, Mail Service is not engaged in the
+          delivery of mail or packages and cannot be responsible for failure of the United States Postal Service or
+          any carrier to deliver the mail or packages, or to deliver them in a timely fashion or undamaged condition.
+        </p>
+        <p><b>4.</b> Applicant agrees to use services in accordance with Mail Service rules and in compliance with all
+          U.S. Postal regulations, as well as local, state, and federal statutes and regulations. Failure to do so may
+          result in cancellation of service without notice, refund, or mail forwarding.</p>
+        <p><b>5.</b> Information provided by applicant will be kept confidential and will not knowingly be disclosed
+          without applicant’s prior consent, except for law enforcement or postal operation purposes, in which case
+          Mail Service intends to cooperate fully. Law enforcement is further clarified to include all city, county,
+          state or federal agencies or their representatives.</p>
+        <p><b>6.</b> Mail will be accepted for no more than three (3) persons or organizations to a single address,
+          and each must complete a USPS Form 1583 and provide photo identification. If applicant consistently receives
+          substantially more mail than should be received by an address, Mail Service reserves the right to require
+          applicant to pay a fee. Charges for service are based upon average daily volume and activity. Special
+          circumstances, e.g., high number of parcels, etc. may require assessment of additional fees. An unusually
+          high volume of mail will result in either a higher fee being charged, or termination of the mail receiving
+          service. Applicant further agrees that parcels delivered to this address for the applicant will be delivered
+          by common carrier only, that no truck line (freight) deliveries will be made WITHOUT PRIOR NOTIFICATION AND
+          ACCEPTENCE OF MAIL SERVICE, that parcels will be retrieved within 24 hours after delivery, and that no
+          hazardous or dangerous material will be delivered to applicant. Failure to adhere to any of these parcel
+          delivery stipulations will result in termination of service.</p>
+        <p><b>7.</b> Applicant agrees to protect, indemnify, and hold harmless Mail Service from and against any, and
+          all claims, demands and causes of action any nature whatsoever relative to use of Mail Service facilities or
+          services.</p>
+        <p><b>8.</b> Should Mail Service commit or fail to commit any act that results in disruption of service and
+          applicant thereby suffers a loss, Mail Service's liability shall be limited to not more than the rental fees
+          paid by applicant for service not yet received. Mail Service shall not be liable for incidental or
+          consequential damages.</p>
+        <p><b>9.</b> Per USPS regulations, certified, registered, insured, or C.O.D. mail or packages will be accepted
+          by Mail Service on the behalf of applicant. Full, advance payment of any charges must be made to Mail
+          Service prior to acceptance of any packages that need payment to be accepted.</p>
+        <p><b>10.</b> Mail Service fees are due and payable in advance or on due date, and notice thereof will be
+          communicated via in person, telephone, email, or online portal. No other notice will be required. Failure to
+          pay such fees when due may result in disruption or cancellation of services. Mail Service does not prorate
+          fees and does not provide refunds in the event of cancellation by applicant. The Applicant's use of service
+          can also be terminated if Applicant remains in default with Mail Service for 14 days or greater for any, and
+          all charges/invoices.</p>
+        <p><b>11.</b> Customer herein agrees that total liability of Mail Service for any, and all claims is limited to
+          one hundred dollars ($100.00) regardless of the nature of the claim.</p>
+          <span><b> Customer Initial </b></span>
+          <p>  <span class="inupt-errr"><input formControlName="initial"
+          type="text" class="Agreement"> <span *ngIf="error(this.form.get('initial'),'initial')"  class="mat-err"> <mat-error class="error" >{{error(this.form.get('initial'),'initial')}}</mat-error> </span></span></p>
+        <p><b>12.</b> Applicant shall use only the address designation “PMB” or "#" to designate their address. NO
+          OTHER DESIGNATION IS VALID. Specifically excluded is the use of suite, apt., dept., or other designators.
+          The U.S. Postal service may refuse to deliver any piece of mail that does not include the PMB or # sign
+          designation. Applicant is also subject to a “Wrong Address/Missing PMB #” fee. Applicant is responsible for
+          notifying correspondents of the above address.</p>
+        <p>The address to be used by applicant for the purpose of receiving mail is as follows:</p>
+        <div class="Applicant_bussiness">
+          <p>Applicant’s Name/Business Name</p>
+          <p><b>225 E 12th St</b></p>
+          <p><b>PMB#(Assigned Number) or </b></p>
+          <p><b>#(Assigned Number)</b> </p>
+          <p><b>Los Angeles CA 90015</b></p>
+        </div>
+        <p><b>13.</b> Customer agrees to abide by all Postal Regulations for providing proper address information to
+          senders. Customer agrees to hold Mail Service free and harmless for failure to receive packages and/or mail
+          when not properly addressed.</p>
+        <p><b>14.</b> Upon termination of services by Mail Service or failure to pay rent in advance by applicant,
+          Mail Service shall not make applicant’s mail available without payment theretofore. Applicant understands
+          that the United States Postal service will not forward or return mail without payment and will not accept a
+          Change of Address. At termination of service, applicant, if he wishes mail forwarded after that date, shall
+          provide Mail Service with a forwarding address, and pay the required fees. In the event applicant fails to
+          do this, Mail Service shall refuse any further mail and, in the case of mail already received handle such
+          mail in accordance with USPS DMM D042.2.6 regulations. By Signing/ Printing name below, Customer agrees to
+          all terms and conditions of this contract.</p>
+          <p><b>15.</b> Are you using this mailbox for </p>
+            <div class="radioButton mt-2">
+              <mat-radio-group formControlName="mailboxType" aria-label="Select an option" >
+                <mat-radio-button  color="warn" class="mx-2" value="personal">Personal</mat-radio-button>
+                <mat-radio-button  color="warn" class="mx-2"  value="business">Business</mat-radio-button>
+                <mat-radio-button  color="warn" class="mx-2" value="both">Both</mat-radio-button>
+              </mat-radio-group>
+            </div>
+          <!-- </p> -->
+        <div class="col-lg-4">
+          <p>  <span class="inupt-errr"><input type="text" formControlName="signature" class="Agreement-sgn"> <span *ngIf="error(this.form.get('signature'),'signature')" class="mat-err"> <mat-error class="error" >{{error(this.form.get('signature'),'signature')}}</mat-error> </span></span></p>
+          <span class="font-14">Applicant Printed Name / Signature</span>
+        </div>
+        <div class="justify-center mt-4">
+          <button type="text" class="theme-btn white-btn mr-2" routerLink="/account-info">Back</button>
+          <button type="text" class="theme-btn red ml-2" (click)="next()">Next </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

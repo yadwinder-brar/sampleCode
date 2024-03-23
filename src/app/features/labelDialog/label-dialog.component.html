@@ -1,0 +1,11 @@
+<div class="d-flex justify-center mt-5 multibutton">
+<button class="theme-btn white-btn back-red bulk-shipment my-3 mx-1" *ngFor="let data of labelData; let i= index" (click)="printLabel(data)">Print Label {{i+1}}</button>
+</div>
+<!-- <div class="">
+ <button class="theme-btn white-btn back-red bulk-shipment my-3 mx-1"(click)="printLabelAll()" >Print All</button>
+</div> -->
+
+<div class="justify-center align-center pt-4 mt-4">
+    <button class="theme-btn white-btn back-red bulk-shipment mr-4" (click)="this.dialogRef.close(false)">Cancel</button>
+    <button class="theme-btn red" (click)="printLabelAll()" >Print All</button>
+  </div>

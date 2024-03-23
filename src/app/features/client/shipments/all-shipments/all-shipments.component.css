@@ -1,0 +1,38 @@
+button.theme-btn.red.my-1.btn-width.create-shipment {
+    max-width: 100px;
+}
+td.fixWidth{
+    width: 200px !important;
+    max-width:200px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+.shipmentNot{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height:50vh;
+}
+.shippment-form-card{
+min-height: 84h;
+}
+/* ::ng-deep .mat-menu-panel {
+    min-height: 44px!important;
+} */
+
+@media (max-width:767px){
+    img.form-append.mr-2{
+        width: 11px !important;
+        margin-left: -8px;
+    }
+    .box-set {
+        margin-right: 5px;
+    }
+}
+
+@media (max-width:441px){
+    .box-set {
+        margin-right: 5px;
+    }
+}

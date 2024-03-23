@@ -1,0 +1,130 @@
+<app-admin-header [pageName]="'Shipments'" ></app-admin-header>
+<div class="content">
+    <div class="inner-dashbaord pt-3">
+        <div class="shippment-form-card">
+            <div class="row">
+                <div class="col-lg-6 col-xl-3 pr-2 pl-2 padding-l mobile-serach">
+                    <div>
+                        <form-field>
+                            <input  [(ngModel)]="search" (keyup)="searchShipment($event)"type="text" placeholder="Searching..." class="form-control font-family" />
+                            <img *ngIf="!search" src="../../../../assets/images/search.svg" class="form-append searching-icon" />
+                            <img class="form-append" *ngIf="search" (click)="search = '';getShipments();" src="../../../../assets/images/close-icon.svg" />
+                        </form-field>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xl-2 pr-2">
+                    <div>
+                        <img src="../../../../assets/images/fillter-date.svg" class="filter-icon" />
+                        <div class="Filter-status">
+                            <form-field>
+                                <mat-select [(ngModel)]="shipmentUser" (selectionChange)="userType($event);" class="form-control filter-status1" placeholder="All">
+                                    <mat-option value="self">Admin</mat-option>
+                                    <mat-option value="user">Users</mat-option>
+                                </mat-select>
+                            </form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6  col-xl-2 pr-2 cursor">
+                    <div>
+                        <img *ngIf="!shipmentDate" src="../../../../assets/images/fillter-date.svg" class="filter-icon" />
+                        <img *ngIf="shipmentDate" (click)="shipmentDate = ''; getShipments();" src="../../../../assets/images/close-icon.svg" class="filter-icon" />
+                        <div class="filter-date">
+                            <input type="text" [(ngModel)]="shipmentDate" (click)="startDate.open()"(dateChange)="getShipments()" readonly placeholder="Filter by Date" [matDatepicker]="startDate" class="form-control" />
+                            <img class="form-append mr-2" (click)="startDate.open()" src="../../../../assets/images/arrow-down.svg" alt="" />
+                            <mat-datepicker #startDate></mat-datepicker>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xl-2 pr-2">
+                    <div>
+                        <img src="../../../../assets/images/fillter-date.svg" class="filter-icon" />
+                        <!-- <img *ngIf="shipmentStatus" (click)="shipmentStatus = ''; getShipments();" src="../../../../assets/images/close-icon.svg" class="filter-icon" /> -->
+                        <div class="Filter-status">
+                            <form-field>
+                                <mat-select
+                                [(ngModel)]="shipmentStatus" (selectionChange)="getShipments();"
+                                class="form-control filter-status1" placeholder="Filter by Status">
+                                <mat-option value="">All</mat-option>
+                                <mat-option value="inTransit">In Transit</mat-option>
+                                <mat-option value="deleted">Cancelled</mat-option>
+                                <mat-option value="drafted" *ngIf="shipmentUser !== 'user'">In Draft </mat-option>
+                                </mat-select>
+                            </form-field>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="col-lg-6 col-xl-2 justify-center pr-2 butn-display ml-auto">
+
+                    <button class="theme-btn orange ml-1 create-shipment"
+                        routerLink="/admin/add-shipment/sender-address">Create Shipment</button>
+                </div>
+            </div>
+            <div class="hr">
+                <hr />
+            </div>
+            <div class="row">
+                <div class="col-lg-12 tble-res" *ngIf="shipmentData && shipmentData.length> 0">
+                    <table class="table table-responsive shippment-table" >
+                        <tr>
+                            <th>Service Type <i class="short"><img (click)="sortShipments()" src="../../../../assets/images/shorting-icon.svg"></i></th>
+                            <th>Tracking No.</th>
+                            <th>Customer Name</th>
+                            <th>Original Price</th>
+                            <th>Price Quote</th>
+                            <th>Label Creation</th>
+                            <th>Estimated Arrival</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                        <tr class="pointer" *ngFor="let item of shipmentData">
+                            <td (click)="ViewShipment(item);">{{item?.selectedService?.serviceType || '--'}}</td>
+                            <td (click)="ViewShipment(item);">{{item?.trackingNumber || '--'}}</td>
+                            <td (click)="ViewShipment(item);">{{item?.sender?.name}}</td>
+                            <td (click)="ViewShipment(item);"> {{getOriginalPriceValue(item?.serviceQuote)? "$"+getOriginalPriceValue(item?.serviceQuote):'--' }}</td>
+                            <td (click)="ViewShipment(item);"> {{getNetPriceValue(item?.serviceQuote)? "$"+getNetPriceValue(item?.serviceQuote):'--' }}</td>
+                            <td (click)="ViewShipment(item);">{{(item?.labelCreationDate | date:'MM-dd-YYYY') || '--' }}</td>
+                            <td (click)="ViewShipment(item);">{{(item?.selectedService?.day | date :'MM-dd-YYYY' )|| '--'}}</td>
+                            <td (click)="ViewShipment(item);"><button class="btn in-transit"  [matTooltip]="item?.trackingStatus?.DEFINATION"
+                                matTooltipPosition="right">
+                                  {{ item?.trackingStatus?.CODE}}</button></td>
+                            <td *ngIf="item?.status == 'drafted'">
+                                <img [matMenuTriggerFor]="menu" src="../../../../assets/images/dots.svg" />
+                                <mat-menu xPosition="before" #menu="matMenu">
+                                    <button  (click)="ViewShipment(item);" class="font-10  mat-menu-item">
+                                        Edit
+                                    </button>
+                                    <button (click)="deleteShipment(item?.id);" class="font-10  mat-menu-item">Delete</button>
+                                </mat-menu>
+                            </td>
+                            <!-- {{item?.status | json}} {{item?.trackingStatus?.CODE | json}} -->
+                            <td *ngIf="item?.status != 'drafted' && item?.trackingStatus?.CODE!='CA'">
+                                <img [matMenuTriggerFor]="menu" src="../../../../assets/images/dots.svg" />
+                                <mat-menu xPosition="before" #menu="matMenu">
+                                    <button (click)="cancelShipment(item?.id);" class="font-10  mat-menu-item">Cancel</button>
+                                </mat-menu>
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+                <div class="col-lg-12" *ngIf="!isloading && shipmentData && shipmentData.length ==0">
+                    <div class="noRequest">
+                        <span>No shipment found </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pagination">
+      <pagination *ngIf="!isloading && shipmentData && shipmentData.length >0"
+        [(pageNo)]="pageNo"
+        [(pageSize)]="pageSize"
+        (page)="getShipments()"
+        [totalRecords]="totalRecords || 0"
+      ></pagination>
+  </div>
+</div>

@@ -1,0 +1,66 @@
+.loader {
+    background: blur;
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    z-index: 10000;
+    stroke: #f44336 !important;
+  }
+  .mat-progress-spinner circle,
+  .mat-spinner circle {
+    stroke: #f44336 !important;
+  }
+  
+  .loading {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(235, 231, 231, 0.7);
+    z-index: 9999;
+    display: block !important;
+  }
+  table.table.table-responsive.address-table.packages-table > tr > td:nth-child(1) {
+    width: 15%;
+}
+.reason {
+  width: 300px;
+  max-height: 50px;
+  overflow: auto;
+}
+.downloadWidth{
+  width: 10%;
+}
+  
+
+@media (max-width:991px){
+  img.form-append.mr-2{
+    width: 10px;
+    margin-left: -10px;
+  }
+  img.ng-star-inserted{
+    margin-top: 0;
+  }
+  .filter-date{
+    margin-right: 0;
+    margin-left: 0;
+  }
+  .ml-left{
+    margin-left: 9px;
+  }
+  .ml-zero{
+    margin-left: 0;
+  }
+  .filter-icon{
+    left: 5px;
+  }
+}
+
+@media (min-width:993px) and (max-width:1166px){
+  .filter-date input{
+    width: 62%;
+  }
+}

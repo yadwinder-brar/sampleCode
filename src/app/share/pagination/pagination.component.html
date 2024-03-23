@@ -1,0 +1,48 @@
+<div class="pagination">
+  <div class="left">
+    <span (click)="previous()"
+      ><img
+        class="cursor"
+        [src]="
+          disable('previous')
+            ? '../../../assets/images/previous-arrow.svg'
+            : '../../../assets/images/left-arrow.svg'
+        "
+    /></span>
+    <span class="font-12 fw-4 black px-3">
+      {{ pageNo }} of {{ totalPages }} Page</span
+    >
+    <!-- {{totalPages}}//////// -->
+    <span (click)="next()"
+      ><img
+        class="cursor"
+        [src]="
+          disable('next')
+            ? '../../../assets/images/next-arrow-grey.svg'
+            : '../../../assets/images/next-arrow.svg'
+        "
+    /></span>
+  </div>
+  <div class="justify-end right">
+    <!-- <span class="pr-2 mr-4 fw-6 black font-14">Total records : {{totalRecords}} </span> -->
+    <span class="pr-2 fw-4 black font-12">Items per page </span>
+    <div class="pagn" (click)="select.open()">
+      <!-- <img src="../../../../../assets/images/down-arrow-white.svg" class="down" /> -->
+      <mat-select
+        class="footer-select pointer"
+        #select
+        (selectionChange)="setPage()"
+        [(ngModel)]="pageSize"
+        placeholder="10"
+      >
+        <mat-option
+          *ngFor="let item of pageSizeOptions"
+          class="ml-2"
+          [value]="item"
+          >{{ item }}</mat-option
+        >
+      </mat-select>
+    </div>
+    <!-- <span class="item-bg">{{ pageSize }}</span> -->
+  </div>
+</div>

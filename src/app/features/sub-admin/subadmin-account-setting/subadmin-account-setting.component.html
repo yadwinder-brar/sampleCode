@@ -1,0 +1,86 @@
+<app-sub-admin-header
+  *ngIf="!isLoading"
+  [pageName]="'Account setting'"
+></app-sub-admin-header>
+<div class="d-none" [class.loading]="isLoading">
+  <mat-progress-spinner
+    *ngIf="isLoading"
+    class="loader"
+    [color]="'warn'"
+    [mode]="'indeterminate'"
+    [value]="'30'"
+    stroke="f44336"
+  >
+  </mat-progress-spinner>
+</div>
+<div class="inner-dashbaord" *ngIf="!isLoading">
+  <div class="shippment-form-card">
+    <div class="border-class">
+      <div class="col-lg-6 col-xl-6 mt-4 ml-4 mb-3">
+        <div class="white-form-card1">
+          <div class="edit-servces">
+            <p class="float-left">Account Information</p>
+          </div>
+          <br />
+          <div class="account-setg">
+            <div class="subAdmin-account">
+              <span class="">customer ID : </span
+              ><span>{{ userData?.UniqueId || "--" }}</span>
+            </div>
+            <div class="subAdmin-account">
+              <span class="">Name : </span><span>{{ userData?.name }}</span>
+            </div>
+            <div class="subAdmin-account">
+              <span>Email : </span><span> {{ userData?.email || "--" }}</span>
+            </div>
+            <div class="subAdmin-account">
+              <span>Phone No. : </span
+              ><span> {{ userData?.phone || "--" }}</span>
+            </div>
+            <div class="subAdmin-account">
+              <span>Address :</span><span>{{ userData?.address || "--" }}</span>
+            </div>
+            <div class="subAdmin-account">
+              <span>City/State/Country : </span
+              ><span>
+                {{ userData?.state || "--" }}({{
+                  userData?.country || "--"
+                }})</span
+              >
+            </div>
+            <div class="subAdmin-account">
+              <span>Zip Code : </span><span>{{ userData?.zipCode }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="defaul ml-4">
+      <div class="row pb-2">
+        <div class="Business-detail pt-3">
+          <div class="mb-1">Sales tax</div>
+          <mat-radio-group aria-label="Select an option"  [(ngModel)]="selectedOption">
+            <mat-radio-button [value]=true checked>Yes</mat-radio-button>
+            <mat-radio-button [value]=false>No</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div class="row mt-3" *ngIf="selectedOption !== false">
+          <div class="mt-1">
+            <form-field>
+              <input
+                type="text"
+                [disabled]="true"
+                class="form-control forgot-pass"
+                [placeholder]="'15%'"
+              />
+            </form-field>
+          </div>
+          <div class="edit-icon">
+            <img src="../../../../assets/images/admin/editicon.svg" 
+            (click)="editMargin(marginAndDiscountData)"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

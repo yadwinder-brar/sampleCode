@@ -1,0 +1,95 @@
+
+  <div class="bg-video-wrap">
+    <div class="header">
+    <div class="row justify-between">
+      <div class="col-2 pl-2">
+        <img
+          class="img-logo-1"
+          src="../../../../assets/images/newLogo5.png"
+          alt=""
+        />
+      </div>
+      <div class="col-2 text-right pr-3">
+        <div>
+          <button class="theme-btn border-white contactBtn"><a href="tel:+123456890">Contact Us </a></button>
+        </div>
+      </div>
+    </div>
+  </div>
+    <video autoplay loop class="video-tag">
+      <source
+        src="https://shipdistrict-prod.s3.us-west-2.amazonaws.com/shipdistrict/cd411f2114b45ef2c6ceb27290c7d8f54118a615.mp4"
+        type="video/mp4"
+      />
+    </video>
+ 
+    <div class="row form-login">
+      <div class="col-lg-12">
+        <div class="form form-width">
+         
+          <div class="font-40 fw-7 topText">
+            Get <span class="getStarted1 ">started</span> with <br />
+            easy Login
+          </div>
+          <div class="font-14 my-3 l-black">Please enter your details below.</div>
+          <form class="" [formGroup]="loginForm">
+            <label class="font-14">Email Address</label>
+            <form-field [errorControl]="loginForm.get('email')" name="email">
+              <input
+                type="text"
+                formControlName="email"
+                class="form-control forgot-pass"
+                placeholder="Email address"
+              />
+            </form-field>
+            <label class="font-14">Password</label>
+            <form-field [errorControl]="loginForm.get('password')" name="password">
+              <input
+                type="password"
+                formControlName="password"
+                #PassRef
+                class="form-control forgot-pass"
+                placeholder="Password"
+              />
+              <img
+                class="form-append"
+                (click)="
+                  Password = !Password;
+                  PassRef.type = PassRef.type == 'password' ? 'text' : 'password'
+                "
+                class="form-append cursor"
+                [src]="
+                  Password
+                    ? '../../../../assets/images/eye-on.svg'
+                    : '../../../../assets/images/eye-off.svg'
+                "
+                alt=""
+              />
+            </form-field>
+          </form>
+          <div (click)="forgot()" class="font-14 text-right getStarted cursor">
+            Forgot Password?
+          </div>
+          <div class="text-center mt-4">
+            <button type="button" class="theme-btn red signupbtn" (click)="login()">
+              Log in
+              <mat-spinner
+              [diameter]="18"
+              class="ml-2"
+              [strokeWidth]="1"
+              *ngIf="isLoading"
+            ></mat-spinner></button>
+          </div>
+  
+          <div class="text-center cursor dont font-14">
+            Don't have an account? <span class="getStarted font-600" (click)="goTO()"
+              >Sign Up</span
+            >
+          </div>
+        </div>
+      </div>
+     
+    </div>
+    <div class="overlay">
+    </div>
+  </div>

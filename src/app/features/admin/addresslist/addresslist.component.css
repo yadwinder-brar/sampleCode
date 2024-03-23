@@ -1,0 +1,19 @@
+.addresNot{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+.addres-list{
+    display: flex;
+    justify-content: end;
+}
+.text-capitalize{
+text-transform:capitalize;
+}
+
+.download-icon.exportOnly {
+    width: 75px;
+    display: flex;
+    justify-content: center;
+}

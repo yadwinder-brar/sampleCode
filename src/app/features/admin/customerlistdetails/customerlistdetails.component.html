@@ -1,0 +1,325 @@
+<!-- <p>dashboard works!</p> -->
+<app-admin-header [link]="'/admin/customerlist'" [icon]="true" [pageName]="'Back'"></app-admin-header>
+<div class="d-none" [class.loading]="isloading">
+    <mat-progress-spinner
+      *ngIf="isloading"
+      class="loader"
+      [color]="'warn'"
+      [mode]="'indeterminate'"
+      [value]="'30'"
+      stroke="f44336"
+    >
+    </mat-progress-spinner>
+  </div>
+<div *ngIf="this.customerDetail && !isloading">
+<div class="row">
+    <div class="col-lg-6 col-xl-6 padding-both">
+        <div class="white-form-card1">
+            <div class="edit-servces">
+                <p class="float-left">User Details</p>
+            </div>
+            <table class="sender-info admin-table-services" width="100%">
+                <tr>
+                    <td align="left">Customer ID :</td>
+                    <td align="left">{{customerDetail?.UniqueId}}</td>
+                </tr>
+                <tr>
+                    <td align="left">Name :</td>
+                    <td align="left">{{customerDetail?.fullName || '--'}}</td>
+                </tr>
+                <tr>
+                    <td align="left">Company Name : </td>
+                    <td align="left">{{ this.userProfile?.companyName? this.userProfile?.companyName : (this.customerDetail?.currentProfile?.companyName||'--')}}</td>
+                </tr>
+                <tr>
+                    <td align="left">Phone No. :</td>
+                    <td align="left">{{userProfile?.phone||customerDetail?.currentProfile?.phone ||'--'}}</td>
+                </tr>
+                <tr>
+                    <td align="left">Email Address :</td>
+                    <td align="left" class="lowertext">{{customerDetail?.email || ''}}</td>
+                </tr>
+                <tr *ngIf="this.userDoc">
+                    <td align="left">Mailbox Address :</td>
+                    <td align="left" class="lowertext">{{this.userDoc?.virtualId || 'pending'}}</td>
+                </tr>
+               
+            </table>
+        </div>
+    </div>
+    <div class="col-lg-6 col-xl-6 padding-right">
+        <div class="white-form-card1 ">
+            <div class="edit-servces admin-address">
+                <p class="float-left">Address Details</p>
+                <div class="post-form1" *ngIf="userDoc" >
+                    <p class="post-text">Post Office Form</p> 
+                    <div class="downlaod-iconadmin" *ngIf="customerDetail?.addedBy!=='admin'" ><img class="formImg" (click)="openForm(customerDetail)"  src="../../../../../assets/images/admin/pdf-download.svg"></div>
+                    <div (click)="downloadForm(customerDetail?.profiles)" class="downlaod-iconadmin downIcon">
+                        <img [src]="'../../../../assets/images/download.svg'" />
+                     </div>
+                    <!-- <div class="downlaod-iconadmin" *ngIf="customerDetail?.addedBy!=='admin'" ><img class="formImg" (click)="openForm(customerDetail)"  src="../../../../../assets/images/admin/pdf-download.svg"></div> -->
+                    </div>
+                </div>
+                <div class="post-form1" *ngIf="this.userProfile && !this.userDoc">
+                    <p class="post-text">Shipment account only</p> 
+                </div>
+            <table class="sender-info" width="100%">
+                <tr>
+                    <td align="left">Address 1 :</td>
+                    <td align="Right" *ngIf="this.userProfile  && userDoc">{{this.userProfile?.address1 || this.userProfile?.address || '--'}}</td>
+                    <td align="Right" *ngIf="this.userProfile  && !userDoc">{{this.userProfile?.address1 || this.userProfile?.address || '--'}}</td>
+                    <td align="Right" *ngIf="!this.userProfile && this.userDoc ">{{this.userDoc?.address1 || this.userDoc?.address || '--'}}</td>
+                </tr>
+                <tr>
+                    <td align="left">Address 2 : </td>
+                    <td align="Right" *ngIf="this.userProfile && userDoc">{{this.userProfile?.address2 || '--'}}</td>
+                    <td align="Right" *ngIf="this.userProfile && !userDoc">{{this.userProfile?.address2 || '--'}}</td>
+                    <td align="Right" *ngIf="!this.userProfile && this.userDoc ">{{this.userDoc?.address2 || this.userDoc?.address2 || '--'}}</td>
+                </tr>
+                <tr>
+                    <td align="left">Company Name :</td>
+                    <td align="Right" *ngIf="this.userProfile && this.userDoc ">{{this.userProfile?this.userProfile?.companyName: '--'}}</td>
+                    <td align="Right" *ngIf="this.userProfile && !this.userDoc ">{{this.userProfile?this.userProfile?.companyName: '--'}}</td>
+                    <td align="Right" *ngIf="!this.userProfile && this.userDoc ">{{this.userDoc? this.userDoc?.companyName: '--'}}</td>
+                </tr>
+                <tr>
+                    <td align="left">PhoneNo. :</td>
+                    <td align="Right" *ngIf="this.userProfile && this.userDoc ">{{this.userProfile?this.userProfile?.phone: '--'}}</td>
+                    <td align="Right" *ngIf="this.userProfile && !this.userDoc ">{{this.userProfile?this.userProfile?.phone: '--'}}</td>
+                    <td align="Right" *ngIf="!this.userProfile && this.userDoc ">{{this.userDoc? this.userDoc?.phone: '--'}}</td>
+                </tr>
+                <tr>
+                    <td align="left">City,State :</td>
+                    <td align="Right" *ngIf="this.userProfile && userDoc">{{this.userProfile?this.userProfile?.city : '--'}}({{this.userProfile?this.userProfile?.state: '--'}})</td>
+                    <td align="Right" *ngIf="this.userProfile && !userDoc">{{this.userProfile?this.userProfile?.city : '--'}}({{this.userProfile?this.userProfile?.state: '--'}})</td>
+                    <td align="Right"*ngIf="!this.userProfile && this.userDoc " >{{this.userDoc?this.userDoc?.city : '--'}}({{this.userDoc?this.userDoc?.state: '--'}})</td>
+                </tr>
+                <tr >
+                    <td align="left">Country :</td>
+                    <td align="Right" *ngIf="this.userProfile && this.userDoc ">{{this.userProfile?this.userProfile?.country : '--'}}</td>
+                    <td align="Right" *ngIf="this.userProfile && !this.userDoc ">{{this.userProfile?this.userProfile?.country : '--'}}</td>
+                    <td align="Right" *ngIf="!this.userProfile && this.userDoc ">{{this.userDoc?.country || '--'}}</td>
+                </tr>
+                <tr>
+                    <td align="left">Zip Code :</td>
+                    <td align="Right" *ngIf="this.userProfile && this.userDoc ">{{this.userProfile?this.userProfile?.zipCode: '--'}}</td>
+                    <td align="Right" *ngIf="this.userProfile && !this.userDoc ">{{this.userProfile?this.userProfile?.zipCode: '--'}}</td>
+                    <td align="Right" *ngIf="!this.userProfile && this.userDoc ">{{this.userDoc? this.userDoc?.zipCode: '--'}}</td>
+                </tr>
+            </table>
+        </div>   
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6 col-xl-6 padding-both">
+        <div class="video">
+            <p class="font-600">Carrier Preferences box</p>
+            
+            <table class="sender-info" width="100%">
+                <tr>
+                    <td align="left">FedEx</td>
+                    <td align="Right"></td>
+                </tr>
+                <!-- <tr>
+                    <td align="left">BLUE DART</td>
+                    <td align="Right"></td>
+                </tr>
+                <tr>
+                    <td align="left">DHL</td>
+                    <td align="Right"></td>
+                </tr>
+                <tr >
+                    <td align="left">USPS</td>
+                    <td align="Right"></td>
+                </tr> -->
+                <!-- <pre>{{userProfile | json}}</pre> -->
+                             
+            </table>
+        </div>
+    </div>
+    <div class="col-lg-6 col-xl-6 padding-right">
+    <div class="white-form-card1" >
+        <div *ngIf="this.userDoc">
+            <div class="font-14 notarised">
+                <p class="font-600">Notarised ID and KYC proofs</p>
+                <span *ngIf="customerDetail?.addedBy=='admin'">The customer is added by admin</span>
+            </div>
+            <div class="row " *ngIf="customerDetail?.addedBy!=='admin'">
+                <!-- <pre>{{userDoc | json}}</pre> -->
+                <div class="col-lg-5 pr-2">
+                    <div class=" font-14 mt-2 mb-1 l-black">Proof 1</div>
+                    <div class="upload-proof-admin">
+                        <a [href]="userDoc?.proofDocument?.documents[0]?.url"><img [src]="userDoc?.proofDocument?.documents[0]?.url || '../../../../assets/images/plus-file1.png'" alt="" /></a>
+                    </div>
+                </div>
+                <div class="col-lg-5 pl-2">
+                    <div class=" font-14 mt-2 mb-1 l-black">Proof 2</div>
+                    <div class="upload-proof-admin">
+                        <a [href]="userDoc?.proofDocument?.documents[0]?.url">
+                            <img [src]="userDoc?.proofDocument?.documents[1]?.url || '../../../../assets/images/plus-file1.png'" alt="" /></a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div *ngIf="!this.userDoc">
+            <p class="font-600">Shipment account only</p>
+        </div>
+    </div>
+    </div>
+</div>
+<div class="content">
+    <div class="inner-dashbaord pt-3">
+        <div class="shippment-form-card">
+            <div class="row">
+                <div class="col-lg-6 col-xl-3 pr-2 pl-2 padding-l">
+                    <img *ngIf="!search"
+                      src="../../../../assets/images/search.svg"
+                      class="searching-icon"
+                    />
+                    <div>
+                        <form-field>
+                            <input
+                            type="text"
+                            [(ngModel)]="search"
+                            (keyup)="searchShipment($event)"
+                            placeholder="Search by Service Type"
+                            class="form-control font-family"
+                            />
+                            <img *ngIf="search" (click)="search = ''; getShipments();" src="../../../../assets/images/close-icon.svg" class="form-append" />
+                        </form-field>
+                      </div>
+                </div>
+                <div class="col-lg-6  col-xl-2 pr-2 cursor">
+                    <div>
+                        <img *ngIf="!shipmentDate"
+                          src="../../../../assets/images/fillter-date.svg"
+                          class="filter-icon"
+                        />
+                        <img *ngIf="shipmentDate" (click)="shipmentDate = ''; getShipments();" src="../../../../assets/images/close-icon.svg" class="filter-icon" />
+                        <div class="filter-date">
+                          <input
+                            type="text"
+                            [(ngModel)]="shipmentDate"
+                            (click)="startDate.open()"
+                            (dateChange)="getShipments()"
+                            readonly
+                            placeholder="Filter by Date"
+                            [matDatepicker]="startDate"
+                            class="form-control"
+                          />
+                          <img
+                            class="form-append mr-2"
+                            (click)="startDate.open()"
+                            src="../../../../assets/images/arrow-down.svg"
+                            alt=""
+                          />
+                          <mat-datepicker #startDate></mat-datepicker>
+                        </div>
+                      </div>
+                </div>
+                <div class="col-lg-6 col-xl-2 pr-2">
+                    <div>
+                        <img
+                          src="../../../../assets/images/fillter-date.svg"
+                          class="filter-icon"
+                        />
+                        <div class="Filter-status">
+                          <form-field>
+                            <mat-select
+                              [(ngModel)]="shipmentStatus"
+                              (selectionChange)="getShipments()"
+                              class="form-control filter-status1"
+                              placeholder="Filter by Status"
+                            >
+                              <mat-option value="">All</mat-option>
+                              <mat-option value="inTransit">in Transit</mat-option>
+                              <!-- <mat-option value="drafted">In Draft </mat-option> -->
+                              <!-- <mat-option value="deleted" >Deleted</mat-option>
+                                              <mat-option value="delivered" >Delivered</mat-option>
+                                              <mat-option value="active" >Active</mat-option> -->
+                            </mat-select>
+                          </form-field>
+                        </div>
+                      </div>
+                </div>
+              
+                <div class="col-lg-6 col-xl-2 pr-2">
+                    <div>
+                        <img src="../../../../assets/images/fillter-date.svg" class="filter-icon" />
+                        <div class="Filter-status">
+                            <form-field>
+                                <mat-select class="form-control filter-status1" placeholder="All">
+                                    <mat-option value="">Showing all</mat-option>
+                                    <mat-option value="international">International</mat-option>
+                                    <mat-option value="domestic">Domestic</mat-option>
+                                </mat-select>
+                            </form-field>
+                        </div>
+                    </div>
+                </div>              
+            </div>
+            <div class="hr">
+                <hr />
+            </div>
+            <div class="row">
+                <div class="col-lg-12 tble-res" *ngIf="shipmentData && shipmentData.length>0">
+                    <table class="table table-responsive shippment-table">
+                        <tr>
+                            <th>Service Type <i class="short"><img src="../../../../assets/images/shorting-icon.svg"></i></th>
+                            <th>Tracking No. <i class="short"><img src="../../../../assets/images/shorting-icon.svg"></i></th>
+                           
+                            <th>Original Price <i class="short"><img src="../../../../assets/images/shorting-icon.svg"></i></th>
+                            <th>Price Quote <i class="short"><img src="../../../../assets/images/shorting-icon.svg"></i></th>
+                            <th>Label Creation <i class="short"><img src="../../../../assets/images/shorting-icon.svg"></i></th>
+                            <th>Estimated Arrival <i class="short"><img src="../../../../assets/images/shorting-icon.svg"></i></th>
+                            <th>Status<i class="short"><img src="../../../../assets/images/shorting-icon.svg"></i></th>
+                            <th></th>
+                        </tr>
+                        <tr class="pointer" *ngFor="let item of shipmentData" class="pointer">
+                            <td routerLink="/admin/customerlist/customers-Shipmentdetail/{{item?.id}}" >{{ item?.selectedService?.serviceType }}</td>
+                            <td routerLink="/admin/customerlist/customers-Shipmentdetail/{{item?.id}}" >{{item?.trackingNumber}}</td>
+                          
+                            <td class="font-600" routerLink="/admin/customerlist/customers-Shipmentdetail/{{item?.id}}" >
+                                <!-- {{item?.serviceQuote? "$"+item?.serviceQuote[1]?.value:'--' }} -->
+                                {{getOriginalPriceValue(item?.serviceQuote)? "$"+getOriginalPriceValue(item?.serviceQuote):'--' }}
+                              </td>
+                            <td class="font-600" routerLink="/admin/customerlist/customers-Shipmentdetail/{{item?.id}}" >
+                                <!-- {{item?.serviceQuote? "$"+item?.serviceQuote[1]?.value:'--' }} -->
+                                {{getNetPriceValue(item?.serviceQuote)? "$"+getNetPriceValue(item?.serviceQuote):'--' }}
+                            </td>
+                            <td routerLink="/admin/customerlist/customers-Shipmentdetail/{{item?.id}}" >{{(item?.labelCreationDate|date:'MM-dd-YYYY') || '--'}}</td>
+                            <td routerLink="/admin/customerlist/customers-Shipmentdetail/{{item?.id}}" >{{ item?.selectedService?.day | date:'MM-dd-YYYY' }}</td>
+                            <td routerLink="/admin/customerlist/customers-Shipmentdetail/{{item?.id}}" ><button class="btn in-transit"  [matTooltip]="item?.trackingStatus?.DEFINATION"
+                                matTooltipPosition="right">
+                                  {{ item?.trackingStatus?.CODE}}</button></td>
+                            <!-- <td>
+                                <img [matMenuTriggerFor]="menu" src="../../../../assets/images/dots.svg" />
+                                <mat-menu xPosition="before" #menu="matMenu">
+                                    <button class="font-10  mat-menu-item">
+                                        Edit
+                                    </button>
+                                    <button class="font-10  mat-menu-item">Delete</button>
+                                </mat-menu>
+                            </td> -->
+                        </tr>
+                       
+
+                    </table>
+                    <div class="pagination" *ngIf="shipmentData && shipmentData.length>0 && !isloading">
+                        <pagination
+                          [(pageNo)]="pageNo"
+                          [(pageSize)]="pageSize"
+                          (page)="getShipments()"
+                          [totalRecords]="totalRecords || 0"
+                        ></pagination>
+                      </div>
+                </div>
+                <div class="col-lg-12 shipmentNot" *ngIf="shipmentData && shipmentData.length==0 && !isloading">
+                    <span> No shipment found for this user</span>
+                  </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

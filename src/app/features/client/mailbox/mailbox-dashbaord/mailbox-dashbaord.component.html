@@ -1,0 +1,133 @@
+<!-- <p>dashboard works!</p> -->
+<app-client-dashboard-header [pageName]="'Mailbox Dashboard'"></app-client-dashboard-header>
+<div class="content">
+    <div class="inner-dashbaord"> 
+        <div class="text-center font-14 pt-1">
+            <div class="row">
+                <div class="col-lg-4"  >
+                    <div (done)="onSkip()" joyrideStep="inboxStep" title="Inbox" [stepContent]="customContent"
+                    [stepContentParams]="{'name': 'Use this button to quickly view all items in your inbox.'}" stepDefaultPosition="bottom"  class="create-mailbox-dash"  routerLink="/client/inbox">
+                        <div class="img-ship"><img src="../../../../assets/images/mailbox-inbox.svg" /></div>
+                        <div class="shipment-div">
+                            <span>Inbox</span>
+                            <span class="font-12">Quick Access To Your Uploaded Scans</span>
+                        </div>
+                    </div>
+                </div>
+                <ng-template #customContent let-cardone="name"> {{cardone}} </ng-template>
+                <div class="col-lg-4 ">
+                    <div (done)="onSkip()" joyrideStep="archiveStep" title="Archive" [stepContent]="customContent"
+                    [stepContentParams]="{'name': 'Use this button to quickly view all the items you have answered in your inbox.'}" stepDefaultPosition="bottom"  class="archive-mailbox-dash" routerLink="/client/archive">
+                        <div class="img-ship"><img src="../../../../assets/images/mailbox-archive.svg" /></div>
+                        <div class="shipment-div">
+                            <span>Archive</span>
+                            <span class="font-12">Quick Access To Archived Scans</span>
+                        </div>
+                    </div>
+                </div>
+                <ng-template #customContent let-cardtwo="name"> {{cardtwo}} </ng-template>
+                <div class="col-lg-4 " >
+                    <div (done)="onSkip()" joyrideStep="trashStep" title="Trash" [stepContent]="customContent"
+                    [stepContentParams]="{'name': 'Use this button to quickly view all the items you have sent to the trash can.'}" stepDefaultPosition="bottom" class="trash-mailbox-dash" routerLink="/client/trash">
+                        <div class="img-ship1"><img src="../../../../assets/images/mailbox-trash.svg" /></div>
+                        <div class="shipment-div">
+                            <span>Trash</span>
+                            <span class="font-12">View Your Trashed Scans</span>
+                        </div>
+                    </div>
+                </div>
+                <ng-template #customContent let-cardthree="name"> {{cardthree}} </ng-template>
+            </div>
+            <div class="row">
+                <div class="col-lg-7  graph-t">
+                    <div class="card saving white-form-card graph ">
+                        <div class="chart-wrapper">
+                            <div class="d-flex dateFilter">
+                                <div class="countText"><span>Inbox vs Archive</span></div>
+                                <div class="d-flex date-box">
+                                <span>
+                                    <div class="countStartDate">
+                                      <div class="filter-date">
+                                        <input type="text" [value]="year" (click)="Year.open()" [(ngModel)]="year" (dateChange)="getMailboxlineChartData()" [matDatepicker]="Year" class="form-control"  [placeholder]="year||'Year'"/>
+                                        <img  src="../../../../assets/images/calender.svg" (click)="Year.open()" class="form-append mr-2" />
+                                        <!-- <img *ngIf="year" (click)="year = ''; getMailboxlineChartData(); " src="../../../../assets/images/close-icon.svg" class="form-append mr-2" /> -->
+                                        <mat-datepicker (yearSelected)="chosenYearHandler($event, Year)"
+                                      startView="multi-year" #Year></mat-datepicker>
+                                      </div>
+                                      <!--  -->
+                                    </div> 
+                                </span>
+                                </div>
+                              </div>
+                            <canvas baseChart *ngIf="!isLineloading && this.lineChartData && this.lineChartData[0]?.data.length >0"
+                                [datasets]="lineChartData" 
+                                [labels]="lineChartLabels" 
+                                [options]="lineChartOptions"
+                                [legend]="lineChartLegend" 
+                                
+                                [type]="lineChartType" 
+                                [plugins]="lineChartPlugins">
+                            </canvas>
+                        </div>
+                        <!-- <img src="../../../../../assets/images/mailbox-chart.png" /> -->
+                    </div>
+
+                </div>
+                <div class="col-lg-5  graph-r">
+                    <div class="card saving white-form-card usage ">
+                        <div class="chart-wrapper">
+                            <div class="d-flex dateFilter">
+                                <div class="countText"><span>Total system usage</span></div>
+                                <div class="d-flex date-box">
+                                <span>
+                                    <div class="countStartDate"> 
+                                      <div class="filter-date">
+                                        <input type="text" (click)="startDate.open()" [(ngModel)]="starDate" (dateChange)="getMailboxCountDataByDate()" [matDatepicker]="startDate" class="form-control"  placeholder="start Date"/>
+                                        <img *ngIf="!starDate" src="../../../../assets/images/calender.svg" (click)="startDate.open()" class="form-append mr-2" />
+                                        <img *ngIf="starDate" (click)="starDate = ''; endDate = ''; getMailboxCountChartData(); " src="../../../../assets/images/close-icon.svg" class="form-append mr-2" />
+                                        <mat-datepicker #startDate></mat-datepicker>
+                                      </div>
+                                    </div> 
+                                </span>
+                                <span class="mx-1">
+                                    <div class="countStartDate"> 
+                                      <div class="filter-date">
+                                        <input type="text" (click)="lastCountDate.open()" [disabled]="!starDate" [min]="starDate" (dateChange)="getMailboxCountChartData()" [(ngModel)]="endDate" [matDatepicker]="lastCountDate" class="form-control"  placeholder="end Date"/>
+                                        <img *ngIf="!endDate" src="../../../../assets/images/calender.svg" (click)="lastCountDate.open()" class="form-append mr-2" />
+                                        <img *ngIf="endDate" (click)="endDate = ''; getMailboxCountChartData(); " src="../../../../assets/images/close-icon.svg" class="form-append mr-2" />
+                                        <mat-datepicker #lastCountDate></mat-datepicker>
+                                      </div>
+                                    </div>
+                                </span>
+                                </div>
+                              </div>
+                              <!-- {{doughnutChartDatasets[0]?.data !==[0,0,0] && !isloading | json}} -->
+                              <!-- {{doughnutChartDatasets[0]?.data | json}}  -->
+                              <div class="dounght">
+                               <div style="display: block ; min-height: 292px; width: 292px;">
+                                  <canvas *ngIf="!isloading && this.shipmentCountChartData?.inbox != '0'|| this.shipmentCountChartData?.archived != '0' || this.shipmentCountChartData?.inTrash != '0'"
+                                  baseChart
+                                  [datasets]="doughnutChartDatasets"
+                                  [labels]="doughnutChartLabels"
+                                  [legend]="true"
+                                  [type]="'doughnut'"
+                                  ></canvas
+                                  >
+                                  <!-- [options]="doughnutChartOptions" -->
+                                  <!-- [colors]="donutColors" -->
+                                  <div *ngIf="!isloading && this.shipmentCountChartData?.inbox == '0'&& this.shipmentCountChartData?.archived == '0' && this.shipmentCountChartData?.inTrash == '0'" class="noData">
+                                    <span>No data found</span>
+                                  </div>
+                                </div>
+                              </div>
+                        </div>
+                        <!-- <img src="../../../../../assets/images/mailbox-chart1.png" /> -->
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,118 @@
+<!-- <p>dashboard works!</p> -->
+<app-sub-admin-header *ngIf="!isLoading" [pageName]="'Back'" [icon]="true" [link]="'/subAdmin/mailbox'" ></app-sub-admin-header>
+<div class="d-none"  [class.loading]="isLoading">
+    <mat-progress-spinner *ngIf="isLoading" class="loader" [color]="'warn'" [mode]="'indeterminate'" [value]="'30'"
+        stroke="f44336">
+    </mat-progress-spinner>
+  </div>
+<div class="row" *ngIf="!isLoading">        
+    <div class="col-lg-6 col-xl-2 justify-center pr-2 butn-display ml-auto mb-3">
+
+        <button class="theme-btn orange ml-1 create-shipment" (click)="uploadScan()">Upload Scan</button>
+    </div>
+</div>
+<div class="content" *ngIf="userMailboxRequestList && userMailboxRequestList.length>0 && !isLoading">
+    <div class="inner-dashbaord px-3 pt-3 pb-4">
+        <div class="inbox-card-mailbox pb-4 mt-1" *ngFor="let data of userMailboxRequestList; let i = index">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <div class="inbox-card">
+                                <div class="inbox-img">
+                                    <img *ngIf="getImageName(data?.labelLink) != 'pdf'"  [src]="data?.labelLink" />
+                                    <iframe class="iframeClass" *ngIf="getImageName(data?.labelLink) == 'pdf'" [src]="sanitizer.bypassSecurityTrustResourceUrl(data?.labelLink)"></iframe>
+                                    <span class="zoom-icon">
+                                        <img (click)="openImg(data)" src="../../../../../assets/images/zoom-icon.svg" />
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-5 inbox-padding">
+                            <div class="main-inbox">
+                                <div class="date-div ml-auto">
+                                    <span class="font-14 ">{{data?.labelCreationDate | date :'fullDate'}}</span>
+                                    <p *ngIf="data?.storageDate" class="font-14">Storage date : {{data?.storageDate | date :'MM/dd/yyyy'}}</p>
+                                  
+                                </div>
+                              
+                            </div>
+                            <div class="following-action pt-4" *ngIf="data?.lastActionAdmin!='labelAssignedToUser' && data?.lastActionAdmin!='labelDelivered' ">
+                                <p class="font-14">User submitted this items as :</p>
+                                <div class="action-perfom">
+                                    <!-- data?.action =='notMyMail'?'notMymail':'trashed'" -->
+                                    <div *ngIf="data?.lastActionUser !='holdForPickupOtp' " class="open-scan mr-3 cursor" [ngClass]="{'notMymail':data?.lastActionUser =='notMyMail', 'trashed':data?.lastActionUser =='labelInTrash','forward':data?.lastActionUser =='forward'}">
+                                        <p *ngIf="data?.lastActionUser =='labelInTrash'" class=""><img class="trashIcon" src="../../../../../assets/images/trash.svg">Trashed</p>
+                                        <p *ngIf="data?.lastActionUser =='openAndScan'" class=""><img src="../../../../../assets/images/barcode-identification.png">Open and scan</p>
+                                        <p *ngIf="data?.lastActionUser =='forwardLabelRequest'" class=""><img src="../../../../../assets/images/forward.svg">Forward</p>
+                                        <p *ngIf="data?.lastActionUser =='notMyMail'" class=""><img class="trashIcon" src="../../../../../assets/images/trash.svg">Not my mail</p>
+                                        <p *ngIf="data?.lastActionUser =='planSelected'" class=""><img src="../../../../../assets/images/forward.svg">Forward</p>
+                                    </div>
+                                    <div *ngIf="data?.lastActionUser =='notMyMail' && !data?.isScanAddedByAdmin" class="my-3 cursor">
+                                        <button (click)="openScanReturnDialogBox(data);" type="button" class="create-btn theme-btn red">Return scan count</button>
+                                    </div>
+                                    <div *ngIf="data?.lastActionUser =='notMyMail' && data?.isScanAddedByAdmin" class="my-3 cursor">
+                                        <button type="button" class="create-btn theme-btn darkBtn">Scan returned to users account</button>
+                                    </div>
+                                    <div *ngIf="data?.lastActionUser =='labelInTrash'" class="send-trash pt-5 mt-4 justify-md-center col-lg-6 offset-lg-3 text-center">
+                                        <p class="font-16 font-500">This item will be shred on: {{data?.inTrashdeletedDate | date :'fullDate'}}</p>
+                                    </div>
+                                    <div class="" *ngIf="data?.lastActionAdmin =='OtpRequest'">
+                                        <span  class="text-dark">Number of Requested scans: {{data?.childLabels?.length || '1'}} </span><br/>
+                                        <span  class="text-dark">Hold for  pickup code is </span>
+                                       <div class="mt-5"> 
+                                            <ng-otp-input class="form-control" (onInputChange)="onOtpChange($event)"[config]="inputConfig" ></ng-otp-input>
+                                        </div>
+                                        <div class="send-trash pt-4 d-flex" *ngIf="data?.action =='holdForPickup'">
+                                            <button type="button" class="create-btn theme-btn red" (click)="verifyCode(data?.id)">Verify code<mat-spinner
+                                                [diameter]="18"
+                                                class="ml-2"
+                                                [strokeWidth]="1"
+                                                *ngIf="loader"
+                                              ></mat-spinner> </button>
+                                              <button class="create-btn mark mx-2 btn-width"  (click)="MarkAsPickedUp(data)">Mark As Picked Up</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="send-trash pt-4 pb-5 mt-5 d-flex" *ngIf="data?.lastActionAdmin =='openAndScanRequest'">
+                                    <button class="create-btn red btn-width" (click)="respondToScanRequest(data)">Respond to Request</button>
+                                    <button class="create-btn mark mx-2 btn-width"  (click)="MarkAsPickedUp(data)">Mark As Picked Up</button>
+
+                                </div>
+                                <div class="send-trash pt-4 pb-5 mt-5 d-flex" *ngIf="data?.lastActionAdmin =='forwardLabel'">
+                                    <button class="create-btn red" routerLink="/subAdmin/mailbox/forwardmailboxdetail/{{data?.id}}" >Respond to Request </button>
+                                    <button class="create-btn mark mx-2 btn-width"  (click)="MarkAsPickedUp(data)">Mark As Picked Up</button>
+                                    <!-- (click)="respondToForwardRequest(data)" -->
+                                </div>
+                            </div>                          
+                            <div class="following-actionpending height-50" *ngIf="data?.lastActionAdmin !='labelAssignedToUser'">
+                                <div class="send-trash" *ngIf="data?.lastActionAdmin=='openAndScanResponse'|| data?.lastActionAdmin=='labelDelivered' || data?.lastActionAdmin=='forwardLabelResponse'" >
+                                   <div class="d-flex">
+                                    <button class="d-inline-block create-btn red btn-width" *ngIf="data?.lastActionAdmin=='openAndScanResponse'|| data?.lastActionAdmin=='forwardLabelResponse' && data?.lastActionUser !='planSelected'" >Request responded</button>
+                                    <button class="d-inline-block create-btn red btn-width" *ngIf="data?.lastActionUser =='planSelected'" routerLink="/subAdmin/mailbox/forwardmailboxdetail/{{data?.id}}">{{data?.forwardLabelTrackingNumber|| data?.forwardLabelDeliveryDate?'Request responded':'Answer Request'}}</button>
+                                    <button *ngIf="data?.lastActionAdmin !=='labelDelivered' && !data?.isPaymentComplete" class="create-btn mark mx-2 my-1 btn-width"  (click)="MarkAsPickedUp(data)">Mark As Picked Up</button>
+                                  </div> 
+                                    <button class="create-btn green mt-5" *ngIf="data?.lastActionAdmin=='labelDelivered'" >Picked up</button>
+                                    <p class="mt-5" *ngIf="data?.lastActionAdmin=='labelDelivered'" >Picked up date is : {{data?.updatedAt | date:'short'}}</p>
+                                </div>
+                            </div> 
+                            <div class="following-actionpending" *ngIf="data?.lastActionAdmin=='labelAssignedToUser'">
+                                <div class="send-trash">
+                                    <button class="create-btn green" *ngIf="data?.lastActionAdmin=='labelAssignedToUser'">Label sent to user</button>
+                                </div>
+                            </div> 
+                                <div class="send-trash pt-4 pb-5 text-center" *ngIf="data?.lastActionAdmin=='labelAssignedToUser' && data?.status!== 'deleted'">
+                                    <button class="create-btn red btn-width"  (click)="cancelMailbox(data)">Cancel</button>
+                                    <button class="create-btn mark mx-2 my-1 btn-width"  (click)="MarkAsPickedUp(data)">Mark As Picked Up</button>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>       
+    </div>
+</div>
+
+<div class="noRequest" *ngIf="userMailboxRequestList && userMailboxRequestList.length==0 && !isLoading">
+    No mailbox shipment found
+</div>
